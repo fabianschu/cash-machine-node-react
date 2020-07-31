@@ -8,8 +8,8 @@ const session = require("express-session");
 const cors = require("cors");
 const mountRoutes = require("./routes");
 const pgSession = require("connect-pg-simple")(session);
-
 const { pool } = require("./db/index");
+require("dotenv").config();
 
 var app = express();
 
