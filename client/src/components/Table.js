@@ -110,6 +110,7 @@ const Table = (props) => {
       type: "date",
       defaultSort: "desc",
       width: 100,
+      editable: "never",
     },
   ]);
 
