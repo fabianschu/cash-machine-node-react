@@ -9,6 +9,6 @@ router.get("/", function (req, res, next) {
 });
 
 module.exports = (app) => {
-  app.use("/auth", auth);
-  app.use("/customers", customers);
+  app.use("/api/auth", auth);
+  app.use("/api/customers", customers);
 };

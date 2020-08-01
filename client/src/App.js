@@ -18,7 +18,7 @@ const App = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_SERVER_URL}/customers`)
+      .get(`${process.env.REACT_APP_SERVER_URL}/api/customers`)
       .then((customers) => {
         setCustomers(customers.data);
       })

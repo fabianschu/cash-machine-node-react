@@ -32,17 +32,17 @@ const CustomerForm = () => {
       let customer;
       if (editingCustomer) {
         customer = await axios.put(
-          `${process.env.REACT_APP_SERVER_URL}/customers/${selectedCustomer.id}`,
+          `${process.env.REACT_APP_SERVER_URL}/api/customers/${selectedCustomer.id}`,
           values
         );
       } else if (creatingCustomer) {
         customer = await axios.post(
-          `${process.env.REACT_APP_SERVER_URL}/customers`,
+          `${process.env.REACT_APP_SERVER_URL}/api/customers`,
           values
         );
       }
       const allCustomers = await axios.get(
-        `${process.env.REACT_APP_SERVER_URL}/customers`
+        `${process.env.REACT_APP_SERVER_URL}/api/customers`
       );
       setCustomers(allCustomers.data);
       setSelectedCustomer(customer.data);

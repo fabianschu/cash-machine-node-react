@@ -16,7 +16,7 @@ const CustomersContextProvider = ({ children }) => {
     }
     axios
       .get(
-        `${process.env.REACT_APP_SERVER_URL}/customers/${selectedCustomer.id}/projects`
+        `${process.env.REACT_APP_SERVER_URL}/api/customers/${selectedCustomer.id}/projects`
       )
       .then((projects) => {
         setProjects(projects.data);
