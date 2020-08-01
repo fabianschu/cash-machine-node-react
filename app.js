@@ -8,7 +8,7 @@ const session = require("express-session");
 const cors = require("cors");
 const mountRoutes = require("./routes");
 const pgSession = require("connect-pg-simple")(session);
-const { pool } = require("./db/index");
+const { client } = require("./db/index");
 require("dotenv").config();
 
 var app = express();
@@ -26,17 +26,17 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 // session management
-app.use(
-  session({
-    store: new pgSession({
-      pool: pool, // Connection pool
-    }),
-    secret: "very secret secret",
-    resave: false,
-    cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 }, // 30 days
-    saveUninitialized: true,
-  })
-);
+// app.use(
+//   session({
+//     store: new pgSession({
+//       pool: client, // Connection pool
+//     }),
+//     secret: "very secret secret",
+//     resave: false,
+//     cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 }, // 30 days
+//     saveUninitialized: true,
+//   })
+// );
 
 // mount all routes
 mountRoutes(app);

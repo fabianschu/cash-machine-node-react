@@ -1,4 +1,4 @@
-const { Pool } = require("pg");
+const { Pool, Client } = require("pg");
 
 const poolOptions = {
   user: "fabi",
@@ -8,9 +8,15 @@ const poolOptions = {
   port: 5432,
 };
 
-const pool = new Pool(poolOptions);
+const conString =
+  process.env.DATABASE_URL ||
+  "postgres://fabi:dbaccess@localhost:5432/cashmashine";
+
+const client = new Client(conString);
+
+client.connect();
 
 module.exports = {
-  query: (text, params) => pool.query(text, params),
-  pool: pool,
+  query: (text, params) => client.query(text, params),
+  // pool: pool,
 };
