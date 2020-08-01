@@ -15,7 +15,9 @@ const CustomersContextProvider = ({ children }) => {
       return;
     }
     axios
-      .get(`http://localhost:5000/customers/${selectedCustomer.id}/projects`)
+      .get(
+        `${process.env.REACT_APP_SERVER_URL}/customers/${selectedCustomer.id}/projects`
+      )
       .then((projects) => {
         setProjects(projects.data);
         setAccordionExpanded(true);

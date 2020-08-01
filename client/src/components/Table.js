@@ -135,11 +135,11 @@ const Table = (props) => {
           onRowAdd: async (newData) => {
             try {
               await axios.post(
-                `http://localhost:5000/customers/${customerId}/projects`,
+                `${process.env.REACT_APP_SERVER_URL}/customers/${customerId}/projects`,
                 newData
               );
               const response = await axios.get(
-                `http://localhost:5000/customers/${customerId}/projects`
+                `${process.env.REACT_APP_SERVER_URL}/customers/${customerId}/projects`
               );
               setProjects(response.data);
             } catch (error) {
@@ -149,11 +149,11 @@ const Table = (props) => {
           onRowUpdate: async (newData, oldData) => {
             try {
               await axios.put(
-                `http://localhost:5000/customers/${customerId}/projects/${oldData.id}`,
+                `${process.env.REACT_APP_SERVER_URL}/customers/${customerId}/projects/${oldData.id}`,
                 newData
               );
               const response = await axios.get(
-                `http://localhost:5000/customers/${customerId}/projects`
+                `${process.env.REACT_APP_SERVER_URL}customers/${customerId}/projects`
               );
               setProjects(response.data);
             } catch (error) {
@@ -163,10 +163,10 @@ const Table = (props) => {
           onRowDelete: async (oldData) => {
             try {
               await axios.delete(
-                `http://localhost:5000/customers/${customerId}/projects/${oldData.id}`
+                `${process.env.REACT_APP_SERVER_URL}/customers/${customerId}/projects/${oldData.id}`
               );
               const response = await axios.get(
-                `http://localhost:5000/customers/${customerId}/projects`
+                `${process.env.REACT_APP_SERVER_URL}/customers/${customerId}/projects`
               );
               setProjects(response.data);
             } catch (error) {

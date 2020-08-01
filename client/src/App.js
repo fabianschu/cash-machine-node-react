@@ -18,7 +18,7 @@ const App = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/customers")
+      .get(`${process.env.REACT_APP_SERVER_URL}/customers`)
       .then((customers) => {
         setCustomers(customers.data);
       })
