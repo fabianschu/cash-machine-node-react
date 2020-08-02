@@ -12,6 +12,7 @@ import { CustomersContext } from "./context/CustomersContext";
 import axios from "axios";
 import CustomerWidget from "./components/CustomerWidget";
 import Modal from "./components/Modal";
+import Login from "./pages/Login";
 
 const App = () => {
   const { customers, setCustomers } = useContext(CustomersContext);
@@ -29,6 +30,9 @@ const App = () => {
     <BrowserRouter>
       <Layout>
         {/* <SwitchModeToggle /> */}
+        <Route exact path="/login">
+          <Login />
+        </Route>
         <Route exact path="/">
           {customers && <CustomerWidget />}
           <Modal />

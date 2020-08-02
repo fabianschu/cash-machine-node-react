@@ -17,6 +17,8 @@ const InputField = (props) => {
     if (name === "street") return "Straße";
     if (name === "country") return "Land";
     if (name === "hourlyRate") return "Stundensatz";
+    if (name === "username") return "Username";
+    if (name === "password") return "Passwort";
   };
 
   return (

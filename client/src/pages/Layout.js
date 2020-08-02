@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Layout = (props) => {
   const theme = useTheme();
-  const classes = useStyles(useMediaQuery(theme.breakpoints.down("sm")));
+  const classes = useStyles(useMediaQuery(theme.breakpoints.down("xs")));
 
   return <div className={classes.root}>{props.children}</div>;
 };
