@@ -25,6 +25,12 @@ const useStyles = makeStyles((theme) => ({
       }
       return "40%";
     },
+    height: (mobile) => {
+      if (mobile) {
+        return "100vh";
+      }
+      return "240px";
+    },
     padding: "50px",
     display: "flex",
     flexDirection: "column",
@@ -36,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
   },
   button: {
-    marginTop: "20px",
+    marginTop: "40px",
     width: "200px",
   },
 }));
@@ -45,10 +51,12 @@ const Login = () => {
   const theme = useTheme();
   const classes = useStyles(useMediaQuery(theme.breakpoints.down("xs")));
 
+  const handleSubmit = async (values) => {};
+
   return (
     <Box className={classes.container}>
       <Paper square className={classes.loginBox}>
-        <Typography variant="h6" component="h1" align="center">
+        <Typography variant="h5" component="h1" align="center">
           Login
         </Typography>
         <Formik

@@ -18,5 +18,5 @@ client.connect();
 
 module.exports = {
   query: (text, params) => client.query(text, params),
-  // pool: pool,
+  conString,
 };
