@@ -38,6 +38,15 @@ app.use(
   })
 );
 
+if (process.env.NODE_ENV === "production") {
+  // Serve any static files
+  app.use(express.static(path.join(__dirname, "/client/build")));
+  // Handle React routing, return all requests to React app
+  app.get("/*", function (req, res) {
+    res.sendFile(path.join(__dirname, "client/build", "index.html"));
+  });
+}
+
 // mount all routes
 mountRoutes(app);
 
@@ -56,14 +65,5 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.json(err.message);
 });
-
-if (process.env.NODE_ENV === "production") {
-  // Serve any static files
-  app.use(express.static(path.join(__dirname, "/client/build")));
-  // Handle React routing, return all requests to React app
-  app.get("*", function (req, res) {
-    res.sendFile(path.join(__dirname, "client/build", "index.html"));
-  });
-}
 
 module.exports = app;
