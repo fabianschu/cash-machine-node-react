@@ -15,7 +15,7 @@ const conString =
 const client = new Client(conString);
 
 client.connect();
-
+console.log("connected to db");
 module.exports = {
   query: (text, params) => client.query(text, params),
   conString,

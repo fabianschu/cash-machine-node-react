@@ -92,13 +92,7 @@ const CustomerForm = () => {
           <Button autoFocus onClick={closeModal} color="primary">
             Abbrechen
           </Button>
-          <Button
-            color="primary"
-            autoFocus
-            variant="contained"
-            type="submit"
-            // onClick={handleSubmit(props.values)}
-          >
+          <Button color="primary" autoFocus variant="contained" type="submit">
             Erstellen
           </Button>
         </DialogActions>

@@ -1,19 +1,24 @@
 const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
+const session = require("express-session");
+const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-const bodyParser = require("body-parser");
-const session = require("express-session");
+const { client, conString } = require("./db/index");
 const cors = require("cors");
 const mountRoutes = require("./routes");
 const pgSession = require("connect-pg-simple")(session);
-const { client, conString } = require("./db/index");
 require("dotenv").config();
 
 var app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+    origin: ["http://localhost:3000"],
+  })
+);
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -34,7 +39,7 @@ app.use(
     secret: "very secret secret",
     resave: false,
     cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 }, // 30 days
-    saveUninitialized: true,
+    saveUninitialized: false,
   })
 );
 
@@ -59,11 +64,12 @@ app.use(function (req, res, next) {
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
+  console.log(err.message);
   res.locals.error = req.app.get("env") === "development" ? err : {};
-
+  console.log("damn an error");
   // render the error page
   res.status(err.status || 500);
-  res.json(err.message);
+  // res.json(err.message);
 });
 
 module.exports = app;
