@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
   accordion: {
     padding: "20px",
+    minHeight: "160px",
   },
   wrapBox: {
     width: "90%",
@@ -37,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "20px",
   },
   bottomSpacer: {
+    marginTop: "20px",
     marginBottom: "20px",
   },
 }));
