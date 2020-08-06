@@ -11,11 +11,6 @@ import { UiContext } from "../context/UiContext";
 import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles((theme) => ({
-  // heading: {
-  //   fontSize: theme.typography.pxToRem(15),
-  //   flexBasis: "33.33%",
-  //   flexShrink: 0,
-  // },
   secondaryHeading: {
     fontSize: theme.typography.pxToRem(15),
     color: theme.palette.text.secondary,
@@ -29,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   accordion: {
     padding: "20px",
-    minHeight: "160px",
+    // minHeight: "160px",
   },
   wrapBox: {
     width: "90%",

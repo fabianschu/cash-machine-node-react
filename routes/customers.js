@@ -14,6 +14,14 @@ const router = new Router();
 //     res.json("not authorized");
 //   }
 // });
+router.use((req, res, next) => {
+  if (req.session.currentUser) {
+    console.log("authenticated");
+    next();
+  } else {
+    res.status(401).json("not authorized");
+  }
+});
 
 /* POST NEW CUSTOMER. */
 router.post("/", async (req, res, next) => {

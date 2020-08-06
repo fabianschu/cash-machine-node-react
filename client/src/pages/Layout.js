@@ -5,8 +5,7 @@ import { useTheme } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: "auto",
-    // minHeight: "100%",
+    height: "100%",
     margin: (mobile) => {
       if (mobile) {
         return "0";
@@ -15,9 +14,6 @@ const useStyles = makeStyles((theme) => ({
     },
     display: "flex",
     flexDirection: "column",
-    // backgroundColor: "red",
-    backgroundImage:
-      "linear-gradient(to right top, #f7f7f7, #eff3fa, #dff0fc, #cceff8, #bceeec)",
   },
 }));
 

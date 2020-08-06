@@ -8,33 +8,49 @@ import { Typography } from "@material-ui/core";
 import { Formik, Form, Field } from "formik";
 import InputField from "../components/InputField";
 import Button from "@material-ui/core/Button";
+// import Typography from "@material-ui/core/Typography";
 import axios from "axios";
 import { CustomersContext } from "../context/CustomersContext";
 import { AuthContext } from "../context/AuthContext";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    // backgroundColor: "green",
-    // height: "100%",
+    height: "100%",
     display: "flex",
-    // alignItems: "center",
+    alignItems: "center",
     justifyContent: "center",
-    // paddingBottom: "400px",
+    // padding: "0 30px",
+    // backgroundColor: "red",
   },
   loginBox: {
+    backgroundColor: "transparent",
+    border: "none",
     width: (mobile) => {
       if (mobile) {
         return "100%";
       }
-      return "40%";
+      return "300px";
     },
+    alignSelf: "center",
+    justifySelf: "center",
+    // width: (mobile) => {
+    //   if (mobile) {
+    //     return "100%";
+    //   }
+    //   return "40%";
+    // },
     height: (mobile) => {
       if (mobile) {
         return "100vh";
       }
-      return "240px";
+      return "auto";
     },
-    padding: "50px",
+    padding: (mobile) => {
+      if (mobile) {
+        return "40px 80px";
+      }
+      return "40px 80px";
+    },
     display: "flex",
     flexDirection: "column",
   },
@@ -45,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
   },
   button: {
-    marginTop: "40px",
+    marginTop: "20px",
     width: "200px",
   },
 }));
@@ -64,7 +80,7 @@ const Login = () => {
 
   return (
     <Box className={classes.container}>
-      <Paper square className={classes.loginBox}>
+      <Paper square className={classes.loginBox} elevation={0}>
         <Typography variant="h5" component="h1" align="center">
           Login
         </Typography>
@@ -83,7 +99,7 @@ const Login = () => {
                 type="submit"
                 className={classes.button}
               >
-                Login
+                <Typography>Login</Typography>
               </Button>
             </Box>
           </Form>
