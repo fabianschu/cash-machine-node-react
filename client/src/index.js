@@ -5,13 +5,16 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { UiContextProvider } from "./context/UiContext";
 import { CustomersContextProvider } from "./context/CustomersContext";
+import { AuthContextProvider } from "./context/AuthContext";
 
 ReactDOM.render(
-  <UiContextProvider>
-    <CustomersContextProvider>
-      <App />
-    </CustomersContextProvider>
-  </UiContextProvider>,
+  <AuthContextProvider>
+    <UiContextProvider>
+      <CustomersContextProvider>
+        <App />
+      </CustomersContextProvider>
+    </UiContextProvider>
+  </AuthContextProvider>,
   document.getElementById("root")
 );
 

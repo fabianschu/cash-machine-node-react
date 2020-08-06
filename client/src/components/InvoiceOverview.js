@@ -40,7 +40,6 @@ const InvoiceOverview = () => {
     hourlyRate,
   } = selectedCustomer;
   const classes = useStyles();
-  console.log(selectedProjects);
 
   const getTotal = () => {
     const result = selectedProjects.reduce(

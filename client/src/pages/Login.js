@@ -10,6 +10,7 @@ import InputField from "../components/InputField";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
 import { CustomersContext } from "../context/CustomersContext";
+import { AuthContext } from "../context/AuthContext";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -52,21 +53,14 @@ const useStyles = makeStyles((theme) => ({
 const Login = () => {
   const theme = useTheme();
   const classes = useStyles(useMediaQuery(theme.breakpoints.down("xs")));
-  const { user, setUser } = useContext(CustomersContext);
+  const { authenticatedUser, setAuthenticatedUser } = useContext(AuthContext);
 
-  const handleSubmit = async (values) => {
-    try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_SERVER_URL}/api/auth/login`,
-        values
-      );
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
+  const handleSubmit = (values) => {
+    axios
+      .post(`${process.env.REACT_APP_SERVER_URL}/api/auth/login`, values)
+      .then((res) => setAuthenticatedUser(res.data.id))
+      .catch((err) => console.log(err));
   };
-
-  const handleLogout = async () => {};
 
   return (
     <Box className={classes.container}>
@@ -94,7 +88,6 @@ const Login = () => {
             </Box>
           </Form>
         </Formik>
-        <Button onClick={handleLogout}>Logout</Button>
       </Paper>
     </Box>
   );

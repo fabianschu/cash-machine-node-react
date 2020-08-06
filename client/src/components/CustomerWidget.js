@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import ModalButton from "./ModalButton";
 import Accordion from "./Accordion";
 import Box from "@material-ui/core/Box";
@@ -6,6 +6,7 @@ import { UiContext } from "../context/UiContext";
 import { CustomersContext } from "../context/CustomersContext";
 import SelectOne from "./SelectOne";
 import { makeStyles } from "@material-ui/core/styles";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   outer: {
@@ -28,8 +29,17 @@ const CustomerWidget = (props) => {
     setSelectedCustomer,
     mode,
   } = useContext(UiContext);
-  const { customers, projects } = useContext(CustomersContext);
+  const { customers, projects, setCustomers } = useContext(CustomersContext);
   const classes = useStyles();
+
+  // useEffect(() => {
+  //   axios
+  //     .get(`${process.env.REACT_APP_SERVER_URL}/api/customers`)
+  //     .then((customers) => {
+  //       setCustomers(customers.data);
+  //     })
+  //     .catch((e) => console.log(e));
+  // }, []);
 
   return (
     <Box>

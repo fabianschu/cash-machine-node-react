@@ -49,7 +49,6 @@ export default function ControlledAccordions(props) {
   const { disabled, data, title } = props;
 
   const handleChange = () => (event, isExpanded) => {
-    console.log(isExpanded);
     setAccordionExpanded(isExpanded ? true : false);
   };
 

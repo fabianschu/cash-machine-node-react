@@ -75,7 +75,6 @@ const styles = {
 };
 
 const Invoice = ({ template }) => {
-  console.log(template);
   const { customer, positions, total } = template;
 
   return (

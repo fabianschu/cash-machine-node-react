@@ -8,26 +8,19 @@ const router = new Router();
 /* GET users listing. */
 router.post("/login", async (req, res, next) => {
   const { username, password } = req.body;
-  console.log("1");
   const { rows } = await db.query("SELECT * FROM users WHERE username = $1", [
     username,
   ]);
 
-  console.log("2");
   const user = rows[0];
   if (!user) return res.status(401).json("user doesnt exist");
-  console.log("3");
   const hashedUserPassword = user.password;
-  console.log("4");
   const success = await bcrypt.compare(password, hashedUserPassword);
   if (!success) return res.status(401).json("pw wrong");
-  console.log("5");
-  console.log(req.session.user);
-  req.session.currentUser = user;
-  console.log(req.session.user);
-  console.log("6");
-  return res.json("credentials ok :)");
-  console.log("7");
+  // console.log(req.session.user);
+  req.session.currentUser = user.id;
+  // console.log(req.session.user);
+  return res.json({ id: req.session.currentUser });
 });
 
 /* GET users listing. */
@@ -54,17 +47,22 @@ router.post("/signup", async (req, res, next) => {
 });
 
 router.use((req, res, next) => {
+  // console.log(req);
+  console.log("looooooool");
+  console.log(req.session);
+  console.log(req.session.currentUser);
   if (req.session.currentUser) {
     // <== if there's user in the session (user is logged in)
     next(); // ==> go to the next route ---
   } else {
     //    |
-    res.status(200).json("not authorized"); //    |
+    res.status(401).json("not authorized"); //    |
   } //    |
 }); // ------------------------------------
 
 router.get("/authenticate", async (req, res, next) => {
-  res.status(200).json("authorized");
+  console.log("whaat");
+  return res.json({ id: req.session.currentUser });
 });
 
 module.exports = router;

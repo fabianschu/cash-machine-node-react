@@ -13,22 +13,23 @@ require("dotenv").config();
 
 var app = express();
 
-app.use(
-  cors({
-    credentials: true,
-    origin: ["http://localhost:3000"],
-  })
-);
+// app.use(
+//   cors({
+//     credentials: true,
+//     origin: ["http://localhost:3000"],
+//   })
+// );
+const corsConfig = {
+  origin: true,
+  credentials: true,
+};
+
+app.use(cors(corsConfig));
+app.options("*", cors(corsConfig));
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
-
-app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "/client/build")));
 
 // session management
 app.use(
@@ -42,6 +43,12 @@ app.use(
     saveUninitialized: false,
   })
 );
+
+app.use(logger("dev"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, "/client/build")));
 
 if (process.env.NODE_ENV === "production") {
   // Serve any static files
@@ -62,14 +69,9 @@ app.use(function (req, res, next) {
 
 // error handler
 app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
   res.locals.message = err.message;
-  console.log(err.message);
   res.locals.error = req.app.get("env") === "development" ? err : {};
-  console.log("damn an error");
-  // render the error page
   res.status(err.status || 500);
-  // res.json(err.message);
 });
 
 module.exports = app;
