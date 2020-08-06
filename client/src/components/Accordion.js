@@ -33,6 +33,12 @@ const useStyles = makeStyles((theme) => ({
   wrapBox: {
     width: "90%",
   },
+  topSpacer: {
+    marginTop: "20px",
+  },
+  bottomSpacer: {
+    marginBottom: "20px",
+  },
 }));
 
 export default function ControlledAccordions(props) {
@@ -79,8 +85,9 @@ export default function ControlledAccordions(props) {
                 currentState={editingCustomer}
                 type="edit"
                 disabled={!selectedCustomer}
+                className={classes.bottomSpacer}
               />
-              <Box>
+              <Box className={classes.topSpacer}>
                 <Box>
                   <Box>{selectedCustomer.firm}</Box>
                   <Box>{selectedCustomer.street}</Box>
@@ -90,7 +97,7 @@ export default function ControlledAccordions(props) {
                   <Box>{selectedCustomer.country}</Box>
                 </Box>
               </Box>
-              <Box>
+              <Box className={classes.topSpacer}>
                 <Box>
                   Steuernummer: <span>{selectedCustomer.taxId}</span>
                 </Box>

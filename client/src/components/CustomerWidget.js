@@ -35,7 +35,7 @@ const CustomerWidget = (props) => {
 
   return (
     <>
-      <Box>
+      <Box boxShadow={5}>
         <Box className={classes.outer}>
           <Box className={classes.inner}>
             <ModalButton

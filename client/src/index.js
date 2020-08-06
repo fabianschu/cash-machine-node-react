@@ -6,6 +6,7 @@ import * as serviceWorker from "./serviceWorker";
 import { UiContextProvider } from "./context/UiContext";
 import { CustomersContextProvider } from "./context/CustomersContext";
 import { AuthContextProvider } from "./context/AuthContext";
+import "./App.css";
 
 ReactDOM.render(
   <AuthContextProvider>

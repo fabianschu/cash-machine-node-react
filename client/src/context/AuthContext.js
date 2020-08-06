@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
-
 const AuthContext = createContext();
 axios.defaults.withCredentials = true;
 const AuthContextProvider = ({ children }) => {
@@ -26,7 +25,9 @@ const AuthContextProvider = ({ children }) => {
     setAuthenticatedUser,
     hasAuthenticated,
   };
+
   console.log("HAS AUTHENTICATed: ", hasAuthenticated);
+
   return (
     <AuthContext.Provider value={defaultContext}>
       {hasAuthenticated && children}

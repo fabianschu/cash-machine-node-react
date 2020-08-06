@@ -15,6 +15,7 @@ import Modal from "./components/Modal";
 import Login from "./pages/Login";
 import PrivateRoute from "./components/PrivateRoute";
 import { AuthContext } from "./context/AuthContext";
+import "./App.css";
 
 const App = () => {
   const { customers, setCustomers } = useContext(CustomersContext);
