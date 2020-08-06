@@ -10,6 +10,16 @@ const CustomersContextProvider = ({ children }) => {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_SERVER_URL}/api/customers`)
+      .then((response) => {
+        console.log(response.data);
+        setCustomers(response.data);
+      })
+      .catch((e) => console.log(e));
+  }, []);
+
+  useEffect(() => {
     if (!selectedCustomer) {
       setAccordionExpanded(false);
       return;
@@ -18,12 +28,13 @@ const CustomersContextProvider = ({ children }) => {
       .get(
         `${process.env.REACT_APP_SERVER_URL}/api/customers/${selectedCustomer.id}/projects`
       )
-      .then((projects) => {
-        setProjects(projects.data);
+      .then((response) => {
+        console.log(response.data);
+        setProjects(response.data);
         setAccordionExpanded(true);
       })
       .catch((e) => console.log(e));
-  }, [selectedCustomer, setAccordionExpanded]);
+  }, [selectedCustomer]);
 
   const defaultContext = {
     customers,
@@ -34,7 +45,7 @@ const CustomersContextProvider = ({ children }) => {
 
   return (
     <CustomersContext.Provider value={defaultContext}>
-      {children}
+      {customers && children}
     </CustomersContext.Provider>
   );
 };

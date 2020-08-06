@@ -24,7 +24,7 @@ const Modal = (props) => {
       return <InvoiceOverview />;
     }
   };
-
+  console.log(creatingCustomer);
   return (
     <div>
       <Dialog

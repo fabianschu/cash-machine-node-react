@@ -7,6 +7,7 @@ import { CustomersContext } from "../context/CustomersContext";
 import SelectOne from "./SelectOne";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
+import Modal from "../components/Modal";
 
 const useStyles = makeStyles((theme) => ({
   outer: {
@@ -32,39 +33,33 @@ const CustomerWidget = (props) => {
   const { customers, projects, setCustomers } = useContext(CustomersContext);
   const classes = useStyles();
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`${process.env.REACT_APP_SERVER_URL}/api/customers`)
-  //     .then((customers) => {
-  //       setCustomers(customers.data);
-  //     })
-  //     .catch((e) => console.log(e));
-  // }, []);
-
   return (
-    <Box>
-      <Box className={classes.outer}>
-        <Box className={classes.inner}>
-          <ModalButton
-            handleClick={setCreatingCustomer}
-            currentState={creatingCustomer}
-            type="create"
-          />
-          <SelectOne
-            options={customers}
-            handleSelection={setSelectedCustomer}
-            selected={selectedCustomer}
-            type="Kunden"
-            display="firm"
-          />
+    <>
+      <Box>
+        <Box className={classes.outer}>
+          <Box className={classes.inner}>
+            <ModalButton
+              handleClick={setCreatingCustomer}
+              currentState={creatingCustomer}
+              type="create"
+            />
+            <SelectOne
+              options={customers}
+              handleSelection={setSelectedCustomer}
+              selected={selectedCustomer}
+              type="Kunden"
+              display="firm"
+            />
+          </Box>
         </Box>
+        <Accordion
+          disabled={!selectedCustomer}
+          data={projects}
+          title={selectedCustomer && selectedCustomer.firm}
+        />
       </Box>
-      <Accordion
-        disabled={!selectedCustomer}
-        data={projects}
-        title={selectedCustomer && selectedCustomer.firm}
-      />
-    </Box>
+      <Modal />
+    </>
   );
 };
 

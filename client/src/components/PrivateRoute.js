@@ -8,9 +8,6 @@ import CustomerWidget from "./CustomerWidget";
 function PrivateRoute({ component: Component, ...rest }) {
   const { authenticatedUser, hasAuthenticated } = useContext(AuthContext);
 
-  console.log("PrivateRoute render");
-  console.log(authenticatedUser);
-  console.log(rest);
   return (
     <Route
       {...rest}
@@ -22,19 +19,6 @@ function PrivateRoute({ component: Component, ...rest }) {
         }
       }}
     />
-    // <BrowserRouter>
-    //   {console.log(authenticatedUser)}
-    //   <Route
-    //     {...rest}
-    //     path="/"
-    //     // render={(props) =>
-    //     //   authenticatedUser ? <Component {...rest} /> : <Redirect to="/" />
-    //     // }
-    //   >
-    //     {/* <Component {...rest} /> */}
-    //     {authenticatedUser ? <Component {...rest} /> : <Redirect to="/login" />}
-    //   </Route>
-    // </BrowserRouter>
   );
 }
 

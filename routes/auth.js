@@ -17,9 +17,7 @@ router.post("/login", async (req, res, next) => {
   const hashedUserPassword = user.password;
   const success = await bcrypt.compare(password, hashedUserPassword);
   if (!success) return res.status(401).json("pw wrong");
-  // console.log(req.session.user);
   req.session.currentUser = user.id;
-  // console.log(req.session.user);
   return res.json({ id: req.session.currentUser });
 });
 
@@ -48,9 +46,6 @@ router.post("/signup", async (req, res, next) => {
 
 router.use((req, res, next) => {
   // console.log(req);
-  console.log("looooooool");
-  console.log(req.session);
-  console.log(req.session.currentUser);
   if (req.session.currentUser) {
     // <== if there's user in the session (user is logged in)
     next(); // ==> go to the next route ---
