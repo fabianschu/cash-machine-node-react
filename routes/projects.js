@@ -5,27 +5,13 @@ const db = require("../db");
 
 const router = new Router({ mergeParams: true });
 
-/* POST NEW CUSTOMER. */
-// router.post("/", async (req, res, next) => {
-//   const {
-//     firm,
-//     firstName,
-//     lastName,
-//     street,
-//     zip,
-//     city,
-//     country,
-//     taxId,
-//     hourlyRate,
-//   } = req.body;
-//   const {
-//     rows,
-//   } = await db.query(
-//     'INSERT INTO "projects" ("name", "description", "", "street", "zip", "city", "country", "taxId", "hourlyRate") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *',
-//     [firm, firstName, lastName, street, zip, city, country, taxId, hourlyRate]
-//   );
-//   res.json(rows[0]);
-// });
+router.use((req, res, next) => {
+  if (req.session.currentUser) {
+    next();
+  } else {
+    res.status(401).json("not authorized");
+  }
+});
 
 /*  GET all projects of a customer */
 router.get("/", async (req, res, next) => {
