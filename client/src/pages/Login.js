@@ -12,6 +12,7 @@ import Button from "@material-ui/core/Button";
 import axios from "axios";
 import { CustomersContext } from "../context/CustomersContext";
 import { AuthContext } from "../context/AuthContext";
+import { Route, Redirect, BrowserRouter } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -77,6 +78,10 @@ const Login = () => {
       .then((res) => setAuthenticatedUser(res.data.id))
       .catch((err) => console.log(err));
   };
+
+  if (authenticatedUser) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <Box className={classes.container}>

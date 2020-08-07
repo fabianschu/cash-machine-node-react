@@ -45,7 +45,6 @@ const CustomersContextProvider = ({ children }) => {
 
   return (
     <CustomersContext.Provider value={defaultContext}>
-      {/* {customers && children} */}
       {children}
     </CustomersContext.Provider>
   );

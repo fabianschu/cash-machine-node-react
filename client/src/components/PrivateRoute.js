@@ -14,7 +14,7 @@ function PrivateRoute({ component: Component, ...rest }) {
       render={(props) => {
         if (authenticatedUser) {
           return <CustomerWidget />;
-        } else if (hasAuthenticated) {
+        } else {
           return <Redirect to="/login" />;
         }
       }}
