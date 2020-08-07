@@ -12,7 +12,7 @@ const AuthContextProvider = ({ children }) => {
       .then((res) => {
         setAuthenticatedUser(res.data.id);
         setHasAuthenticated(true);
-        console.log("user set");
+        console.log("user set: ", res);
       })
       .catch((err) => {
         console.log(err);

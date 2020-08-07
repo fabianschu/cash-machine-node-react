@@ -6,14 +6,6 @@ const projects = require("./projects");
 
 const router = new Router();
 
-// authenticate
-// router.use((req, res, next) => {
-//   if (req.session.currentUser) {
-//     next();
-//   } else {
-//     res.json("not authorized");
-//   }
-// });
 router.use((req, res, next) => {
   if (req.session.currentUser) {
     console.log("authenticated");
@@ -82,6 +74,7 @@ router.put("/:customerId", async (req, res, next) => {
 /*  GET all customers */
 router.get("/", async (req, res, next) => {
   const { rows } = await db.query('SELECT * FROM "customers"');
+  console.log(rows);
   res.json(rows);
 });
 
