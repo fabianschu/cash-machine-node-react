@@ -7,6 +7,7 @@ const AuthContextProvider = ({ children }) => {
   const [hasAuthenticated, setHasAuthenticated] = useState(false);
 
   useEffect(() => {
+    console.log(`${process.env.REACT_APP_SERVER_URL}/api/auth/authenticate`);
     axios
       .get(`${process.env.REACT_APP_SERVER_URL}/api/auth/authenticate`)
       .then((res) => {
