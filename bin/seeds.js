@@ -77,12 +77,12 @@ db.query("DROP TABLE IF EXISTS projects")
   )
   .then(() =>
     db.query(
-      'CREATE TABLE IF NOT EXISTS "customers" (ID SERIAL PRIMARY KEY, "firm" VARCHAR(30) UNIQUE, "firstName" VARCHAR(30), "lastName" VARCHAR(30), "street" VARCHAR(30), "zip" VARCHAR(30), "city" VARCHAR(30), "country" VARCHAR(30), "taxId" VARCHAR(30), "hourlyRate" REAL)'
+      'CREATE TABLE IF NOT EXISTS "customers" (ID SERIAL PRIMARY KEY, "firm" VARCHAR(30) UNIQUE, "firstName" VARCHAR(30), "lastName" VARCHAR(30), "street" VARCHAR(30), "zip" VARCHAR(30), "city" VARCHAR(30), "country" VARCHAR(30), "taxId" VARCHAR(30), "hourlyRate" REAL, "userId" INTEGER REFERENCES users("id"))'
     )
   )
   .then(() =>
     db.query(
-      'CREATE TABLE IF NOT EXISTS "projects" (ID SERIAL PRIMARY KEY, "name" VARCHAR(30) UNIQUE, "description" VARCHAR(140), "hours" REAL, "customerId" INTEGER REFERENCES customers("id"), "createdAt" TIMESTAMP, "updatedAt" TIMESTAMP)'
+      'CREATE TABLE IF NOT EXISTS "projects" (ID SERIAL PRIMARY KEY, "name" VARCHAR(30) UNIQUE, "description" VARCHAR(140), "hours" REAL, "customerId" INTEGER REFERENCES customers("id"), "createdAt" TIMESTAMP, "updatedAt" TIMESTAMP, "userId" INTEGER REFERENCES users("id"))'
     )
   )
   .then(() =>

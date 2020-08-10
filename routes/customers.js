@@ -6,14 +6,14 @@ const projects = require("./projects");
 
 const router = new Router();
 
-// router.use((req, res, next) => {
-//   if (req.session.currentUser) {
-//     console.log("authenticated");
-//     next();
-//   } else {
-//     res.status(401).json("not authorized");
-//   }
-// });
+router.use((req, res, next) => {
+  if (req.session.currentUser) {
+    console.log("authenticated for customers");
+    next();
+  } else {
+    res.status(401).json("not authorized");
+  }
+});
 
 /* POST NEW CUSTOMER. */
 router.post("/", async (req, res, next) => {
@@ -29,13 +29,26 @@ router.post("/", async (req, res, next) => {
     taxId,
     hourlyRate,
   } = req.body;
+
+  const userId = req.session.currentUser;
+
   const {
     rows,
   } = await db.query(
-    'INSERT INTO "customers" ("firm", "firstName", "lastName", "street", "zip", "city", "country", "taxId", "hourlyRate") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *',
-    [firm, firstName, lastName, street, zip, city, country, taxId, hourlyRate]
+    'INSERT INTO "customers" ("firm", "firstName", "lastName", "street", "zip", "city", "country", "taxId", "hourlyRate", "userId") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *',
+    [
+      firm,
+      firstName,
+      lastName,
+      street,
+      zip,
+      city,
+      country,
+      taxId,
+      hourlyRate,
+      parseInt(userId),
+    ]
   );
-  console.log("coocoo: ", rows[0]);
   res.json(rows[0]);
 });
 
@@ -73,7 +86,11 @@ router.put("/:customerId", async (req, res, next) => {
 
 /*  GET all customers */
 router.get("/", async (req, res, next) => {
-  const { rows } = await db.query('SELECT * FROM "customers"');
+  const userId = req.session.currentUser;
+  console.log("get customers; userId: ", userId);
+  const {
+    rows,
+  } = await db.query('SELECT * FROM "customers" WHERE "userId" = $1', [userId]);
   console.log(rows);
   res.json(rows);
 });

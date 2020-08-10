@@ -53,7 +53,6 @@ router.use((req, res, next) => {
 });
 
 router.get("/authenticate", async (req, res, next) => {
-  console.log("here");
   return res.json({ id: req.session.currentUser });
 });
 
