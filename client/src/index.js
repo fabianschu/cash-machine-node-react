@@ -4,17 +4,17 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { UiContextProvider } from "./context/UiContext";
-import { CustomersContextProvider } from "./context/CustomersContext";
+import { DataContextProvider } from "./context/DataContext";
 import { AuthContextProvider } from "./context/AuthContext";
 import "./App.css";
 
 ReactDOM.render(
   <AuthContextProvider>
-    <UiContextProvider>
-      <CustomersContextProvider>
+    <DataContextProvider>
+      <UiContextProvider>
         <App />
-      </CustomersContextProvider>
-    </UiContextProvider>
+      </UiContextProvider>
+    </DataContextProvider>
   </AuthContextProvider>,
   document.getElementById("root")
 );

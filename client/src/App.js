@@ -8,7 +8,7 @@ import {
 import Layout from "./pages/Layout";
 import theme from "./theme";
 import SwitchModeToggle from "./components/SwitchModeToggle";
-import { CustomersContext } from "./context/CustomersContext";
+import { DataContext } from "./context/DataContext";
 import axios from "axios";
 import CustomerWidget from "./components/CustomerWidget";
 import Modal from "./components/Modal";
@@ -18,7 +18,7 @@ import { AuthContext } from "./context/AuthContext";
 import "./App.css";
 
 const App = () => {
-  const { customers, setCustomers } = useContext(CustomersContext);
+  const { customers, setCustomers } = useContext(DataContext);
   const { setAuthenticatedUser } = useContext(AuthContext);
 
   return (

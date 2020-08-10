@@ -3,7 +3,7 @@ import ModalButton from "./ModalButton";
 import Accordion from "./Accordion";
 import Box from "@material-ui/core/Box";
 import { UiContext } from "../context/UiContext";
-import { CustomersContext } from "../context/CustomersContext";
+import { DataContext } from "../context/DataContext";
 import SelectOne from "./SelectOne";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
@@ -30,7 +30,7 @@ const CustomerWidget = (props) => {
     setSelectedCustomer,
     mode,
   } = useContext(UiContext);
-  const { customers, projects, setCustomers } = useContext(CustomersContext);
+  const { customers, projects, setCustomers } = useContext(DataContext);
   const classes = useStyles();
 
   return (

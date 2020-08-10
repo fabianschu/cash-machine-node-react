@@ -10,7 +10,7 @@ import InputField from "../components/InputField";
 import Button from "@material-ui/core/Button";
 // import Typography from "@material-ui/core/Typography";
 import axios from "axios";
-import { CustomersContext } from "../context/CustomersContext";
+import { DataContext } from "../context/DataContext";
 import { AuthContext } from "../context/AuthContext";
 import { Route, Redirect, BrowserRouter } from "react-router-dom";
 

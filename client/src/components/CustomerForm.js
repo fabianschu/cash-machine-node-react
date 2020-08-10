@@ -4,7 +4,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { UiContext } from "../context/UiContext";
-import { CustomersContext } from "../context/CustomersContext";
+import { DataContext } from "../context/DataContext";
 import { Formik, Form, Field } from "formik";
 import InputField from "./InputField";
 import axios from "axios";
@@ -25,7 +25,7 @@ const CustomerForm = () => {
     setSelectedCustomer,
     selectedCustomer,
   } = useContext(UiContext);
-  const { setCustomers } = useContext(CustomersContext);
+  const { setCustomers } = useContext(DataContext);
 
   const handleSubmit = async (values) => {
     try {
