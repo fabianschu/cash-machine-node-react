@@ -6,8 +6,7 @@ const UiContext = createContext();
 
 const UiContextProvider = ({ children }) => {
   const [mode, setMode] = useState("work");
-  console.log(DataContext);
-  const { setProjects } = useContext(DataContext);
+  const { getProjects } = useContext(DataContext);
 
   const [creatingCustomer, setCreatingCustomer] = useState(false);
   const [editingCustomer, setEditingCustomer] = useState(false);
@@ -27,16 +26,8 @@ const UiContextProvider = ({ children }) => {
     }
 
     if (selectedCustomer) {
-      axios
-        .get(
-          `${process.env.REACT_APP_SERVER_URL}/api/customers/${selectedCustomer.id}/projects`
-        )
-        .then((response) => {
-          console.log(response.data);
-          setProjects(response.data);
-          setAccordionExpanded(true);
-        })
-        .catch((e) => console.log(e));
+      getProjects();
+      setAccordionExpanded(true);
     }
   }, [selectedCustomer]);
 
@@ -63,6 +54,9 @@ const UiContextProvider = ({ children }) => {
     setMode,
     setSelectedProjects,
   };
+
+  console.log(selectedCustomer);
+
   return (
     <UiContext.Provider value={defaultContext}>{children}</UiContext.Provider>
   );

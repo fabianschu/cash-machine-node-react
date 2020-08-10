@@ -104,18 +104,21 @@ export default function ControlledAccordions(props) {
               </Box>
             </Box>
           )}
-
           {/* <Typography className={classes.heading}>Show Details</Typography>
           <Typography className={classes.secondaryHeading}>{title}</Typography> */}
         </AccordionSummary>
         <AccordionDetails p={0} className={classes.accordionContent}>
-          <Table rows={data} />
-          <ModalButton
-            handleClick={() => setCreatingInvoice(true)}
-            type="print"
-            disabled={selectedProjects.length === 0}
-            className={classes.printButton}
-          />
+          {selectedCustomer && (
+            <>
+              <Table rows={data} />
+              <ModalButton
+                handleClick={() => setCreatingInvoice(true)}
+                type="print"
+                disabled={selectedProjects.length === 0}
+                className={classes.printButton}
+              />
+            </>
+          )}
         </AccordionDetails>
       </Accordion>
     </div>

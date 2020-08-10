@@ -54,7 +54,6 @@ const CustomerWidget = (props) => {
         </Box>
         <Accordion
           disabled={!selectedCustomer}
-          data={projects}
           title={selectedCustomer && selectedCustomer.firm}
         />
       </Box>

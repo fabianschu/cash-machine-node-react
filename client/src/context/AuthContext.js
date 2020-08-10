@@ -7,13 +7,11 @@ const AuthContextProvider = ({ children }) => {
   const [hasAuthenticated, setHasAuthenticated] = useState(false);
 
   useEffect(() => {
-    console.log(`${process.env.REACT_APP_SERVER_URL}/api/auth/authenticate`);
     axios
       .get(`${process.env.REACT_APP_SERVER_URL}/api/auth/authenticate`)
       .then((res) => {
         setAuthenticatedUser(res.data.id);
         setHasAuthenticated(true);
-        console.log("user set: ", res);
       })
       .catch((err) => {
         console.log(err);
@@ -26,8 +24,6 @@ const AuthContextProvider = ({ children }) => {
     setAuthenticatedUser,
     hasAuthenticated,
   };
-
-  console.log("HAS AUTHENTICATed: ", hasAuthenticated);
 
   return (
     <AuthContext.Provider value={defaultContext}>

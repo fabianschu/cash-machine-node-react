@@ -20,6 +20,7 @@ import TextField from "@material-ui/core/TextField";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import { UiContext } from "../context/UiContext";
 import { DataContext } from "../context/DataContext";
+import { AuthContext } from "../context/AuthContext";
 import Paper from "@material-ui/core/Paper";
 
 const tableIcons = {
@@ -54,11 +55,15 @@ const tableIcons = {
 
 const Table = (props) => {
   const { useState } = React;
-  const customerId = 2;
-  const { setProjects } = useContext(DataContext);
+  const { setProjects, projects, getProjects } = useContext(DataContext);
+  const { selectedCustomer } = useContext(UiContext);
   const { mode, selectedProjects, setSelectedProjects } = useContext(UiContext);
+  const customerId = selectedCustomer.id;
+  let rows = projects;
 
-  let { rows } = props;
+  rows = projects.filter(
+    (project) => project.customerId === selectedCustomer.id
+  );
 
   rows = rows.map((row) => {
     if (
@@ -113,7 +118,7 @@ const Table = (props) => {
       editable: "never",
     },
   ]);
-
+  console.log(customerId);
   return (
     <div style={{ width: "100%" }}>
       <MaterialTable
@@ -135,14 +140,12 @@ const Table = (props) => {
         editable={{
           onRowAdd: async (newData) => {
             try {
+              newData = { ...newData, customerId: customerId };
               await axios.post(
-                `${process.env.REACT_APP_SERVER_URL}/api/customers/${customerId}/projects`,
+                `${process.env.REACT_APP_SERVER_URL}/api/projects`,
                 newData
               );
-              const response = await axios.get(
-                `${process.env.REACT_APP_SERVER_URL}/api/customers/${customerId}/projects`
-              );
-              setProjects(response.data);
+              await getProjects();
             } catch (error) {
               console.log(error);
             }
@@ -150,26 +153,20 @@ const Table = (props) => {
           onRowUpdate: async (newData, oldData) => {
             try {
               await axios.put(
-                `${process.env.REACT_APP_SERVER_URL}/api/customers/${customerId}/projects/${oldData.id}`,
+                `${process.env.REACT_APP_SERVER_URL}/api/projects/${newData.id}`,
                 newData
               );
-              const response = await axios.get(
-                `${process.env.REACT_APP_SERVER_URL}/api/customers/${customerId}/projects`
-              );
-              setProjects(response.data);
+              await getProjects();
             } catch (error) {
               console.log(error);
             }
           },
-          onRowDelete: async (oldData) => {
+          onRowDelete: async (newData) => {
             try {
               await axios.delete(
-                `${process.env.REACT_APP_SERVER_URL}/api/customers/${customerId}/projects/${oldData.id}`
+                `${process.env.REACT_APP_SERVER_URL}/api/projects/${newData.id}`
               );
-              const response = await axios.get(
-                `${process.env.REACT_APP_SERVER_URL}/api/customers/${customerId}/projects`
-              );
-              setProjects(response.data);
+              await getProjects();
             } catch (error) {
               console.log(error);
             }

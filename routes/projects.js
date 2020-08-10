@@ -7,7 +7,7 @@ const router = new Router({ mergeParams: true });
 
 router.use((req, res, next) => {
   if (req.session.currentUser) {
-    console.log("authenticated for customers");
+    console.log("authenticated for projects");
     next();
   } else {
     res.status(401).json("not authorized");
@@ -25,8 +25,8 @@ router.get("/", async (req, res, next) => {
 });
 
 router.post("/", async (req, res, next) => {
-  const { name, description, hours, selectedCustomer } = req.body;
-  const customerId = parseInt(selectedCustomer);
+  const { name, description, hours, customerId } = req.body;
+  // const customerId = parseInt(selectedCustomer);
   const createdAt = new Date();
   const updatedAt = new Date();
   const userId = req.session.currentUser;
