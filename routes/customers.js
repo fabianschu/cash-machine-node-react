@@ -95,6 +95,6 @@ router.get("/", async (req, res, next) => {
   res.json(rows);
 });
 
-router.use("/:customerId/projects", projects);
+// router.use("/:customerId/projects", projects);
 
 module.exports = router;
