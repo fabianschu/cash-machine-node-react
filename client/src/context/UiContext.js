@@ -18,6 +18,8 @@ const UiContextProvider = ({ children }) => {
   const [accordionExpanded, setAccordionExpanded] = useState(false);
 
   useEffect(() => {
+    console.log("useEffect within UiContext");
+    console.log(selectedCustomer);
     setSelectedProjects([]);
 
     if (!selectedCustomer) {
@@ -26,12 +28,12 @@ const UiContextProvider = ({ children }) => {
     }
 
     if (selectedCustomer) {
-      getProjects();
       setAccordionExpanded(true);
     }
   }, [selectedCustomer]);
 
   const closeModal = () => {
+    console.log("close modal");
     setCreatingCustomer(false);
     setEditingCustomer(false);
     setCreatingInvoice(false);

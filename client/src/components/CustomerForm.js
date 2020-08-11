@@ -25,27 +25,32 @@ const CustomerForm = () => {
     setSelectedCustomer,
     selectedCustomer,
   } = useContext(UiContext);
-  const { setCustomers } = useContext(DataContext);
+  const { getCustomers, setCustomers } = useContext(DataContext);
 
   const handleSubmit = async (values) => {
     try {
-      let customer;
+      let response;
       if (editingCustomer) {
-        customer = await axios.put(
+        response = await axios.put(
           `${process.env.REACT_APP_SERVER_URL}/api/customers/${selectedCustomer.id}`,
           values
         );
       } else if (creatingCustomer) {
-        customer = await axios.post(
+        response = await axios.post(
           `${process.env.REACT_APP_SERVER_URL}/api/customers`,
           values
         );
+        setSelectedCustomer(response.data);
       }
       const allCustomers = await axios.get(
         `${process.env.REACT_APP_SERVER_URL}/api/customers`
       );
       setCustomers(allCustomers.data);
-      setSelectedCustomer(customer.data);
+      if (response.data) {
+        setSelectedCustomer(
+          allCustomers.data.find((customer) => customer.id === response.data.id)
+        );
+      }
       closeModal();
     } catch (error) {
       console.log(error);

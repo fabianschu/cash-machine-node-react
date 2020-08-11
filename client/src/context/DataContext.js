@@ -54,12 +54,10 @@ const DataContextProvider = ({ children }) => {
   };
 
   const getProjects = async () => {
-    console.log("paaarty");
     try {
       const { data } = await axios.get(
         `${process.env.REACT_APP_SERVER_URL}/api/projects`
       );
-      console.log("wtf");
       return setProjects(data);
     } catch (e) {
       console.log(e);
@@ -72,9 +70,9 @@ const DataContextProvider = ({ children }) => {
     setCustomers,
     setProjects,
     getProjects,
+    getCustomers,
   };
   console.log(customers);
-  console.log(projects);
   return (
     <DataContext.Provider value={defaultContext}>
       {customers && projects && children}
