@@ -18,11 +18,8 @@ const SelectOne = (props) => {
   const classes = useStyles();
   const { options, selected, handleSelection, disabled, type, display } = props;
   const [inputValue, setInputValue] = React.useState("");
-
-  useEffect(() => {
-    handleSelection(null);
-  }, [options, handleSelection]);
-
+  console.log(options);
+  console.log(selected);
   return (
     <Autocomplete
       value={selected}
