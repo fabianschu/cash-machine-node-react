@@ -118,7 +118,6 @@ const Table = (props) => {
       editable: "never",
     },
   ]);
-  console.log(customerId);
   return (
     <div style={{ width: "100%" }}>
       <MaterialTable

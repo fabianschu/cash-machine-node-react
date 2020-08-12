@@ -5,21 +5,20 @@ import axios from "axios";
 const UiContext = createContext();
 
 const UiContextProvider = ({ children }) => {
-  const [mode, setMode] = useState("work");
-  const { getProjects } = useContext(DataContext);
+  const { fetchProjects, customers, addCustomer, setCustomers } = useContext(
+    DataContext
+  );
 
   const [creatingCustomer, setCreatingCustomer] = useState(false);
   const [editingCustomer, setEditingCustomer] = useState(false);
   const [creatingInvoice, setCreatingInvoice] = useState(false);
 
-  const [selectedCustomer, setSelectedCustomer] = useState("");
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [selectedProjects, setSelectedProjects] = useState([]);
 
   const [accordionExpanded, setAccordionExpanded] = useState(false);
 
   useEffect(() => {
-    console.log("useEffect within UiContext");
-    console.log(selectedCustomer);
     setSelectedProjects([]);
 
     if (!selectedCustomer) {
@@ -33,19 +32,51 @@ const UiContextProvider = ({ children }) => {
   }, [selectedCustomer]);
 
   const closeModal = () => {
-    console.log("close modal");
     setCreatingCustomer(false);
     setEditingCustomer(false);
     setCreatingInvoice(false);
   };
 
+  const modifyCustomers = async (values) => {
+    let response;
+    // if (editingCustomer) {
+    //   response = await axios.put(
+    //     `${process.env.REACT_APP_SERVER_URL}/api/customers/${selectedCustomer.id}`,
+    //     values
+    //   );
+    // } else if (creatingCustomer) {
+    response = await axios.post(
+      `${process.env.REACT_APP_SERVER_URL}/api/customers`,
+      values
+    );
+    // const id = await addCustomer();
+    const allCustomers = await axios.get(
+      `${process.env.REACT_APP_SERVER_URL}/api/customers`
+    );
+    const { id } = response.data;
+    console.log(id);
+    console.log(allCustomers.data);
+    console.log(allCustomers.data.find((customer) => customer.id === id));
+    setCustomers(allCustomers.data);
+    setSelectedCustomer(
+      allCustomers.data.find((customer) => customer.id === id)
+    );
+
+    // if (response.data) {
+    //   console.log.setSelectedCustomer(
+    //     allCustomers.data.find((customer) => customer.id === response.data.id)
+    //   );
+    // }
+    // }
+  };
+  console.log(customers);
+  console.log(selectedCustomer);
   const defaultContext = {
     creatingCustomer,
     editingCustomer,
     creatingInvoice,
     selectedCustomer,
     accordionExpanded,
-    mode,
     selectedProjects,
     setCreatingCustomer,
     setCreatingInvoice,
@@ -53,11 +84,9 @@ const UiContextProvider = ({ children }) => {
     setSelectedCustomer,
     closeModal,
     setAccordionExpanded,
-    setMode,
     setSelectedProjects,
+    modifyCustomers,
   };
-
-  console.log(selectedCustomer);
 
   return (
     <UiContext.Provider value={defaultContext}>{children}</UiContext.Provider>

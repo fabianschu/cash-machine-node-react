@@ -10,7 +10,7 @@ const DataContextProvider = ({ children }) => {
   const [projects, setProjects] = useState();
 
   useEffect(() => {
-    getCustomers();
+    getAndSetCustomers();
     getProjects();
   }, []);
 
@@ -31,18 +31,7 @@ const DataContextProvider = ({ children }) => {
   //     .catch((e) => console.log(e));
   // }, [selectedCustomer]);
 
-  // const getCustomersProjects = async (selectedCustomer) => {
-  //   try {
-  //     const { data } = await axios.get(
-  //       `${process.env.REACT_APP_SERVER_URL}/api/customers/${selectedCustomer.id}/projects`
-  //     );
-  //     setProjects(data);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
-
-  const getCustomers = async () => {
+  const getAndSetCustomers = async () => {
     try {
       const { data } = await axios.get(
         `${process.env.REACT_APP_SERVER_URL}/api/customers`
@@ -51,6 +40,14 @@ const DataContextProvider = ({ children }) => {
     } catch (e) {
       console.log(e);
     }
+  };
+
+  const addCustomer = async (values) => {
+    const response = await axios.post(
+      `${process.env.REACT_APP_SERVER_URL}/api/customers`,
+      values
+    );
+    return response.data.id;
   };
 
   const getProjects = async () => {
@@ -70,9 +67,9 @@ const DataContextProvider = ({ children }) => {
     setCustomers,
     setProjects,
     getProjects,
-    getCustomers,
+    getAndSetCustomers,
+    addCustomer,
   };
-  console.log(customers);
   return (
     <DataContext.Provider value={defaultContext}>
       {customers && projects && children}

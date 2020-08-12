@@ -28,6 +28,7 @@ const SelectOne = (props) => {
       options={options}
       className={classes.formControl}
       getOptionLabel={(option) => {
+        console.log(option);
         if (!option) return "";
         return option[display];
       }}
