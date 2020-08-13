@@ -65,10 +65,11 @@ router.put("/:customerId", async (req, res, next) => {
     taxId,
     hourlyRate,
   } = req.body;
+  const userId = req.session.currentUser;
   const {
     rows,
   } = await db.query(
-    'UPDATE "customers" SET "firm" = ($1), "firstName" = ($2), "lastName" = ($3), "street" = ($4), "zip" = ($5), "city" = ($6), "country" = ($7), "taxId" = ($8), "hourlyRate" = ($9) WHERE id =($10) RETURNING *',
+    'UPDATE "customers" SET "firm" = ($1), "firstName" = ($2), "lastName" = ($3), "street" = ($4), "zip" = ($5), "city" = ($6), "country" = ($7), "taxId" = ($8), "hourlyRate" = ($9) WHERE "id" = ($10) AND "userId" = ($11) RETURNING *',
     [
       firm,
       firstName,
@@ -80,18 +81,18 @@ router.put("/:customerId", async (req, res, next) => {
       taxId,
       hourlyRate,
       id,
+      userId,
     ]
   );
+  res.json(rows[0]);
 });
 
 /*  GET all customers */
 router.get("/", async (req, res, next) => {
   const userId = req.session.currentUser;
-  console.log("get customers; userId: ", userId);
   const {
     rows,
   } = await db.query('SELECT * FROM "customers" WHERE "userId" = $1', [userId]);
-  console.log(rows);
   res.json(rows);
 });
 

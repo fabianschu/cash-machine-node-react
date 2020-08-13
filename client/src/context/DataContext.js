@@ -36,18 +36,31 @@ const DataContextProvider = ({ children }) => {
       const { data } = await axios.get(
         `${process.env.REACT_APP_SERVER_URL}/api/customers`
       );
-      return setCustomers(data);
+      setCustomers(data);
+      return data;
     } catch (e) {
       console.log(e);
     }
   };
 
   const addCustomer = async (values) => {
-    const response = await axios.post(
+    const newCustomer = await axios.post(
       `${process.env.REACT_APP_SERVER_URL}/api/customers`,
       values
     );
-    return response.data.id;
+    const allCustomers = await getAndSetCustomers();
+    return allCustomers.find((customer) => customer.id === newCustomer.data.id);
+  };
+
+  const editCustomer = async (values) => {
+    const updatedCustomer = await axios.put(
+      `${process.env.REACT_APP_SERVER_URL}/api/customers/:id`,
+      values
+    );
+    const allCustomers = await getAndSetCustomers();
+    return allCustomers.find(
+      (customer) => customer.id === updatedCustomer.data.id
+    );
   };
 
   const getProjects = async () => {
@@ -69,6 +82,7 @@ const DataContextProvider = ({ children }) => {
     getProjects,
     getAndSetCustomers,
     addCustomer,
+    editCustomer,
   };
   return (
     <DataContext.Provider value={defaultContext}>

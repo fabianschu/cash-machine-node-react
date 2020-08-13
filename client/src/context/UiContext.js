@@ -5,7 +5,7 @@ import axios from "axios";
 const UiContext = createContext();
 
 const UiContextProvider = ({ children }) => {
-  const { fetchProjects, customers, addCustomer, setCustomers } = useContext(
+  const { fetchProjects, customers, addCustomer, editCustomer } = useContext(
     DataContext
   );
 
@@ -38,39 +38,18 @@ const UiContextProvider = ({ children }) => {
   };
 
   const modifyCustomers = async (values) => {
-    let response;
-    // if (editingCustomer) {
-    //   response = await axios.put(
-    //     `${process.env.REACT_APP_SERVER_URL}/api/customers/${selectedCustomer.id}`,
-    //     values
-    //   );
-    // } else if (creatingCustomer) {
-    response = await axios.post(
-      `${process.env.REACT_APP_SERVER_URL}/api/customers`,
-      values
-    );
-    // const id = await addCustomer();
-    const allCustomers = await axios.get(
-      `${process.env.REACT_APP_SERVER_URL}/api/customers`
-    );
-    const { id } = response.data;
-    console.log(id);
-    console.log(allCustomers.data);
-    console.log(allCustomers.data.find((customer) => customer.id === id));
-    setCustomers(allCustomers.data);
-    setSelectedCustomer(
-      allCustomers.data.find((customer) => customer.id === id)
-    );
-
-    // if (response.data) {
-    //   console.log.setSelectedCustomer(
-    //     allCustomers.data.find((customer) => customer.id === response.data.id)
-    //   );
-    // }
-    // }
+    if (creatingCustomer) {
+      setSelectedCustomer(null);
+      const newCustomer = await addCustomer(values);
+      setSelectedCustomer(newCustomer);
+    }
+    if (editingCustomer) {
+      setSelectedCustomer(null);
+      const updatedCustomer = await editCustomer(values);
+      setSelectedCustomer(updatedCustomer);
+    }
   };
-  console.log(customers);
-  console.log(selectedCustomer);
+
   const defaultContext = {
     creatingCustomer,
     editingCustomer,
@@ -87,6 +66,8 @@ const UiContextProvider = ({ children }) => {
     setSelectedProjects,
     modifyCustomers,
   };
+  console.log(creatingCustomer);
+  console.log(editingCustomer);
 
   return (
     <UiContext.Provider value={defaultContext}>{children}</UiContext.Provider>
