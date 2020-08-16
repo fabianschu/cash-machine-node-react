@@ -29,14 +29,8 @@ const CustomerForm = () => {
   const { getAndSetCustomers, setCustomers } = useContext(DataContext);
 
   const handleSubmit = async (values) => {
-    console.log("click");
-    console.log(values);
-    try {
-      await modifyCustomers(values);
-      closeModal();
-    } catch (error) {
-      console.log(error);
-    }
+    await modifyCustomers(values);
+    closeModal();
   };
 
   const getInitialValues = () => {

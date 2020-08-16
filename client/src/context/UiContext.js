@@ -5,7 +5,7 @@ import axios from "axios";
 const UiContext = createContext();
 
 const UiContextProvider = ({ children }) => {
-  const { fetchProjects, customers, addCustomer, editCustomer } = useContext(
+  const { addCustomer, editCustomer, addProject, editProject } = useContext(
     DataContext
   );
 
@@ -66,8 +66,6 @@ const UiContextProvider = ({ children }) => {
     setSelectedProjects,
     modifyCustomers,
   };
-  console.log(creatingCustomer);
-  console.log(editingCustomer);
 
   return (
     <UiContext.Provider value={defaultContext}>{children}</UiContext.Provider>

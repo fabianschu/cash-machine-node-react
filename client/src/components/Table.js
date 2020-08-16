@@ -55,16 +55,22 @@ const tableIcons = {
 
 const Table = (props) => {
   const { useState } = React;
-  const { setProjects, projects, getProjects } = useContext(DataContext);
+  const { projects, addProject, editProject, deleteProject } = useContext(
+    DataContext
+  );
   const { selectedCustomer } = useContext(UiContext);
   const { mode, selectedProjects, setSelectedProjects } = useContext(UiContext);
   const customerId = selectedCustomer.id;
   let rows = projects;
 
+  console.log(rows);
+  console.log(selectedCustomer);
+
   rows = projects.filter(
     (project) => project.customerId === selectedCustomer.id
   );
 
+  console.log(rows);
   rows = rows.map((row) => {
     if (
       selectedProjects
@@ -118,6 +124,9 @@ const Table = (props) => {
       editable: "never",
     },
   ]);
+
+  console.log(selectedCustomer);
+
   return (
     <div style={{ width: "100%" }}>
       <MaterialTable
@@ -137,38 +146,20 @@ const Table = (props) => {
         columns={columns}
         data={rows}
         editable={{
-          onRowAdd: async (newData) => {
-            try {
-              newData = { ...newData, customerId: customerId };
-              await axios.post(
-                `${process.env.REACT_APP_SERVER_URL}/api/projects`,
-                newData
-              );
-              await getProjects();
-            } catch (error) {
-              console.log(error);
-            }
+          onRowAdd: async (projectData) => {
+            await addProject({
+              ...projectData,
+              customerId: selectedCustomer.id,
+            });
           },
-          onRowUpdate: async (newData, oldData) => {
-            try {
-              await axios.put(
-                `${process.env.REACT_APP_SERVER_URL}/api/projects/${newData.id}`,
-                newData
-              );
-              await getProjects();
-            } catch (error) {
-              console.log(error);
-            }
+          onRowUpdate: async (projectData) => {
+            await editProject({
+              ...projectData,
+              customerId: selectedCustomer.id,
+            });
           },
-          onRowDelete: async (newData) => {
-            try {
-              await axios.delete(
-                `${process.env.REACT_APP_SERVER_URL}/api/projects/${newData.id}`
-              );
-              await getProjects();
-            } catch (error) {
-              console.log(error);
-            }
+          onRowDelete: async (project) => {
+            await deleteProject(project.id);
           },
         }}
       />

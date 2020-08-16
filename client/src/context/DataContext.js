@@ -74,6 +74,55 @@ const DataContextProvider = ({ children }) => {
     }
   };
 
+  const getAndSetProjects = async () => {
+    console.log("getting projects");
+    try {
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_SERVER_URL}/api/projects`
+      );
+      console.log(data);
+      return setProjects(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const addProject = async (values) => {
+    try {
+      await axios.post(
+        `${process.env.REACT_APP_SERVER_URL}/api/projects`,
+        values
+      );
+    } catch (e) {
+      console.log(e);
+    }
+    await getAndSetProjects();
+  };
+
+  const editProject = async (values) => {
+    try {
+      console.log(values);
+      await axios.put(
+        `${process.env.REACT_APP_SERVER_URL}/api/projects/:id`,
+        values
+      );
+    } catch (e) {
+      console.log(e);
+    }
+    await getAndSetProjects();
+  };
+
+  const deleteProject = async (id) => {
+    try {
+      await axios.delete(
+        `${process.env.REACT_APP_SERVER_URL}/api/projects/${id}`
+      );
+    } catch (e) {
+      console.log(e);
+    }
+    await getAndSetProjects();
+  };
+
   const defaultContext = {
     customers,
     projects,
@@ -83,6 +132,9 @@ const DataContextProvider = ({ children }) => {
     getAndSetCustomers,
     addCustomer,
     editCustomer,
+    addProject,
+    editProject,
+    deleteProject,
   };
   return (
     <DataContext.Provider value={defaultContext}>

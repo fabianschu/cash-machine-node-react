@@ -26,7 +26,6 @@ router.get("/", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   const { name, description, hours, customerId } = req.body;
-  // const customerId = parseInt(selectedCustomer);
   const createdAt = new Date();
   const updatedAt = new Date();
   const userId = req.session.currentUser;
@@ -54,19 +53,26 @@ router.put("/:projectId", async (req, res, next) => {
     'UPDATE "projects" SET "name" = ($1), "description" = ($2), "hours" = ($3), "updatedAt" = ($4) WHERE id=($5) AND "userId" = ($6)',
     [name, description, hours, updatedAt, id, userId]
   );
+  console.log(rows);
   res.json(rows);
 });
 
 router.delete("/:projectId", async (req, res, next) => {
   const { projectId } = req.params;
   const userId = req.session.currentUser;
-  const {
-    rows,
-  } = await db.query(
-    'DELETE FROM "projects" WHERE "id" = ($1) AND "userId" = $2',
-    [projectId, userId]
-  );
-  res.json(rows);
+  console.log(parseInt(projectId));
+  console.log(userId);
+  try {
+    const {
+      rows,
+    } = await db.query(
+      'DELETE FROM "projects" WHERE "id" = ($1) AND "userId" = ($2)',
+      [projectId, userId]
+    );
+    res.json(rows);
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 module.exports = router;
