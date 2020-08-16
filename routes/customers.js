@@ -8,7 +8,6 @@ const router = new Router();
 
 router.use((req, res, next) => {
   if (req.session.currentUser) {
-    console.log("authenticated for customers");
     next();
   } else {
     res.status(401).json("not authorized");
@@ -17,7 +16,6 @@ router.use((req, res, next) => {
 
 /* POST NEW CUSTOMER. */
 router.post("/", async (req, res, next) => {
-  console.log(req.body);
   const {
     firm,
     firstName,

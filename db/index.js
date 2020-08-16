@@ -8,8 +8,6 @@ const client = new Client(conString);
 
 client.connect();
 
-console.log("connected to db: ", conString);
-
 module.exports = {
   query: (text, params) => client.query(text, params),
   conString,

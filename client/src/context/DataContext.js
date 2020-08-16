@@ -14,23 +14,6 @@ const DataContextProvider = ({ children }) => {
     getProjects();
   }, []);
 
-  // useEffect(() => {
-  //   if (!selectedCustomer) {
-  //     setAccordionExpanded(false);
-  //     return;
-  //   }
-  //   axios
-  //     .get(
-  //       `${process.env.REACT_APP_SERVER_URL}/api/customers/${selectedCustomer.id}/projects`
-  //     )
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       setProjects(response.data);
-  //       setAccordionExpanded(true);
-  //     })
-  //     .catch((e) => console.log(e));
-  // }, [selectedCustomer]);
-
   const getAndSetCustomers = async () => {
     try {
       const { data } = await axios.get(
@@ -75,12 +58,10 @@ const DataContextProvider = ({ children }) => {
   };
 
   const getAndSetProjects = async () => {
-    console.log("getting projects");
     try {
       const { data } = await axios.get(
         `${process.env.REACT_APP_SERVER_URL}/api/projects`
       );
-      console.log(data);
       return setProjects(data);
     } catch (e) {
       console.log(e);
@@ -101,7 +82,6 @@ const DataContextProvider = ({ children }) => {
 
   const editProject = async (values) => {
     try {
-      console.log(values);
       await axios.put(
         `${process.env.REACT_APP_SERVER_URL}/api/projects/:id`,
         values

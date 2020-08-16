@@ -63,14 +63,10 @@ const Table = (props) => {
   const customerId = selectedCustomer.id;
   let rows = projects;
 
-  console.log(rows);
-  console.log(selectedCustomer);
-
   rows = projects.filter(
     (project) => project.customerId === selectedCustomer.id
   );
 
-  console.log(rows);
   rows = rows.map((row) => {
     if (
       selectedProjects
@@ -124,8 +120,6 @@ const Table = (props) => {
       editable: "never",
     },
   ]);
-
-  console.log(selectedCustomer);
 
   return (
     <div style={{ width: "100%" }}>

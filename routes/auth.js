@@ -31,7 +31,6 @@ router.get("/logout", async (req, res, next) => {
 
 /* POST user . */
 router.post("/signup", async (req, res, next) => {
-  console.log(req);
   const { username, password } = req.body;
   const salt = await bcrypt.genSalt();
   const hash = await bcrypt.hash(password, salt);

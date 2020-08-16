@@ -7,7 +7,6 @@ const router = new Router({ mergeParams: true });
 
 router.use((req, res, next) => {
   if (req.session.currentUser) {
-    console.log("authenticated for projects");
     next();
   } else {
     res.status(401).json("not authorized");
@@ -53,15 +52,12 @@ router.put("/:projectId", async (req, res, next) => {
     'UPDATE "projects" SET "name" = ($1), "description" = ($2), "hours" = ($3), "updatedAt" = ($4) WHERE id=($5) AND "userId" = ($6)',
     [name, description, hours, updatedAt, id, userId]
   );
-  console.log(rows);
   res.json(rows);
 });
 
 router.delete("/:projectId", async (req, res, next) => {
   const { projectId } = req.params;
   const userId = req.session.currentUser;
-  console.log(parseInt(projectId));
-  console.log(userId);
   try {
     const {
       rows,
