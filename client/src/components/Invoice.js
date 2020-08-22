@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   },
   greenText: {
     color: "#559495",
-    fontSize: 10,
+    fontSize: 9,
     fontWeight: "thin",
   },
   customerAddress: {
@@ -143,6 +143,9 @@ const styles = StyleSheet.create({
   },
   bigSpacer: {
     marginBottom: BOTTOM_MARGIN_WITHIN_SECTIONS * 2,
+  },
+  smallFont: {
+    fontSize: 9,
   },
 });
 
@@ -247,7 +250,13 @@ const Invoice = ({ template }) => {
             <Text>Zahlbar innerhalb von 15 Tagen ab Rechnungsdatum.</Text>
             <Text style={styles.thanks}>Vielen Dank für das Projekt!</Text>
           </View>
-          <View style={{ ...styles.centeredContent, ...styles.serif }}>
+          <View
+            style={{
+              ...styles.centeredContent,
+              ...styles.serif,
+              ...styles.smallFont,
+            }}
+          >
             <Text>Faky McFake • Fakyfake Straße 64 • 12345 Fakehausen</Text>
             <Text>
               IBAN: DE20 1111 0000 1111 1111 11 BIC: FAKYFAKYE2 Steuernummer:
