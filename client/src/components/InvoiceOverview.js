@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -16,6 +16,7 @@ import Paper from "@material-ui/core/Paper";
 import { Typography } from "@material-ui/core";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import Invoice from "./Invoice";
+import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles({
   table: {
@@ -27,6 +28,7 @@ const useStyles = makeStyles({
 });
 
 const InvoiceOverview = () => {
+  const [invoiceTitle, setInvoiceTitle] = useState("");
   const { closeModal, selectedCustomer, selectedProjects } = useContext(
     UiContext
   );
@@ -63,21 +65,22 @@ const InvoiceOverview = () => {
     customer: { ...selectedCustomer },
     positions: [...selectedProjects],
     total: getTotal(),
+    invoiceTitle,
   };
 
   return (
     <>
       <DialogTitle id="responsive-dialog-title">Rechnung erstellen</DialogTitle>
       <DialogContent>
-        <Box fontWeight="fontWeightBold" mb={1}>
-          Kundendetails
-        </Box>
         <Box
           mb={3}
           display="flex"
           flexDirection="row"
           justifyContent="space-between"
         >
+          <Box fontWeight="fontWeightBold" mb={1}>
+            Kundendetails:
+          </Box>
           <Box>
             <Box>{firm}</Box>
             <Box>{street}</Box>
@@ -95,9 +98,25 @@ const InvoiceOverview = () => {
             </Box>
           </Box>
         </Box>
+        <Box
+          mb={3}
+          display="flex"
+          flexDirection="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Box fontWeight="fontWeightBold" mr={3}>
+            Rechnungstitel:
+          </Box>
+          <TextField
+            fullWidth
+            value={invoiceTitle}
+            onChange={(e) => setInvoiceTitle(e.target.value)}
+          />
+        </Box>
         <Box mb={3}>
           <Box variant="h2" fontWeight="fontWeightBold" mb={1}>
-            Positionen
+            Positionen:
           </Box>
           <TableContainer component={Paper} variant="outlined">
             <Table
@@ -155,7 +174,7 @@ const InvoiceOverview = () => {
             fileName="somename.pdf"
           >
             {({ blob, url, loading, error }) =>
-              loading ? "Loading document..." : "Download PDF"
+              loading ? "PDF wird erstellt" : "PDF herunterladen"
             }
           </PDFDownloadLink>
         </Button>
