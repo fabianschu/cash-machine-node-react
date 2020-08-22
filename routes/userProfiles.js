@@ -1,5 +1,4 @@
 var express = require("express");
-const bcrypt = require("bcrypt");
 const Router = require("express-promise-router");
 const db = require("../db");
 
