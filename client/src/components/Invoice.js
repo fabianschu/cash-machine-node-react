@@ -1,7 +1,17 @@
 import React, { useContext } from "react";
-import { Document, Page, View, Text, Image } from "@react-pdf/renderer";
+import {
+  Document,
+  Page,
+  View,
+  Text,
+  Image,
+  Font,
+  StyleSheet,
+} from "@react-pdf/renderer";
 import logo from "../logo.png";
 import moment from "moment";
+import lightMuseo from "../assets/light100.ttf";
+import regularMuseo from "../assets/normal500.ttf";
 
 const BORDER_COLOR = "#bfbfbf";
 const BORDER_STYLE = "solid";
@@ -10,12 +20,17 @@ const COLN_WIDTH = (100 - COL1_WIDTH) / 3;
 const BOTTOM_MARGIN_BETWEEN_SECTIONS = 30;
 const BOTTOM_MARGIN_WITHIN_SECTIONS = 20;
 
-const styles = {
+Font.register({ family: "Museo", src: lightMuseo, fontWeight: "light" });
+Font.register({ family: "Museo", src: regularMuseo, fontWeight: "regular" });
+
+const styles = StyleSheet.create({
   body: {
     padding: 40,
     display: "flex",
     flexDirection: "column",
     height: "100%",
+    fontFamily: "Museo",
+    fontWeight: "regular",
   },
   header: {
     display: "flex",
@@ -109,8 +124,10 @@ const styles = {
   },
   thanks: {
     marginTop: 15,
+    fontFamily: "Museo",
+    fontWeight: "light",
   },
-};
+});
 
 const Invoice = ({ template }) => {
   const { customer, positions, total } = template;
@@ -127,7 +144,7 @@ const Invoice = ({ template }) => {
   } = customer;
   const { totalHours, totalPrice } = total;
   const date = moment().format("DD|MM|YYYY");
-  console.log(template);
+
   return (
     <Document>
       <Page style={styles.body}>
