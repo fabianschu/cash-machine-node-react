@@ -1,11 +1,9 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
-import { AuthContext } from "./AuthContext";
 
 const DataContext = createContext();
 
 const DataContextProvider = ({ children }) => {
-  const { authenticatedUser } = useContext(AuthContext);
   const [customers, setCustomers] = useState();
   const [projects, setProjects] = useState();
 

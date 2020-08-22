@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   Document,
   Page,
@@ -148,17 +148,7 @@ const styles = StyleSheet.create({
 
 const Invoice = ({ template }) => {
   const { customer, positions, total, invoiceTitle } = template;
-  const {
-    firm,
-    firstName,
-    lastName,
-    zip,
-    street,
-    city,
-    country,
-    taxId,
-    hourlyRate,
-  } = customer;
+  const { firm, zip, street, city, country } = customer;
   const { totalHours, totalPrice } = total;
   const date = moment().format("DD|MM|YYYY");
   console.log("rerender");

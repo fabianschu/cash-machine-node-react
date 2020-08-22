@@ -1,12 +1,10 @@
-import React, { useContext, useState } from "react";
-import { Route, Redirect, BrowserRouter } from "react-router-dom";
-import axios from "axios";
+import React, { useContext } from "react";
+import { Route, Redirect } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import InputField from "../components/InputField";
 import CustomerWidget from "./CustomerWidget";
 
 function PrivateRoute({ component: Component, ...rest }) {
-  const { authenticatedUser, hasAuthenticated } = useContext(AuthContext);
+  const { authenticatedUser } = useContext(AuthContext);
 
   return (
     <Route

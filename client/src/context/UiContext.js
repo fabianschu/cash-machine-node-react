@@ -1,13 +1,10 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import { DataContext } from "./DataContext";
-import axios from "axios";
 
 const UiContext = createContext();
 
 const UiContextProvider = ({ children }) => {
-  const { addCustomer, editCustomer, addProject, editProject } = useContext(
-    DataContext
-  );
+  const { addCustomer, editCustomer } = useContext(DataContext);
 
   const [creatingCustomer, setCreatingCustomer] = useState(false);
   const [editingCustomer, setEditingCustomer] = useState(false);

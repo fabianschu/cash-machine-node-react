@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { forwardRef } from "react";
-import axios from "axios";
 import MaterialTable from "material-table";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
 import Check from "@material-ui/icons/Check";
@@ -20,7 +19,6 @@ import TextField from "@material-ui/core/TextField";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import { UiContext } from "../context/UiContext";
 import { DataContext } from "../context/DataContext";
-import { AuthContext } from "../context/AuthContext";
 import Paper from "@material-ui/core/Paper";
 
 const tableIcons = {
@@ -59,8 +57,7 @@ const Table = (props) => {
     DataContext
   );
   const { selectedCustomer } = useContext(UiContext);
-  const { mode, selectedProjects, setSelectedProjects } = useContext(UiContext);
-  const customerId = selectedCustomer.id;
+  const { selectedProjects, setSelectedProjects } = useContext(UiContext);
   let rows = projects;
 
   rows = projects.filter(

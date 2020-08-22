@@ -4,10 +4,8 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { UiContext } from "../context/UiContext";
-import { DataContext } from "../context/DataContext";
 import { Formik, Form, Field } from "formik";
 import InputField from "./InputField";
-import axios from "axios";
 import * as Yup from "yup";
 
 const SignupSchema = Yup.object().shape({
@@ -20,13 +18,10 @@ const SignupSchema = Yup.object().shape({
 const CustomerForm = () => {
   const {
     closeModal,
-    creatingCustomer,
     editingCustomer,
-    setSelectedCustomer,
     selectedCustomer,
     modifyCustomers,
   } = useContext(UiContext);
-  const { getAndSetCustomers, setCustomers } = useContext(DataContext);
 
   const handleSubmit = async (values) => {
     await modifyCustomers(values);

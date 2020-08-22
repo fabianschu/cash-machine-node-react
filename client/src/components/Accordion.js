@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
   },
   accordion: {
     padding: "20px",
-    // minHeight: "160px",
   },
   wrapBox: {
     width: "90%",
@@ -48,7 +47,7 @@ export default function ControlledAccordions(props) {
     editingCustomer,
     setEditingCustomer,
   } = useContext(UiContext);
-  const { disabled, data, title } = props;
+  const { disabled, data } = props;
 
   const handleChange = () => (event, isExpanded) => {
     setAccordionExpanded(isExpanded ? true : false);

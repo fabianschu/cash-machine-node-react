@@ -8,11 +8,9 @@ import { Typography } from "@material-ui/core";
 import { Formik, Form, Field } from "formik";
 import InputField from "../components/InputField";
 import Button from "@material-ui/core/Button";
-// import Typography from "@material-ui/core/Typography";
 import axios from "axios";
-import { DataContext } from "../context/DataContext";
 import { AuthContext } from "../context/AuthContext";
-import { Route, Redirect, BrowserRouter } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -20,8 +18,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    // padding: "0 30px",
-    // backgroundColor: "red",
   },
   loginBox: {
     backgroundColor: "transparent",
@@ -34,12 +30,6 @@ const useStyles = makeStyles((theme) => ({
     },
     alignSelf: "center",
     justifySelf: "center",
-    // width: (mobile) => {
-    //   if (mobile) {
-    //     return "100%";
-    //   }
-    //   return "40%";
-    // },
     height: (mobile) => {
       if (mobile) {
         return "100vh";
