@@ -20,7 +20,7 @@ const COL1_WIDTH = 25;
 const COL2_WIDTH = 55;
 const COL3_WIDTH = 10;
 const COL4_WIDTH = 10;
-const MAIN_MARGIN = 35;
+const MAIN_MARGIN = 40;
 const BOTTOM_MARGIN_BETWEEN_SECTIONS = 30;
 const BOTTOM_MARGIN_WITHIN_SECTIONS = 20;
 const DEFAULT_FONT_SIZE = 11;
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "40px",
-    marginBottom: MAIN_MARGIN,
+    marginBottom: BOTTOM_MARGIN_BETWEEN_SECTIONS,
   },
   ownName: {
     textTransform: "capitalize",
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
 });
 
 const Invoice = ({ template }) => {
-  const { customer, positions, total, invoiceTitle } = template;
+  const { customer, positions, total, invoiceTitle, userProfile } = template;
   const { firm, zip, street, city, country } = customer;
   const { totalHours, totalPrice } = total;
   const date = moment().format("DD|MM|YYYY");
@@ -177,14 +177,12 @@ const Invoice = ({ template }) => {
               ...styles.bigSpacer,
             }}
           >
-            <Text style={styles.ownName}>
-              {formatName(process.env.REACT_APP_OWN_NAME)}
-            </Text>
+            <Text style={styles.ownName}>{formatName(userProfile.name)}</Text>
             <Text style={styles.greenText}>
-              {process.env.REACT_APP_STREET} • {process.env.REACT_APP_ZIP_CITY}
+              {userProfile.street} • {userProfile.zip} {userProfile.city}
             </Text>
-            <Text style={styles.greenText}>{process.env.REACT_APP_EMAIL}</Text>
-            <Text style={styles.greenText}>{process.env.REACT_APP_PHONE}</Text>
+            <Text style={styles.greenText}>{userProfile.email}</Text>
+            <Text style={styles.greenText}>{userProfile.phone}</Text>
           </View>
           <View style={{ ...styles.customerAddress, ...styles.spacer }}>
             <Text>{firm}</Text>
@@ -268,13 +266,12 @@ const Invoice = ({ template }) => {
             }}
           >
             <Text>
-              {process.env.REACT_APP_OWN_NAME} • {process.env.REACT_APP_STREET}{" "}
-              • {process.env.REACT_APP_ZIP_CITY}
+              {userProfile.name} • {userProfile.street} • {userProfile.zip}{" "}
+              {userProfile.city}
             </Text>
             <Text>
-              IBAN: {process.env.REACT_APP_IBAN} BIC:{" "}
-              {process.env.REACT_APP_BIC} Steuernummer:
-              {process.env.REACT_APP_TAX_ID} UID: {process.env.REACT_APP_UID}
+              IBAN: {userProfile.iban} BIC: {userProfile.bic} Steuernummer:
+              {userProfile.taxId} UID: {userProfile.uId}
             </Text>
           </View>
         </View>

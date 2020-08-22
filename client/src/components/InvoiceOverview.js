@@ -5,6 +5,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import { UiContext } from "../context/UiContext";
+import { DataContext } from "../context/DataContext";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -31,6 +32,9 @@ const InvoiceOverview = () => {
   const { closeModal, selectedCustomer, selectedProjects } = useContext(
     UiContext
   );
+
+  const { userProfile } = useContext(DataContext);
+
   const {
     firm,
     street,
@@ -65,7 +69,10 @@ const InvoiceOverview = () => {
     positions: [...selectedProjects],
     total: getTotal(),
     invoiceTitle,
+    userProfile,
   };
+
+  console.log(userProfile);
 
   return (
     <>

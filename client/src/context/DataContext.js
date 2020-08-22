@@ -15,7 +15,7 @@ const DataContextProvider = ({ children }) => {
     getAndSetCustomers();
     getProjects();
     getUserProfile();
-  }, []);
+  }, [authenticatedUser]);
 
   const getAndSetCustomers = async () => {
     try {
@@ -95,10 +95,10 @@ const DataContextProvider = ({ children }) => {
     await getAndSetProjects();
   };
 
-  const deleteProject = async (id) => {
+  const deleteProject = async () => {
     try {
       await axios.delete(
-        `${process.env.REACT_APP_SERVER_URL}/api/projects/${id}`
+        `${process.env.REACT_APP_SERVER_URL}/api/projects/${authenticatedUser}`
       );
     } catch (e) {
       console.log(e);
@@ -109,9 +109,9 @@ const DataContextProvider = ({ children }) => {
   const getUserProfile = async (id) => {
     try {
       const { data } = await axios.get(
-        `${process.env.REACT_APP_SERVER_URL}/api/user_profiles/${authenticatedUser}`
+        `${process.env.REACT_APP_SERVER_URL}/api/user_profiles/${id}`
       );
-      setUserProfile(data);
+      return setUserProfile(data);
     } catch (e) {
       console.log(e);
     }
@@ -120,10 +120,12 @@ const DataContextProvider = ({ children }) => {
   const defaultContext = {
     customers,
     projects,
+    userProfile,
     setCustomers,
     setProjects,
     getProjects,
     getAndSetCustomers,
+    getUserProfile,
     addCustomer,
     editCustomer,
     addProject,
@@ -133,7 +135,7 @@ const DataContextProvider = ({ children }) => {
 
   return (
     <DataContext.Provider value={defaultContext}>
-      {customers && projects && children}
+      {customers && projects && userProfile && children}
     </DataContext.Provider>
   );
 };
