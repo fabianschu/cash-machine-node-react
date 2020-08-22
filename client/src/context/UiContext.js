@@ -43,7 +43,8 @@ const UiContextProvider = ({ children }) => {
     if (editingCustomer) {
       setSelectedCustomer(null);
       const updatedCustomer = await editCustomer(values);
-      setSelectedCustomer(updatedCustomer);
+      if (!updatedCustomer) setSelectedCustomer(null);
+      else setSelectedCustomer(updatedCustomer);
     }
   };
 

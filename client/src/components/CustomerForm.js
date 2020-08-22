@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import Button from "@material-ui/core/Button";
+import Box from "@material-ui/core/Box";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -44,35 +45,52 @@ const CustomerForm = () => {
       hourlyRate: "",
     };
   };
+
+  const getButtonCaption = () => {
+    if (editingCustomer) {
+      return "Speichern";
+    }
+    return "Erstellen";
+  };
+
   return (
     <Formik
       initialValues={getInitialValues()}
       validationSchema={SignupSchema}
       onSubmit={handleSubmit}
     >
-      <Form>
-        <DialogTitle id="responsive-dialog-title">
-          {"Neuen Kunden Erstellen"}
-        </DialogTitle>
-        <DialogContent>
-          <Field component={InputField} name="firm" />
-          <Field component={InputField} name="firstName" />
-          <Field component={InputField} name="lastName" />
-          <Field component={InputField} name="street" />
-          <Field component={InputField} name="zip" />
-          <Field component={InputField} name="city" />
-          <Field component={InputField} name="country" />
-          <Field component={InputField} name="hourlyRate" />
-        </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={closeModal} color="primary">
-            Abbrechen
-          </Button>
-          <Button color="primary" autoFocus variant="contained" type="submit">
-            Erstellen
-          </Button>
-        </DialogActions>
-      </Form>
+      {(props) => (
+        <Form>
+          <DialogTitle id="responsive-dialog-title">
+            {"Neuen Kunden Erstellen"}
+          </DialogTitle>
+          <DialogContent>
+            <Field component={InputField} name="firm" />
+            <Field component={InputField} name="firstName" />
+            <Field component={InputField} name="lastName" />
+            <Field component={InputField} name="street" />
+            <Field component={InputField} name="zip" />
+            <Field component={InputField} name="city" />
+            <Field component={InputField} name="country" />
+            <Field component={InputField} name="hourlyRate" />
+          </DialogContent>
+          <DialogActions>
+            <Box mr="auto">
+              <Button
+                onClick={() => handleSubmit({ ...props.values, active: false })}
+              >
+                Löschen
+              </Button>
+            </Box>
+            <Button autoFocus onClick={closeModal} color="primary">
+              Abbrechen
+            </Button>
+            <Button color="primary" autoFocus variant="contained" type="submit">
+              {getButtonCaption()}
+            </Button>
+          </DialogActions>
+        </Form>
+      )}
     </Formik>
   );
 };

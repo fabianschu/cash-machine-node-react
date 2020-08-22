@@ -51,6 +51,7 @@ router.post("/", async (req, res, next) => {
 });
 
 router.put("/:customerId", async (req, res, next) => {
+  console.log(req.body);
   const {
     id,
     firm,
@@ -62,27 +63,33 @@ router.put("/:customerId", async (req, res, next) => {
     country,
     taxId,
     hourlyRate,
+    active,
   } = req.body;
   const userId = req.session.currentUser;
-  const {
-    rows,
-  } = await db.query(
-    'UPDATE "customers" SET "firm" = ($1), "firstName" = ($2), "lastName" = ($3), "street" = ($4), "zip" = ($5), "city" = ($6), "country" = ($7), "taxId" = ($8), "hourlyRate" = ($9) WHERE "id" = ($10) AND "userId" = ($11) RETURNING *',
-    [
-      firm,
-      firstName,
-      lastName,
-      street,
-      zip,
-      city,
-      country,
-      taxId,
-      hourlyRate,
-      id,
-      userId,
-    ]
-  );
-  res.json(rows[0]);
+  try {
+    const {
+      rows,
+    } = await db.query(
+      'UPDATE "customers" SET "firm" = ($1), "firstName" = ($2), "lastName" = ($3), "street" = ($4), "zip" = ($5), "city" = ($6), "country" = ($7), "taxId" = ($8), "hourlyRate" = ($9), "active" = ($10) WHERE "id" = ($11) AND "userId" = ($12) RETURNING *',
+      [
+        firm,
+        firstName,
+        lastName,
+        street,
+        zip,
+        city,
+        country,
+        taxId,
+        hourlyRate,
+        active,
+        id,
+        userId,
+      ]
+    );
+    res.json(rows[0]);
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 /*  GET all customers */
@@ -90,7 +97,10 @@ router.get("/", async (req, res, next) => {
   const userId = req.session.currentUser;
   const {
     rows,
-  } = await db.query('SELECT * FROM "customers" WHERE "userId" = $1', [userId]);
+  } = await db.query(
+    'SELECT * FROM "customers" WHERE "userId" = $1 AND "active" = $2',
+    [userId, true]
+  );
   res.json(rows);
 });
 

@@ -146,6 +146,7 @@ const styles = StyleSheet.create({
   },
   smallFont: {
     fontSize: 9,
+    justifySelf: "flex-end",
   },
   bold: {
     fontWeight: "bold",
@@ -163,8 +164,16 @@ const Invoice = ({ template }) => {
     return name.toUpperCase().split("").join(" ");
   };
 
-  const formatPrice = (price) =>
-    price.toFixed(2).toString().replace(".", ",") + " €";
+  const formatPrice = (price) => {
+    if (withTax()) price = price * 1.16;
+    return price.toFixed(2).toString().replace(".", ",") + " €";
+  };
+
+  const withTax = () => {
+    if (country === "Deutschland") return true;
+    return false;
+  };
+
   return (
     <Document>
       <Page style={styles.body}>
@@ -245,18 +254,26 @@ const Invoice = ({ template }) => {
                 <Text style={styles.tableCell}>{totalHours}</Text>
               </View>
               <View style={{ ...styles.tableCol, ...styles.col4 }}>
-                <Text style={styles.tableCell}>{formatPrice(totalPrice)}</Text>
+                <Text style={styles.tableCell}>
+                  {formatPrice(totalPrice)}
+                  {!withTax() && "*"}
+                </Text>
               </View>
             </View>
           </View>
         </View>
         <View style={styles.footer}>
           <View style={styles.centeredContent}>
-            <Text>
-              *Steuerschuldnerschaft des Leistungsempfängers (Reverse Charge)
-            </Text>
-            <Text>Zahlbar innerhalb von 15 Tagen ab Rechnungsdatum.</Text>
-            <Text style={styles.thanks}>Vielen Dank für das Projekt!</Text>
+            {!withTax() && (
+              <>
+                <Text>
+                  *Steuerschuldnerschaft des Leistungsempfängers (Reverse
+                  Charge)
+                </Text>
+                <Text>Zahlbar innerhalb von 15 Tagen ab Rechnungsdatum.</Text>
+                <Text style={styles.thanks}>Vielen Dank für das Projekt!</Text>
+              </>
+            )}
           </View>
           <View
             style={{
