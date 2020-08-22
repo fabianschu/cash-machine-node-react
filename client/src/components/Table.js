@@ -61,7 +61,8 @@ const Table = (props) => {
   let rows = projects;
 
   rows = projects.filter(
-    (project) => project.customerId === selectedCustomer.id
+    (project) =>
+      !project.invoiceId && project.customerId === selectedCustomer.id
   );
 
   rows = rows.map((row) => {
