@@ -13,10 +13,13 @@ import moment from "moment";
 import lightMuseo from "../assets/light100.ttf";
 import regularMuseo from "../assets/normal500.ttf";
 
-const BORDER_COLOR = "#bfbfbf";
+const BORDER_COLOR = "#000";
 const BORDER_STYLE = "solid";
-const COL1_WIDTH = 40;
-const COLN_WIDTH = (100 - COL1_WIDTH) / 3;
+const BORDER_WIDTH = 0.5;
+const COL1_WIDTH = 25;
+const COL2_WIDTH = 55;
+const COL3_WIDTH = 10;
+const COL4_WIDTH = 10;
 const MAIN_MARGIN = 35;
 const BOTTOM_MARGIN_BETWEEN_SECTIONS = 30;
 const BOTTOM_MARGIN_WITHIN_SECTIONS = 20;
@@ -69,58 +72,47 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     alignSelf: "flex-end",
   },
+  invoiceTitle: {
+    fontWeight: "bold",
+    marginBottom: BOTTOM_MARGIN_WITHIN_SECTIONS,
+  },
   table: {
     display: "table",
     width: "auto",
     borderStyle: BORDER_STYLE,
     borderColor: BORDER_COLOR,
-    borderWidth: 1,
-    borderRightWidth: 0,
+    borderWidth: BORDER_WIDTH,
+    borderTopWidth: 0,
     borderBottomWidth: 0,
     marginBottom: BOTTOM_MARGIN_BETWEEN_SECTIONS,
+    fontSize: 10,
   },
   tableRow: {
     margin: "auto",
     flexDirection: "row",
-  },
-  tableCol1Header: {
-    width: COL1_WIDTH + "%",
     borderStyle: BORDER_STYLE,
     borderColor: BORDER_COLOR,
-    borderBottomColor: "#000",
-    borderWidth: 1,
+    borderWidth: BORDER_WIDTH,
+    borderRightWidth: 0,
     borderLeftWidth: 0,
-    borderTopWidth: 0,
+    marginTop: -0.2,
+    marginBottom: -0.2,
   },
+  col1: {
+    width: COL1_WIDTH + "%",
+  },
+  col2: {
+    width: COL2_WIDTH + "%",
+    borderRightWidth: BORDER_WIDTH * 2,
+    borderLeftWidth: BORDER_WIDTH * 2,
+  },
+  col3: { width: COL3_WIDTH + "%", borderRightWidth: BORDER_WIDTH },
+  col4: { width: COL4_WIDTH + "%" },
   tableColHeader: {
-    width: COLN_WIDTH + "%",
-    borderStyle: BORDER_STYLE,
-    borderColor: BORDER_COLOR,
-    borderBottomColor: "#000",
-    borderWidth: 1,
-    borderLeftWidth: 0,
-    borderTopWidth: 0,
-  },
-  tableCol1: {
-    width: COL1_WIDTH + "%",
-    borderStyle: BORDER_STYLE,
-    borderColor: BORDER_COLOR,
-    borderWidth: 1,
-    borderLeftWidth: 0,
-    borderTopWidth: 0,
-  },
-  tableCol: {
-    width: COLN_WIDTH + "%",
-    borderStyle: BORDER_STYLE,
-    borderColor: BORDER_COLOR,
-    borderWidth: 1,
-    borderLeftWidth: 0,
-    borderTopWidth: 0,
+    fontWeight: "bold",
   },
   tableCellHeader: {
     margin: 5,
-    fontSize: 12,
-    fontWeight: 500,
   },
   tableCell: {
     margin: 5,
@@ -155,7 +147,7 @@ const styles = StyleSheet.create({
 });
 
 const Invoice = ({ template }) => {
-  const { customer, positions, total } = template;
+  const { customer, positions, total, invoiceTitle } = template;
   const {
     firm,
     firstName,
@@ -169,11 +161,10 @@ const Invoice = ({ template }) => {
   } = customer;
   const { totalHours, totalPrice } = total;
   const date = moment().format("DD|MM|YYYY");
-
+  console.log("rerender");
   return (
     <Document>
       <Page style={styles.body}>
-        <View></View>
         <View style={styles.header}>
           <Image src={logo} style={styles.image} />
           <View
@@ -205,53 +196,56 @@ const Invoice = ({ template }) => {
             <Text>{date}</Text>
           </View>
         </View>
-        <View style={styles.table}>
-          <View style={styles.tableRow}>
-            <View style={styles.tableCol1Header}>
-              <Text style={styles.tableCellHeader}>Projekt</Text>
-            </View>
-            <View style={styles.tableColHeader}>
-              <Text style={styles.tableCellHeader}>Beschreibung</Text>
-            </View>
-            <View style={styles.tableColHeader}>
-              <Text style={styles.tableCellHeader}>Stunden</Text>
-            </View>
-            <View style={styles.tableColHeader}>
-              <Text style={styles.tableCellHeader}>Preis</Text>
-            </View>
-          </View>
-          {positions.map((position) => {
-            return (
-              <View style={styles.tableRow}>
-                <View style={styles.tableCol1}>
-                  <Text style={styles.tableCell}>{position.name}</Text>
-                </View>
-                <View style={styles.tableCol}>
-                  <Text style={styles.tableCell}>{position.description}</Text>
-                </View>
-                <View style={styles.tableCol}>
-                  <Text style={styles.tableCell}>{position.hours}</Text>
-                </View>
-                <View style={styles.tableCol}>
-                  <Text style={styles.tableCell}>
-                    {position.hours * customer.hourlyRate}
-                  </Text>
-                </View>
+        <View>
+          <Text style={styles.invoiceTitle}>{invoiceTitle}</Text>
+          <View style={styles.table}>
+            <View style={styles.tableRow}>
+              <View style={{ ...styles.tableColHeader, ...styles.col1 }}>
+                <Text style={styles.tableCellHeader}>Projekt</Text>
               </View>
-            );
-          })}
-          <View style={styles.tableRow}>
-            <View style={styles.tableCol1}>
-              <Text style={styles.tableCell}>Gesamt</Text>
+              <View style={{ ...styles.tableColHeader, ...styles.col2 }}>
+                <Text style={styles.tableCellHeader}>Beschreibung</Text>
+              </View>
+              <View style={{ ...styles.tableColHeader, ...styles.col3 }}>
+                <Text style={styles.tableCellHeader}>Stunden</Text>
+              </View>
+              <View style={{ ...styles.tableColHeader, ...styles.col4 }}>
+                <Text style={styles.tableCellHeader}>Preis</Text>
+              </View>
             </View>
-            <View style={styles.tableCol}>
-              <Text style={styles.tableCell}></Text>
-            </View>
-            <View style={styles.tableCol}>
-              <Text style={styles.tableCell}>{totalHours}</Text>
-            </View>
-            <View style={styles.tableCol}>
-              <Text style={styles.tableCell}>{totalPrice}</Text>
+            {positions.map((position) => {
+              return (
+                <View style={styles.tableRow}>
+                  <View style={{ ...styles.tableCol, ...styles.col1 }}>
+                    <Text style={styles.tableCell}>{position.name}</Text>
+                  </View>
+                  <View style={{ ...styles.tableCol, ...styles.col2 }}>
+                    <Text style={styles.tableCell}>{position.description}</Text>
+                  </View>
+                  <View style={{ ...styles.tableCol, ...styles.col3 }}>
+                    <Text style={styles.tableCell}>{position.hours}</Text>
+                  </View>
+                  <View style={{ ...styles.tableCol, ...styles.col4 }}>
+                    <Text style={styles.tableCell}>
+                      {position.hours * customer.hourlyRate}
+                    </Text>
+                  </View>
+                </View>
+              );
+            })}
+            <View style={styles.tableRow}>
+              <View style={{ ...styles.tableCol, ...styles.col1 }}>
+                <Text style={styles.tableCell}>Gesamt</Text>
+              </View>
+              <View style={{ ...styles.tableCol, ...styles.col2 }}>
+                <Text style={styles.tableCell}></Text>
+              </View>
+              <View style={{ ...styles.tableCol, ...styles.col3 }}>
+                <Text style={styles.tableCell}>{totalHours}</Text>
+              </View>
+              <View style={{ ...styles.tableCol, ...styles.col4 }}>
+                <Text style={styles.tableCell}>{totalPrice}</Text>
+              </View>
             </View>
           </View>
         </View>
