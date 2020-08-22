@@ -17,20 +17,23 @@ const BORDER_COLOR = "#bfbfbf";
 const BORDER_STYLE = "solid";
 const COL1_WIDTH = 40;
 const COLN_WIDTH = (100 - COL1_WIDTH) / 3;
+const MAIN_MARGIN = 35;
 const BOTTOM_MARGIN_BETWEEN_SECTIONS = 30;
 const BOTTOM_MARGIN_WITHIN_SECTIONS = 20;
+const DEFAULT_FONT_SIZE = 11;
 
 Font.register({ family: "Museo", src: lightMuseo, fontWeight: "light" });
 Font.register({ family: "Museo", src: regularMuseo, fontWeight: "regular" });
 
 const styles = StyleSheet.create({
   body: {
-    padding: 40,
+    padding: MAIN_MARGIN,
     display: "flex",
     flexDirection: "column",
     height: "100%",
     fontFamily: "Museo",
-    fontWeight: "regular",
+    fontWeight: "light",
+    fontSize: DEFAULT_FONT_SIZE,
   },
   header: {
     display: "flex",
@@ -40,7 +43,20 @@ const styles = StyleSheet.create({
     marginBottom: BOTTOM_MARGIN_BETWEEN_SECTIONS,
   },
   image: {
-    width: "60px",
+    width: "40px",
+    marginBottom: MAIN_MARGIN,
+  },
+  ownName: {
+    textTransform: "capitalize",
+    color: "grey",
+    marginBottom: BOTTOM_MARGIN_WITHIN_SECTIONS,
+    fontFamily: "Museo",
+    fontWeight: "light",
+  },
+  greenText: {
+    color: "#559495",
+    fontSize: 10,
+    fontWeight: "thin",
   },
   customerAddress: {
     display: "flex",
@@ -127,6 +143,15 @@ const styles = StyleSheet.create({
     fontFamily: "Museo",
     fontWeight: "light",
   },
+  serif: {
+    fontFamily: "Times-Roman",
+  },
+  spacer: {
+    marginBottom: BOTTOM_MARGIN_WITHIN_SECTIONS,
+  },
+  bigSpacer: {
+    marginBottom: BOTTOM_MARGIN_WITHIN_SECTIONS * 2,
+  },
 });
 
 const Invoice = ({ template }) => {
@@ -151,12 +176,23 @@ const Invoice = ({ template }) => {
         <View></View>
         <View style={styles.header}>
           <Image src={logo} style={styles.image} />
-          <View style={styles.centeredContent}>
-            <Text>Brijitte Musterfrau</Text>
-            <Text>Franz-Joseph-Str. 102</Text>
-            <Text>48372 Cottbus</Text>
+          <View
+            style={{
+              ...styles.centeredContent,
+              ...styles.serif,
+              ...styles.bigSpacer,
+            }}
+          >
+            <Text style={styles.ownName}>
+              B r i j i t t e &nbsp; M u s t e r f r a u
+            </Text>
+            <Text style={styles.greenText}>
+              Franz-Joseph-Str. 102 • 48372 Cottbus
+            </Text>
+            <Text style={styles.greenText}>emailaddresse@email.de</Text>
+            <Text style={styles.greenText}>+49 123 45678910</Text>
           </View>
-          <View style={styles.customerAddress}>
+          <View style={{ ...styles.customerAddress, ...styles.spacer }}>
             <Text>{firm}</Text>
             <Text>{street}</Text>
             <Text>
@@ -227,7 +263,7 @@ const Invoice = ({ template }) => {
             <Text>Zahlbar innerhalb von 15 Tagen ab Rechnungsdatum.</Text>
             <Text style={styles.thanks}>Vielen Dank für das Projekt!</Text>
           </View>
-          <View style={styles.centeredContent}>
+          <View style={{ ...styles.centeredContent, ...styles.serif }}>
             <Text>Faky McFake • Fakyfake Straße 64 • 12345 Fakehausen</Text>
             <Text>
               IBAN: DE20 1111 0000 1111 1111 11 BIC: FAKYFAKYE2 Steuernummer:
