@@ -1,15 +1,20 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { AuthContext } from "../context/AuthContext";
 
 const DataContext = createContext();
 
 const DataContextProvider = ({ children }) => {
+  const { authenticatedUser } = useContext(AuthContext);
+
   const [customers, setCustomers] = useState();
   const [projects, setProjects] = useState();
+  const [userProfile, setUserProfile] = useState();
 
   useEffect(() => {
     getAndSetCustomers();
     getProjects();
+    getUserProfile();
   }, []);
 
   const getAndSetCustomers = async () => {
@@ -101,6 +106,17 @@ const DataContextProvider = ({ children }) => {
     await getAndSetProjects();
   };
 
+  const getUserProfile = async (id) => {
+    try {
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_SERVER_URL}/api/user_profiles/${authenticatedUser}`
+      );
+      setUserProfile(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const defaultContext = {
     customers,
     projects,
@@ -114,6 +130,7 @@ const DataContextProvider = ({ children }) => {
     editProject,
     deleteProject,
   };
+
   return (
     <DataContext.Provider value={defaultContext}>
       {customers && projects && children}

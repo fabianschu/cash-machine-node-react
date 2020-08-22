@@ -14,7 +14,7 @@ router.use((req, res, next) => {
 });
 
 /*  GET own user profile */
-router.get("/", async (req, res, next) => {
+router.get("/:userId", async (req, res, next) => {
   const userId = req.session.currentUser;
   const {
     rows,
