@@ -20,7 +20,6 @@ import "./App.css";
 const App = () => {
   const { customers, setCustomers } = useContext(DataContext);
   const { setAuthenticatedUser } = useContext(AuthContext);
-
   return (
     <BrowserRouter>
       <Layout>
