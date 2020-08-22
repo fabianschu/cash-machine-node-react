@@ -147,6 +147,9 @@ const styles = StyleSheet.create({
   smallFont: {
     fontSize: 9,
   },
+  bold: {
+    fontWeight: "bold",
+  },
 });
 
 const Invoice = ({ template }) => {
@@ -154,7 +157,14 @@ const Invoice = ({ template }) => {
   const { firm, zip, street, city, country } = customer;
   const { totalHours, totalPrice } = total;
   const date = moment().format("DD|MM|YYYY");
-  console.log("rerender");
+
+  const formatName = (name) => {
+    if (!name) return;
+    return name.toUpperCase().split("").join(" ");
+  };
+
+  const formatPrice = (price) =>
+    price.toFixed(2).toString().replace(".", ",") + " €";
   return (
     <Document>
       <Page style={styles.body}>
@@ -168,13 +178,13 @@ const Invoice = ({ template }) => {
             }}
           >
             <Text style={styles.ownName}>
-              B r i j i t t e &nbsp; M u s t e r f r a u
+              {formatName(process.env.REACT_APP_OWN_NAME)}
             </Text>
             <Text style={styles.greenText}>
-              Franz-Joseph-Str. 102 • 48372 Cottbus
+              {process.env.REACT_APP_STREET} • {process.env.REACT_APP_ZIP_CITY}
             </Text>
-            <Text style={styles.greenText}>emailaddresse@email.de</Text>
-            <Text style={styles.greenText}>+49 123 45678910</Text>
+            <Text style={styles.greenText}>{process.env.REACT_APP_EMAIL}</Text>
+            <Text style={styles.greenText}>{process.env.REACT_APP_PHONE}</Text>
           </View>
           <View style={{ ...styles.customerAddress, ...styles.spacer }}>
             <Text>{firm}</Text>
@@ -220,13 +230,13 @@ const Invoice = ({ template }) => {
                   </View>
                   <View style={{ ...styles.tableCol, ...styles.col4 }}>
                     <Text style={styles.tableCell}>
-                      {position.hours * customer.hourlyRate}
+                      {formatPrice(position.hours * customer.hourlyRate)}
                     </Text>
                   </View>
                 </View>
               );
             })}
-            <View style={styles.tableRow}>
+            <View style={{ ...styles.tableRow, ...styles.bold }}>
               <View style={{ ...styles.tableCol, ...styles.col1 }}>
                 <Text style={styles.tableCell}>Gesamt</Text>
               </View>
@@ -237,7 +247,7 @@ const Invoice = ({ template }) => {
                 <Text style={styles.tableCell}>{totalHours}</Text>
               </View>
               <View style={{ ...styles.tableCol, ...styles.col4 }}>
-                <Text style={styles.tableCell}>{totalPrice}</Text>
+                <Text style={styles.tableCell}>{formatPrice(totalPrice)}</Text>
               </View>
             </View>
           </View>
@@ -257,10 +267,14 @@ const Invoice = ({ template }) => {
               ...styles.smallFont,
             }}
           >
-            <Text>Faky McFake • Fakyfake Straße 64 • 12345 Fakehausen</Text>
             <Text>
-              IBAN: DE20 1111 0000 1111 1111 11 BIC: FAKYFAKYE2 Steuernummer:
-              111 / 111 / 111111 UID: DE 111 111 111
+              {process.env.REACT_APP_OWN_NAME} • {process.env.REACT_APP_STREET}{" "}
+              • {process.env.REACT_APP_ZIP_CITY}
+            </Text>
+            <Text>
+              IBAN: {process.env.REACT_APP_IBAN} BIC:{" "}
+              {process.env.REACT_APP_BIC} Steuernummer:
+              {process.env.REACT_APP_TAX_ID} UID: {process.env.REACT_APP_UID}
             </Text>
           </View>
         </View>
