@@ -3,6 +3,7 @@ var router = express.Router();
 const auth = require("./auth");
 const customers = require("./customers");
 const projects = require("./projects");
+const userProfiles = require("./userProfiles");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -13,4 +14,5 @@ module.exports = (app) => {
   app.use("/api/auth", auth);
   app.use("/api/customers", customers);
   app.use("/api/projects", projects);
+  app.use("/api/user_profiles", userProfiles);
 };
