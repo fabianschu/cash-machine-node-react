@@ -4,11 +4,15 @@ import { DataContext } from "./DataContext";
 const UiContext = createContext();
 
 const UiContextProvider = ({ children }) => {
-  const { addCustomer, editCustomer } = useContext(DataContext);
+  const { addCustomer, editCustomer, archiveProjects } = useContext(
+    DataContext
+  );
 
   const [creatingCustomer, setCreatingCustomer] = useState(false);
   const [editingCustomer, setEditingCustomer] = useState(false);
   const [creatingInvoice, setCreatingInvoice] = useState(false);
+
+  const [creatingProject, setCreatingProject] = useState(false);
 
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [selectedProjects, setSelectedProjects] = useState([]);
@@ -32,6 +36,7 @@ const UiContextProvider = ({ children }) => {
     setCreatingCustomer(false);
     setEditingCustomer(false);
     setCreatingInvoice(false);
+    setCreatingProject(false);
   };
 
   const modifyCustomers = async (values) => {
@@ -58,11 +63,13 @@ const UiContextProvider = ({ children }) => {
     setCreatingCustomer,
     setCreatingInvoice,
     setEditingCustomer,
+    setCreatingProject,
     setSelectedCustomer,
     closeModal,
     setAccordionExpanded,
     setSelectedProjects,
     modifyCustomers,
+    creatingProject,
   };
 
   return (

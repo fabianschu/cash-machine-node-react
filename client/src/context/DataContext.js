@@ -5,7 +5,7 @@ import { AuthContext } from "../context/AuthContext";
 const DataContext = createContext();
 
 const DataContextProvider = ({ children }) => {
-  const { authenticatedUser } = useContext(AuthContext);
+  const { authenticatedUser, hasAuthenticated } = useContext(AuthContext);
 
   const [customers, setCustomers] = useState();
   const [projects, setProjects] = useState();
@@ -14,7 +14,7 @@ const DataContextProvider = ({ children }) => {
   useEffect(() => {
     getAndSetCustomers();
     getProjects();
-    getUserProfile();
+    getUserProfile(authenticatedUser);
   }, [authenticatedUser]);
 
   const getAndSetCustomers = async () => {
@@ -83,10 +83,10 @@ const DataContextProvider = ({ children }) => {
     await getAndSetProjects();
   };
 
-  const editProject = async (values) => {
+  const editProject = async (id, values) => {
     try {
       await axios.put(
-        `${process.env.REACT_APP_SERVER_URL}/api/projects/:id`,
+        `${process.env.REACT_APP_SERVER_URL}/api/projects/${id}`,
         values
       );
     } catch (e) {
@@ -95,10 +95,10 @@ const DataContextProvider = ({ children }) => {
     await getAndSetProjects();
   };
 
-  const deleteProject = async () => {
+  const deleteProject = async (id) => {
     try {
       await axios.delete(
-        `${process.env.REACT_APP_SERVER_URL}/api/projects/${authenticatedUser}`
+        `${process.env.REACT_APP_SERVER_URL}/api/projects/${id}`
       );
     } catch (e) {
       console.log(e);
@@ -112,6 +112,37 @@ const DataContextProvider = ({ children }) => {
         `${process.env.REACT_APP_SERVER_URL}/api/user_profiles/${id}`
       );
       return setUserProfile(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const addInvoice = async (values) => {
+    try {
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_SERVER_URL}/api/invoices`,
+        values
+      );
+      console.log(data);
+      return data;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const editProjects = async (projects, values) => {
+    const projectIds = projects.map((project) => project.id);
+    const data = {
+      ids: projectIds,
+      payload: values,
+    };
+
+    try {
+      const { result } = await axios.put(
+        `${process.env.REACT_APP_SERVER_URL}/api/projects`,
+        data
+      );
+      await getAndSetProjects();
     } catch (e) {
       console.log(e);
     }
@@ -131,6 +162,8 @@ const DataContextProvider = ({ children }) => {
     addProject,
     editProject,
     deleteProject,
+    addInvoice,
+    editProjects,
   };
 
   return (

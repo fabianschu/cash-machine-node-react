@@ -145,13 +145,13 @@ const Table = (props) => {
             });
           },
           onRowUpdate: async (projectData) => {
-            await editProject({
+            await editProject(projectData.id, {
               ...projectData,
               customerId: selectedCustomer.id,
             });
           },
-          onRowDelete: async (project) => {
-            await deleteProject(project.id);
+          onRowDelete: async (projectData) => {
+            await deleteProject(projectData.id);
           },
         }}
       />

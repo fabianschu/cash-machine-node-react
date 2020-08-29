@@ -17,9 +17,9 @@ const BORDER_COLOR = "#000";
 const BORDER_STYLE = "solid";
 const BORDER_WIDTH = 0.5;
 const COL1_WIDTH = 25;
-const COL2_WIDTH = 55;
+const COL2_WIDTH = 53;
 const COL3_WIDTH = 10;
-const COL4_WIDTH = 10;
+const COL4_WIDTH = 12;
 const MAIN_MARGIN = 40;
 const BOTTOM_MARGIN_BETWEEN_SECTIONS = 30;
 const BOTTOM_MARGIN_WITHIN_SECTIONS = 20;
@@ -154,7 +154,14 @@ const styles = StyleSheet.create({
 });
 
 const Invoice = ({ template }) => {
-  const { customer, positions, total, invoiceTitle, userProfile } = template;
+  const {
+    customer,
+    positions,
+    total,
+    invoiceTitle,
+    userProfile,
+    formalInvoiceId,
+  } = template;
   const { firm, zip, street, city, country } = customer;
   const { totalHours, totalPrice } = total;
   const date = moment().format("DD|MM|YYYY");
@@ -202,7 +209,7 @@ const Invoice = ({ template }) => {
             <Text>{country}</Text>
           </View>
           <View style={styles.metaInfo}>
-            <Text>Rechnungsnummer 12624</Text>
+            <Text>Rechnungsnummer {formalInvoiceId}</Text>
             <Text>{date}</Text>
           </View>
         </View>

@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
+import Paper from "@material-ui/core/Paper";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ModalButton from "./ModalButton";
@@ -10,29 +11,36 @@ import { UiContext } from "../context/UiContext";
 import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles((theme) => ({
-  secondaryHeading: {
-    fontSize: theme.typography.pxToRem(15),
-    color: theme.palette.text.secondary,
-  },
   accordionContent: {
     flexDirection: "column",
     alignItems: "flex-end",
   },
-  printButton: {
-    alignSelf: "flex-end",
-  },
-  accordion: {
-    padding: "20px",
-  },
-  wrapBox: {
+  accordionSummary: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
     width: "90%",
+    height: "100%",
   },
-  topSpacer: {
-    marginTop: "20px",
+  paper: {
+    padding: "15px 0",
+    border: `2px solid ${theme.palette.primary.main}`,
+    flexGrow: 1,
+    marginRight: "32px",
+    display: "flex",
+    flexDirection: "column",
   },
-  bottomSpacer: {
-    marginTop: "20px",
-    marginBottom: "20px",
+  customerDetails: {
+    display: "flex",
+    flexWrap: "wrap",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    height: "100%",
+  },
+  buttonBox: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-evenly",
   },
 }));
 
@@ -46,6 +54,7 @@ export default function ControlledAccordions(props) {
     selectedCustomer,
     editingCustomer,
     setEditingCustomer,
+    setCreatingProject,
   } = useContext(UiContext);
   const { disabled, data } = props;
 
@@ -54,14 +63,14 @@ export default function ControlledAccordions(props) {
   };
 
   return (
-    <div>
+    <div className={classes.accordion}>
       <Accordion
         expanded={accordionExpanded}
         onChange={handleChange(true)}
         elevation={0}
         square
         disabled={disabled}
-        className={classes.accordion}
+        // className={classes.accordion}
       >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon color="secondary" />}
@@ -69,36 +78,52 @@ export default function ControlledAccordions(props) {
           id="panel1bh-header"
         >
           {selectedCustomer && (
-            <Box
-              display="flex"
-              flexWrap="wrap"
-              justifyContent="space-between"
-              className={classes.wrapBox}
-            >
-              <ModalButton
-                handleClick={setEditingCustomer}
-                currentState={editingCustomer}
-                type="edit"
-                disabled={!selectedCustomer}
-                className={classes.bottomSpacer}
-              />
-              <Box className={classes.topSpacer}>
-                <Box>
-                  <Box>{selectedCustomer.firm}</Box>
-                  <Box>{selectedCustomer.street}</Box>
+            <Box className={classes.accordionSummary}>
+              <Paper className={classes.paper} elevation={0}>
+                <Box className={classes.customerDetails}>
+                  <Box fontWeight="bold">Kundendetails:</Box>
                   <Box>
-                    {selectedCustomer.zip} {selectedCustomer.city}
+                    <Box>
+                      <Box>{selectedCustomer.firm}</Box>
+                      <Box>{selectedCustomer.street}</Box>
+                      <Box>
+                        {selectedCustomer.zip} {selectedCustomer.city}
+                      </Box>
+                      <Box>{selectedCustomer.country}</Box>
+                    </Box>
                   </Box>
-                  <Box>{selectedCustomer.country}</Box>
+                  <Box>
+                    <Box>
+                      Steuernummer: ajsfbadbfdsjfabh{" "}
+                      <span>{selectedCustomer.taxId}</span>
+                    </Box>
+                    <Box>
+                      Stundensatz: <span>€{selectedCustomer.hourlyRate}</span>
+                    </Box>
+                  </Box>
+                  <Box>
+                    <ModalButton
+                      handleClick={setEditingCustomer}
+                      currentState={editingCustomer}
+                      type="editCustomer"
+                      disabled={!selectedCustomer}
+                    />
+                  </Box>
                 </Box>
-              </Box>
-              <Box className={classes.topSpacer}>
-                <Box>
-                  Steuernummer: <span>{selectedCustomer.taxId}</span>
-                </Box>
-                <Box>
-                  Stundensatz: <span>€{selectedCustomer.hourlyRate}</span>
-                </Box>
+              </Paper>
+              <Box className={classes.buttonBox}>
+                <ModalButton
+                  handleClick={() => setCreatingProject(true)}
+                  type="createProject"
+                  disabled={!selectedCustomer}
+                  className={classes.printButton}
+                />
+                <ModalButton
+                  handleClick={() => setCreatingInvoice(true)}
+                  type="print"
+                  disabled={selectedProjects.length === 0}
+                  className={classes.printButton}
+                />
               </Box>
             </Box>
           )}
@@ -106,17 +131,7 @@ export default function ControlledAccordions(props) {
           <Typography className={classes.secondaryHeading}>{title}</Typography> */}
         </AccordionSummary>
         <AccordionDetails p={0} className={classes.accordionContent}>
-          {selectedCustomer && (
-            <>
-              <Table rows={data} />
-              <ModalButton
-                handleClick={() => setCreatingInvoice(true)}
-                type="print"
-                disabled={selectedProjects.length === 0}
-                className={classes.printButton}
-              />
-            </>
-          )}
+          {selectedCustomer && <Table rows={data} />}
         </AccordionDetails>
       </Accordion>
     </div>

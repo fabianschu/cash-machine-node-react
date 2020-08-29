@@ -14,15 +14,15 @@ router.use((req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   const userId = req.session.currentUser;
-  const { title, status, customerId } = req.body;
+  const { title, customerId } = req.body;
   const createdAt = new Date();
   const updatedAt = new Date();
   try {
     const {
       rows,
     } = await db.query(
-      'INSERT INTO "invoices" ("title", "status", "customerId", "createdAt", "updatedAt", "userId") VALUES ($1, $2, $3, $4, $5, $6)',
-      [title, status, customerId, createdAt, updatedAt, userId]
+      'INSERT INTO "invoices" ("title", "customerId", "createdAt", "updatedAt", "userId") VALUES ($1, $2, $3, $4, $5) RETURNING "id"',
+      [title, customerId, createdAt, updatedAt, userId]
     );
     res.json(rows[0]);
   } catch (e) {

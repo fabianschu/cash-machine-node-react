@@ -25,15 +25,20 @@ const useStyles = makeStyles({
   column: {
     fontWeight: "bold",
   },
+  button: {
+    textDecoration: "none",
+    color: "white",
+  },
 });
 
 const InvoiceOverview = () => {
   const [invoiceTitle, setInvoiceTitle] = useState("");
+  const [formalInvoiceId, setFormalInvoiceId] = useState();
   const { closeModal, selectedCustomer, selectedProjects } = useContext(
     UiContext
   );
 
-  const { userProfile } = useContext(DataContext);
+  const { userProfile, addInvoice, editProjects } = useContext(DataContext);
 
   const {
     firm,
@@ -70,9 +75,21 @@ const InvoiceOverview = () => {
     total: getTotal(),
     invoiceTitle,
     userProfile,
+    formalInvoiceId,
   };
 
-  console.log(userProfile);
+  const handleSubmit = async () => {
+    const { id } = await addInvoice({
+      title: invoiceTitle,
+      customerId: selectedCustomer.id,
+    });
+    setFormalInvoiceId(calculateInvoiceId(id));
+    editProjects(selectedProjects, { invoiceId: id });
+  };
+
+  const calculateInvoiceId = (id) => {
+    return id * 6 + 6000;
+  };
 
   return (
     <>
@@ -118,6 +135,7 @@ const InvoiceOverview = () => {
             fullWidth
             value={invoiceTitle}
             onChange={(e) => setInvoiceTitle(e.target.value)}
+            variant="outlined"
           />
         </Box>
         <Box mb={3}>
@@ -165,25 +183,32 @@ const InvoiceOverview = () => {
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button autoFocus onClick={closeModal} color="primary">
-          Abbrechen
-        </Button>
-        <Button
-          color="primary"
-          autoFocus
-          variant="contained"
-          type="submit"
-          // onClick={handleSubmit(props.values)}
-        >
-          <PDFDownloadLink
-            document={<Invoice template={invoiceTemplate} />}
-            fileName="somename.pdf"
-          >
-            {({ blob, url, loading, error }) =>
-              loading ? "PDF wird erstellt" : "PDF herunterladen"
-            }
-          </PDFDownloadLink>
-        </Button>
+        {formalInvoiceId ? (
+          <Button color="secondary" autoFocus variant="contained">
+            <PDFDownloadLink
+              document={<Invoice template={invoiceTemplate} />}
+              fileName="somename.pdf"
+              className={classes.button}
+            >
+              {({ blob, url, loading, error }) =>
+                loading ? "PDF wird erstellt" : "PDF herunterladen"
+              }
+            </PDFDownloadLink>
+          </Button>
+        ) : (
+          <>
+            <Button autoFocus onClick={closeModal} color="primary">
+              Abbrechen
+            </Button>
+            <Button
+              onClick={handleSubmit}
+              color="secondary"
+              variant="contained"
+            >
+              OK
+            </Button>
+          </>
+        )}
       </DialogActions>
     </>
   );

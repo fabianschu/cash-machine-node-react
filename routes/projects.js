@@ -55,6 +55,52 @@ router.put("/:projectId", async (req, res, next) => {
   res.json(rows);
 });
 
+router.put("/", async (req, res, next) => {
+  console.log("cookoo");
+  const updatedAt = new Date();
+  const { ids, payload } = req.body;
+  const userId = req.session.currentUser;
+  let count = 1;
+  let valuesString = "";
+  let values = [];
+  let idsString = "";
+
+  const assembleQueryParams = () => {
+    const changeAttributes = Object.keys(payload);
+    for (let i = 0; i < changeAttributes.length; i++) {
+      valuesString += `"${changeAttributes}" = ($${count})`;
+      values.push(payload[changeAttributes]);
+      if (i < changeAttributes.length - 1) {
+        valuesString += ", ";
+      }
+      count++;
+    }
+    idsString += "(";
+    for (let i = 0; i < ids.length; i++) {
+      idsString += `$${count}`;
+      if (i < ids.length - 1) {
+        idsString += ", ";
+      }
+      count++;
+    }
+    idsString += ")";
+  };
+
+  assembleQueryParams();
+
+  try {
+    const {
+      rows,
+    } = await db.query(
+      `UPDATE "projects" SET ${valuesString} WHERE id IN ${idsString} AND "userId" = ($${count}) RETURNING *`,
+      [...values, ...ids, userId]
+    );
+    res.json(rows);
+  } catch (e) {
+    console.log(e);
+  }
+});
+
 router.delete("/:projectId", async (req, res, next) => {
   const { projectId } = req.params;
   const userId = req.session.currentUser;

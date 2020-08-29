@@ -19,6 +19,9 @@ const InputField = (props) => {
     if (name === "hourlyRate") return "Stundensatz";
     if (name === "username") return "Username";
     if (name === "password") return "Passwort";
+    if (name === "name") return "Projektname";
+    if (name === "description") return "Beschreibung";
+    if (name === "hours") return "Stundenanzahl";
   };
 
   return (

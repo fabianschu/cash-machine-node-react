@@ -10,12 +10,9 @@ import Modal from "../components/Modal";
 
 const useStyles = makeStyles((theme) => ({
   outer: {
-    padding: "20px",
+    padding: "20px 16px",
     backgroundColor: "white",
-  },
-  inner: {
     display: "flex",
-    justifyContent: "space-between",
     flexWrap: "wrap",
     alignItems: "center",
   },
@@ -35,20 +32,19 @@ const CustomerWidget = (props) => {
     <>
       <Box boxShadow={5}>
         <Box className={classes.outer}>
-          <Box className={classes.inner}>
-            <ModalButton
-              handleClick={setCreatingCustomer}
-              currentState={creatingCustomer}
-              type="create"
-            />
-            <SelectOne
-              options={customers}
-              handleSelection={setSelectedCustomer}
-              selected={selectedCustomer}
-              type="Kunden"
-              display="firm"
-            />
-          </Box>
+          <ModalButton
+            handleClick={setCreatingCustomer}
+            currentState={creatingCustomer}
+            type="createCustomer"
+            m={0}
+          />
+          <SelectOne
+            options={customers}
+            handleSelection={setSelectedCustomer}
+            selected={selectedCustomer}
+            type="Kunden"
+            display="firm"
+          />
         </Box>
         <Accordion
           disabled={!selectedCustomer}
