@@ -118,12 +118,6 @@ export default function ControlledAccordions(props) {
                   disabled={!selectedCustomer}
                   className={classes.printButton}
                 />
-                <ModalButton
-                  handleClick={() => setCreatingInvoice(true)}
-                  type="print"
-                  disabled={selectedProjects.length === 0}
-                  className={classes.printButton}
-                />
               </Box>
             </Box>
           )}
@@ -132,6 +126,14 @@ export default function ControlledAccordions(props) {
         </AccordionSummary>
         <AccordionDetails p={0} className={classes.accordionContent}>
           {selectedCustomer && <Table rows={data} />}
+          <Box mt={2}>
+            <ModalButton
+              handleClick={() => setCreatingInvoice(true)}
+              type="print"
+              disabled={selectedProjects.length === 0}
+              className={classes.printButton}
+            />
+          </Box>
         </AccordionDetails>
       </Accordion>
     </div>

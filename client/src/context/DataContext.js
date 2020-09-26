@@ -168,7 +168,8 @@ const DataContextProvider = ({ children }) => {
 
   return (
     <DataContext.Provider value={defaultContext}>
-      {customers && projects && userProfile && children}
+      {/* {customers && projects && userProfile && children} */}
+      {hasAuthenticated && children}
     </DataContext.Provider>
   );
 };

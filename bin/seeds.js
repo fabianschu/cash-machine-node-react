@@ -68,7 +68,6 @@ projects = [
 ];
 
 db.query("DROP TABLE IF EXISTS projects")
-  // .then(() => db.query("DROP TABLE session"))
   .then(() => db.query("DROP TABLE IF EXISTS customers"))
   .then(() =>
     db.query(
@@ -93,32 +92,6 @@ db.query("DROP TABLE IF EXISTS projects")
   .then(() =>
     db.query(
       'CREATE TABLE IF NOT EXISTS "projects" (ID SERIAL PRIMARY KEY, "name" VARCHAR(30), "description" VARCHAR(160), "hours" REAL, "customerId" INTEGER REFERENCES customers("id"), "createdAt" TIMESTAMP, "updatedAt" TIMESTAMP, "userId" INTEGER REFERENCES users("id"), "invoiceId" INTEGER REFERENCES invoices("id"))'
-    )
-  )
-  .then(() =>
-    customers.map((c) =>
-      db.query(
-        'INSERT INTO "customers" ("firm", "firstName", "lastName", "street", "city", "zip","country", "taxId","hourlyRate") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',
-        [
-          c.firm,
-          c.firstName,
-          c.lastName,
-          c.street,
-          c.city,
-          c.zip,
-          c.country,
-          c.taxId,
-          c.hourlyRate,
-        ]
-      )
-    )
-  )
-  .then(() =>
-    projects.map((p) =>
-      db.query(
-        'INSERT INTO "projects" ("name", "description", "hours", "createdAt", "updatedAt", "customerId") VALUES ($1, $2, $3, $4, $5, $6)',
-        [p.name, p.description, p.hours, p.createdAt, p.updatedAt, p.customerId]
-      )
     )
   )
   .then(() => console.log("Tables created: users, customers"))
