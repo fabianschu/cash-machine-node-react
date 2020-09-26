@@ -166,6 +166,7 @@ const DataContextProvider = ({ children }) => {
     customers,
     projects,
     userProfile,
+    invoices,
     setCustomers,
     setProjects,
     getProjects,
@@ -180,11 +181,10 @@ const DataContextProvider = ({ children }) => {
     editProjects,
   };
 
-  console.log(invoices);
   return (
     <DataContext.Provider value={defaultContext}>
       {/* {customers && projects && userProfile && children} */}
-      {hasAuthenticated && children}
+      {hasAuthenticated && customers && children}
     </DataContext.Provider>
   );
 };
