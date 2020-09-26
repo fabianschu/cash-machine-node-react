@@ -17,6 +17,7 @@ import Paper from "@material-ui/core/Paper";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import Invoice from "./Invoice";
 import TextField from "@material-ui/core/TextField";
+import InputField from "./InputField";
 
 const useStyles = makeStyles({
   table: {
@@ -33,12 +34,17 @@ const useStyles = makeStyles({
 
 const InvoiceOverview = () => {
   const [invoiceTitle, setInvoiceTitle] = useState("");
-  const [formalInvoiceId, setFormalInvoiceId] = useState();
   const { closeModal, selectedCustomer, selectedProjects } = useContext(
     UiContext
   );
 
-  const { userProfile, addInvoice, editProjects } = useContext(DataContext);
+  const {
+    userProfile,
+    addInvoice,
+    editProjects,
+    invoices,
+    getInvoices,
+  } = useContext(DataContext);
 
   const {
     firm,
@@ -69,27 +75,33 @@ const InvoiceOverview = () => {
 
   const { totalHours, totalPrice } = getTotal();
 
-  const invoiceTemplate = {
-    customer: { ...selectedCustomer },
-    positions: [...selectedProjects],
-    total: getTotal(),
-    invoiceTitle,
-    userProfile,
-    formalInvoiceId,
-  };
-
   const handleSubmit = async () => {
+    closeModal();
     const { id } = await addInvoice({
       title: invoiceTitle,
       customerId: selectedCustomer.id,
     });
-    setFormalInvoiceId(calculateInvoiceId(id));
-    editProjects(selectedProjects, { invoiceId: id });
+    await editProjects(selectedProjects, { invoiceId: id });
   };
 
   const calculateInvoiceId = (id) => {
     return id * 6 + 6000;
   };
+
+  const getNewInvoiceId = () => {
+    return Math.max(...invoices.map((invoice) => invoice.id));
+  };
+
+  const invoiceTemplate = {
+    customer: { ...selectedCustomer },
+    positions: [...selectedProjects],
+    total: getTotal(),
+    formalInvoiceId: calculateInvoiceId(getNewInvoiceId()),
+    invoiceTitle,
+    userProfile,
+  };
+
+  console.log(invoiceTemplate);
 
   return (
     <>
@@ -128,14 +140,15 @@ const InvoiceOverview = () => {
           justifyContent="space-between"
           alignItems="center"
         >
-          <Box fontWeight="fontWeightBold" mr={3}>
-            Rechnungstitel:
-          </Box>
           <TextField
             fullWidth
             value={invoiceTitle}
             onChange={(e) => setInvoiceTitle(e.target.value)}
             variant="outlined"
+            type="text"
+            label="Rechnungstitel"
+            size="small"
+            margin="normal"
           />
         </Box>
         <Box mb={3}>
@@ -183,32 +196,25 @@ const InvoiceOverview = () => {
         </Box>
       </DialogContent>
       <DialogActions>
-        {formalInvoiceId ? (
-          <Button color="secondary" autoFocus variant="contained">
-            <PDFDownloadLink
-              document={<Invoice template={invoiceTemplate} />}
-              fileName="somename.pdf"
-              className={classes.button}
-            >
-              {({ blob, url, loading, error }) =>
-                loading ? "PDF wird erstellt" : "PDF herunterladen"
-              }
-            </PDFDownloadLink>
-          </Button>
-        ) : (
-          <>
-            <Button autoFocus onClick={closeModal} color="primary">
-              Abbrechen
-            </Button>
-            <Button
-              onClick={handleSubmit}
-              color="secondary"
-              variant="contained"
-            >
-              OK
-            </Button>
-          </>
-        )}
+        <Button autoFocus onClick={closeModal} color="primary">
+          Abbrechen
+        </Button>
+        <Button
+          color="secondary"
+          autoFocus
+          variant="contained"
+          onClick={handleSubmit}
+        >
+          <PDFDownloadLink
+            document={<Invoice template={invoiceTemplate} />}
+            fileName="somename.pdf"
+            className={classes.button}
+          >
+            {({ blob, url, loading, error }) =>
+              loading ? "PDF wird erstellt" : "PDF herunterladen"
+            }
+          </PDFDownloadLink>
+        </Button>
       </DialogActions>
     </>
   );

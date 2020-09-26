@@ -137,7 +137,7 @@ const DataContextProvider = ({ children }) => {
         `${process.env.REACT_APP_SERVER_URL}/api/invoices`,
         values
       );
-      console.log(data);
+      await getInvoices();
       return data;
     } catch (e) {
       console.log(e);
@@ -183,7 +183,6 @@ const DataContextProvider = ({ children }) => {
 
   return (
     <DataContext.Provider value={defaultContext}>
-      {/* {customers && projects && userProfile && children} */}
       {hasAuthenticated && customers && children}
     </DataContext.Provider>
   );
