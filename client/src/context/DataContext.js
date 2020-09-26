@@ -183,7 +183,7 @@ const DataContextProvider = ({ children }) => {
 
   return (
     <DataContext.Provider value={defaultContext}>
-      {hasAuthenticated && customers && children}
+      {hasAuthenticated && children}
     </DataContext.Provider>
   );
 };

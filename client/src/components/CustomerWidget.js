@@ -38,13 +38,15 @@ const CustomerWidget = (props) => {
             type="createCustomer"
             m={0}
           />
-          <SelectOne
-            options={customers}
-            handleSelection={setSelectedCustomer}
-            selected={selectedCustomer}
-            type="Kunden"
-            display="firm"
-          />
+          {customers && (
+            <SelectOne
+              options={customers}
+              handleSelection={setSelectedCustomer}
+              selected={selectedCustomer}
+              type="Kunden"
+              display="firm"
+            />
+          )}
         </Box>
         <Accordion
           disabled={!selectedCustomer}
