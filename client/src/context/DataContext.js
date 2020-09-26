@@ -9,13 +9,27 @@ const DataContextProvider = ({ children }) => {
 
   const [customers, setCustomers] = useState();
   const [projects, setProjects] = useState();
+  const [invoices, setInvoices] = useState();
   const [userProfile, setUserProfile] = useState();
 
   useEffect(() => {
     getAndSetCustomers();
     getProjects();
+    getInvoices();
     getUserProfile(authenticatedUser);
   }, [authenticatedUser]);
+
+  const getInvoices = async () => {
+    try {
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_SERVER_URL}/api/invoices`
+      );
+      setInvoices(data);
+      return data;
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const getAndSetCustomers = async () => {
     try {
@@ -166,6 +180,7 @@ const DataContextProvider = ({ children }) => {
     editProjects,
   };
 
+  console.log(invoices);
   return (
     <DataContext.Provider value={defaultContext}>
       {/* {customers && projects && userProfile && children} */}
