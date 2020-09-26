@@ -7,6 +7,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { UiContext } from "../context/UiContext";
 import { Formik, Form, Field } from "formik";
 import InputField from "./InputField";
+import FloatInputField from "./FloatInputField";
 import * as Yup from "yup";
 import { DataContext } from "../context/DataContext";
 
@@ -37,7 +38,7 @@ const ProjectForm = () => {
           <DialogContent>
             <Field component={InputField} name="name" />
             <Field component={InputField} name="description" />
-            <Field component={InputField} name="hours" />
+            <Field component={FloatInputField} name="hours" />
           </DialogContent>
           <DialogActions>
             <Button autoFocus onClick={closeModal} color="primary">

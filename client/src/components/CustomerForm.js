@@ -7,6 +7,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { UiContext } from "../context/UiContext";
 import { Formik, Form, Field } from "formik";
 import InputField from "./InputField";
+import FloatInputField from "./FloatInputField";
 import * as Yup from "yup";
 
 const SignupSchema = Yup.object().shape({
@@ -72,15 +73,19 @@ const CustomerForm = () => {
             <Field component={InputField} name="zip" />
             <Field component={InputField} name="city" />
             <Field component={InputField} name="country" />
-            <Field component={InputField} name="hourlyRate" />
+            <Field component={FloatInputField} name="hourlyRate" />
           </DialogContent>
           <DialogActions>
             <Box mr="auto">
-              <Button
-                onClick={() => handleSubmit({ ...props.values, active: false })}
-              >
-                Löschen
-              </Button>
+              {editingCustomer && (
+                <Button
+                  onClick={() =>
+                    handleSubmit({ ...props.values, active: false })
+                  }
+                >
+                  Löschen
+                </Button>
+              )}
             </Box>
             <Button autoFocus onClick={closeModal} color="primary">
               Abbrechen
