@@ -68,6 +68,7 @@ projects = [
 ];
 
 db.query("DROP TABLE IF EXISTS projects")
+  .then(() => db.query("DROP TABLE IF EXISTS invoices"))
   .then(() => db.query("DROP TABLE IF EXISTS customers"))
   .then(() =>
     db.query(
@@ -91,8 +92,8 @@ db.query("DROP TABLE IF EXISTS projects")
   )
   .then(() =>
     db.query(
-      'CREATE TABLE IF NOT EXISTS "projects" (ID SERIAL PRIMARY KEY, "name" VARCHAR(30), "description" VARCHAR(160), "hours" REAL, "customerId" INTEGER REFERENCES customers("id"), "createdAt" TIMESTAMP, "updatedAt" TIMESTAMP, "userId" INTEGER REFERENCES users("id"), "invoiceId" INTEGER REFERENCES invoices("id"))'
+      'CREATE TABLE IF NOT EXISTS "projects" (ID SERIAL PRIMARY KEY, "name" VARCHAR(30), "description" VARCHAR(400), "hours" REAL, "customerId" INTEGER REFERENCES customers("id"), "createdAt" TIMESTAMP, "updatedAt" TIMESTAMP, "userId" INTEGER REFERENCES users("id"), "invoiceId" INTEGER REFERENCES invoices("id"))'
     )
   )
-  .then(() => console.log("Tables created: users, customers"))
+  .then(() => console.log("Tables deleted and newly created"))
   .catch((e) => console.log(e));
