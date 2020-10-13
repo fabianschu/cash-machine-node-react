@@ -27,7 +27,7 @@ const InputField = (props) => {
 
   return (
     <TextField
-      type="text"
+      type={name === "password" ? "password" : "text"}
       id={name}
       label={getLabel()}
       variant="outlined"
