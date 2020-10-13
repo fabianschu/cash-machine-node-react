@@ -22,6 +22,7 @@ const InputField = (props) => {
     if (name === "name") return "Projektname";
     if (name === "description") return "Beschreibung";
     if (name === "hours") return "Stundenanzahl";
+    if (name === "taxId") return "Steuernummer";
   };
 
   return (

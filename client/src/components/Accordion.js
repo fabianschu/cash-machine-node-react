@@ -94,7 +94,7 @@ export default function ControlledAccordions(props) {
                   </Box>
                   <Box>
                     <Box>
-                      Steuernummer: ajsfbadbfdsjfabh{" "}
+                      Steuernummer: {selectedCustomer.customerId}
                       <span>{selectedCustomer.taxId}</span>
                     </Box>
                     <Box>

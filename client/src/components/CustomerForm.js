@@ -74,6 +74,7 @@ const CustomerForm = () => {
             <Field component={InputField} name="city" />
             <Field component={InputField} name="country" />
             <Field component={FloatInputField} name="hourlyRate" />
+            <Field component={InputField} name="taxId" />
           </DialogContent>
           <DialogActions>
             <Box mr="auto">

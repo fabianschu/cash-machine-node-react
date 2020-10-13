@@ -162,7 +162,7 @@ const Invoice = ({ template }) => {
     userProfile,
     formalInvoiceId,
   } = template;
-  const { firm, zip, street, city, country } = customer;
+  const { firm, zip, street, city, country, taxId } = customer;
   const { totalHours, totalPrice } = total;
   const date = moment().format("DD|MM|YYYY");
 
@@ -209,6 +209,7 @@ const Invoice = ({ template }) => {
             <Text>{country}</Text>
           </View>
           <View style={styles.metaInfo}>
+            <Text>UID {taxId}</Text>
             <Text>Rechnungsnummer {formalInvoiceId}</Text>
             <Text>{date}</Text>
           </View>
