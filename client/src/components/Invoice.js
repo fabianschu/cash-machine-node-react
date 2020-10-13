@@ -170,6 +170,9 @@ const styles = StyleSheet.create({
   smallFont: {
     fontSize: 9,
   },
+  alignRight: {
+    textAlign: "right",
+  },
 });
 
 const Invoice = ({ template }) => {
@@ -281,7 +284,13 @@ const Invoice = ({ template }) => {
                 <Text style={styles.tableCell}></Text>
               </View>
               <View style={{ ...styles.tableCol, ...styles.col2 }}>
-                <Text style={{ ...styles.tableCell, ...styles.subtotal }}>
+                <Text
+                  style={{
+                    ...styles.tableCell,
+                    ...styles.bold,
+                    ...styles.alignRight,
+                  }}
+                >
                   Zwischensumme
                 </Text>
               </View>
@@ -323,7 +332,7 @@ const Invoice = ({ template }) => {
                 <Text style={styles.tableCell}></Text>
               </View>
               <View style={{ ...styles.tableCol, ...styles.col3 }}>
-                <Text style={{ ...styles.tableCell, ...styles.bold }}>
+                <Text style={{ ...styles.tableCell, ...styles.alignRight }}>
                   inkl. USt
                 </Text>
               </View>
