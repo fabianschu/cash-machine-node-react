@@ -100,14 +100,27 @@ const styles = StyleSheet.create({
   },
   col1: {
     width: COL1_WIDTH + "%",
+    display: "flex",
+    justifyContent: "center",
   },
   col2: {
     width: COL2_WIDTH + "%",
     borderRightWidth: BORDER_WIDTH * 2,
     borderLeftWidth: BORDER_WIDTH * 2,
   },
-  col3: { width: COL3_WIDTH + "%", borderRightWidth: BORDER_WIDTH },
-  col4: { width: COL4_WIDTH + "%", textAlign: "right" },
+  col3: {
+    width: COL3_WIDTH + "%",
+    borderRightWidth: BORDER_WIDTH,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  col4: {
+    width: COL4_WIDTH + "%",
+    textAlign: "right",
+    display: "flex",
+    justifyContent: "center",
+  },
   tableColHeader: {
     fontWeight: "bold",
   },
@@ -144,12 +157,18 @@ const styles = StyleSheet.create({
   bigSpacer: {
     marginBottom: BOTTOM_MARGIN_WITHIN_SECTIONS * 2,
   },
-  smallFont: {
-    fontSize: 9,
+  flexEnd: {
     justifySelf: "flex-end",
   },
   bold: {
     fontWeight: "bold",
+  },
+  subtotal: {
+    fontWeight: "bold",
+    textAlign: "right",
+  },
+  smallFont: {
+    fontSize: 9,
   },
 });
 
@@ -165,20 +184,24 @@ const Invoice = ({ template }) => {
   const { firm, zip, street, city, country, taxId } = customer;
   const { totalHours, totalPrice } = total;
   const date = moment().format("DD|MM|YYYY");
+  const taxRate = 0.16;
 
   const formatName = (name) => {
     if (!name) return;
     return name.toUpperCase().split("").join(" ");
   };
 
-  const formatPrice = (price) => {
-    if (withTax()) price = price * 1.16;
-    return price.toFixed(2).toString().replace(".", ",") + " €";
-  };
-
   const withTax = () => {
     if (country === "Deutschland") return true;
     return false;
+  };
+
+  const totalTax = (price) => {
+    return price * taxRate;
+  };
+
+  const formatPrice = (total) => {
+    return total.toFixed(2).toString().replace(".", ",") + " €";
   };
 
   return (
@@ -238,7 +261,9 @@ const Invoice = ({ template }) => {
                     <Text style={styles.tableCell}>{position.name}</Text>
                   </View>
                   <View style={{ ...styles.tableCol, ...styles.col2 }}>
-                    <Text style={styles.tableCell}>{position.description}</Text>
+                    <Text style={{ ...styles.tableCell, ...styles.smallFont }}>
+                      {position.description}
+                    </Text>
                   </View>
                   <View style={{ ...styles.tableCol, ...styles.col3 }}>
                     <Text style={styles.tableCell}>{position.hours}</Text>
@@ -253,13 +278,54 @@ const Invoice = ({ template }) => {
             })}
             <View style={{ ...styles.tableRow, ...styles.bold }}>
               <View style={{ ...styles.tableCol, ...styles.col1 }}>
+                <Text style={styles.tableCell}></Text>
+              </View>
+              <View style={{ ...styles.tableCol, ...styles.col2 }}>
+                <Text style={{ ...styles.tableCell, ...styles.subtotal }}>
+                  Zwischensumme
+                </Text>
+              </View>
+              <View style={{ ...styles.tableCol, ...styles.col3 }}>
+                <Text style={{ ...styles.tableCell, ...styles.bold }}>
+                  {totalHours}
+                </Text>
+              </View>
+              <View style={{ ...styles.tableCol, ...styles.col4 }}>
+                <Text style={styles.tableCell}>
+                  {formatPrice(totalPrice)}
+                  {!withTax() && "*"}
+                </Text>
+              </View>
+            </View>
+            <View style={{ ...styles.tableRow, ...styles.bold }}>
+              <View style={{ ...styles.tableCol, ...styles.col1 }}>
+                <Text style={styles.tableCell}></Text>
+              </View>
+              <View style={{ ...styles.tableCol, ...styles.col2 }}>
+                <Text style={{ ...styles.tableCell, ...styles.smallFont }}>
+                  + 16% USt
+                </Text>
+              </View>
+              <View style={{ ...styles.tableCol, ...styles.col3 }}>
+                <Text style={{ ...styles.tableCell }}></Text>
+              </View>
+              <View style={{ ...styles.tableCol, ...styles.col4 }}>
+                <Text style={styles.tableCell}>
+                  {formatPrice(totalTax(totalPrice))}
+                </Text>
+              </View>
+            </View>
+            <View style={{ ...styles.tableRow, ...styles.bold }}>
+              <View style={{ ...styles.tableCol, ...styles.col1 }}>
                 <Text style={styles.tableCell}>Gesamt</Text>
               </View>
               <View style={{ ...styles.tableCol, ...styles.col2 }}>
                 <Text style={styles.tableCell}></Text>
               </View>
               <View style={{ ...styles.tableCol, ...styles.col3 }}>
-                <Text style={styles.tableCell}>{totalHours}</Text>
+                <Text style={{ ...styles.tableCell, ...styles.bold }}>
+                  inkl. USt
+                </Text>
               </View>
               <View style={{ ...styles.tableCol, ...styles.col4 }}>
                 <Text style={styles.tableCell}>
@@ -287,7 +353,7 @@ const Invoice = ({ template }) => {
             style={{
               ...styles.centeredContent,
               ...styles.serif,
-              ...styles.smallFont,
+              ...styles.flexEnd,
             }}
           >
             <Text>
