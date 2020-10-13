@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     borderLeftWidth: BORDER_WIDTH * 2,
   },
   col3: { width: COL3_WIDTH + "%", borderRightWidth: BORDER_WIDTH },
-  col4: { width: COL4_WIDTH + "%" },
+  col4: { width: COL4_WIDTH + "%", textAlign: "right" },
   tableColHeader: {
     fontWeight: "bold",
   },
