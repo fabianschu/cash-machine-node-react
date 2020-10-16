@@ -203,6 +203,8 @@ const Invoice = ({ template }) => {
     return price * taxRate;
   };
 
+  const grossPrice = totalPrice * (1 + taxRate);
+
   const formatPrice = (total) => {
     return total.toFixed(2).toString().replace(".", ",") + " €";
   };
@@ -279,51 +281,61 @@ const Invoice = ({ template }) => {
                 </View>
               );
             })}
-            <View style={{ ...styles.tableRow, ...styles.bold }}>
-              <View style={{ ...styles.tableCol, ...styles.col1 }}>
-                <Text style={styles.tableCell}></Text>
-              </View>
-              <View style={{ ...styles.tableCol, ...styles.col2 }}>
-                <Text
-                  style={{
-                    ...styles.tableCell,
-                    ...styles.bold,
-                    ...styles.alignRight,
-                  }}
-                >
-                  Zwischensumme
-                </Text>
-              </View>
-              <View style={{ ...styles.tableCol, ...styles.col3 }}>
-                <Text style={{ ...styles.tableCell, ...styles.bold }}>
-                  {totalHours}
-                </Text>
-              </View>
-              <View style={{ ...styles.tableCol, ...styles.col4 }}>
-                <Text style={styles.tableCell}>
-                  {formatPrice(totalPrice)}
-                  {!withTax() && "*"}
-                </Text>
-              </View>
-            </View>
-            <View style={{ ...styles.tableRow, ...styles.bold }}>
-              <View style={{ ...styles.tableCol, ...styles.col1 }}>
-                <Text style={styles.tableCell}></Text>
-              </View>
-              <View style={{ ...styles.tableCol, ...styles.col2 }}>
-                <Text style={{ ...styles.tableCell, ...styles.smallFont }}>
-                  + 16% USt
-                </Text>
-              </View>
-              <View style={{ ...styles.tableCol, ...styles.col3 }}>
-                <Text style={{ ...styles.tableCell }}></Text>
-              </View>
-              <View style={{ ...styles.tableCol, ...styles.col4 }}>
-                <Text style={styles.tableCell}>
-                  {formatPrice(totalTax(totalPrice))}
-                </Text>
-              </View>
-            </View>
+            {withTax() && (
+              <>
+                <View style={{ ...styles.tableRow, ...styles.bold }}>
+                  <View style={{ ...styles.tableCol, ...styles.col1 }}>
+                    <Text style={styles.tableCell}></Text>
+                  </View>
+                  <View style={{ ...styles.tableCol, ...styles.col2 }}>
+                    <Text
+                      style={{
+                        ...styles.tableCell,
+                        ...styles.bold,
+                        ...styles.alignRight,
+                      }}
+                    >
+                      Zwischensumme
+                    </Text>
+                  </View>
+                  <View style={{ ...styles.tableCol, ...styles.col3 }}>
+                    <Text style={{ ...styles.tableCell, ...styles.bold }}>
+                      {totalHours}
+                    </Text>
+                  </View>
+                  <View style={{ ...styles.tableCol, ...styles.col4 }}>
+                    <Text style={styles.tableCell}>
+                      {formatPrice(totalPrice)}
+                      {!withTax() && "*"}
+                    </Text>
+                  </View>
+                </View>
+                <View style={{ ...styles.tableRow, ...styles.bold }}>
+                  <View style={{ ...styles.tableCol, ...styles.col1 }}>
+                    <Text style={styles.tableCell}></Text>
+                  </View>
+                  <View style={{ ...styles.tableCol, ...styles.col2 }}>
+                    <Text
+                      style={{
+                        ...styles.tableCell,
+                        ...styles.smallFont,
+                        ...styles.alignRight,
+                      }}
+                    >
+                      + 16% USt
+                    </Text>
+                  </View>
+                  <View style={{ ...styles.tableCol, ...styles.col3 }}>
+                    <Text style={{ ...styles.tableCell }}></Text>
+                  </View>
+                  <View style={{ ...styles.tableCol, ...styles.col4 }}>
+                    <Text style={styles.tableCell}>
+                      {formatPrice(totalTax(totalPrice))}
+                    </Text>
+                  </View>
+                </View>
+              </>
+            )}
             <View style={{ ...styles.tableRow, ...styles.bold }}>
               <View style={{ ...styles.tableCol, ...styles.col1 }}>
                 <Text style={styles.tableCell}>Gesamt</Text>
@@ -333,12 +345,14 @@ const Invoice = ({ template }) => {
               </View>
               <View style={{ ...styles.tableCol, ...styles.col3 }}>
                 <Text style={{ ...styles.tableCell, ...styles.alignRight }}>
-                  inkl. USt
+                  {withTax() && "inkl. USt"}
                 </Text>
               </View>
               <View style={{ ...styles.tableCol, ...styles.col4 }}>
                 <Text style={styles.tableCell}>
-                  {formatPrice(totalPrice)}
+                  {withTax()
+                    ? formatPrice(grossPrice)
+                    : formatPrice(totalPrice)}
                   {!withTax() && "*"}
                 </Text>
               </View>
