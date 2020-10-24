@@ -26,8 +26,8 @@ const CustomerForm = () => {
   } = useContext(UiContext);
 
   const handleSubmit = async (values) => {
-    await modifyCustomers(values);
     closeModal();
+    await modifyCustomers(values);
   };
 
   const getInitialValues = () => {

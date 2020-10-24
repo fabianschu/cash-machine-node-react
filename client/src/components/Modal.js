@@ -27,7 +27,7 @@ const Modal = (props) => {
       return <ProjectForm />;
     }
   };
-  console.log(creatingProject);
+
   return (
     <div>
       <Dialog

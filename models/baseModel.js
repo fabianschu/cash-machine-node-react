@@ -14,6 +14,7 @@ class BaseModel {
       const { rows } = await db.query(query, values);
       return rows;
     } catch (e) {
+      console.log(e);
       return e;
     }
   };
@@ -24,11 +25,13 @@ class BaseModel {
       const { rows } = await db.query(query, values);
       return rows;
     } catch (e) {
+      console.log(e);
       return e;
     }
   };
 
   update = async (attributes, conditions) => {
+    if (attributes.id) delete attributes.id;
     const updatedAt = new Date();
     const { query, values } = queryBuilder.update(
       this.tableName,
@@ -39,6 +42,7 @@ class BaseModel {
       const { rows } = await db.query(query, values);
       return rows[0];
     } catch (e) {
+      console.log(e);
       return e;
     }
   };

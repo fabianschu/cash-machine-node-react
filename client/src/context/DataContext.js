@@ -54,7 +54,7 @@ const DataContextProvider = ({ children }) => {
 
   const editCustomer = async (values) => {
     const updatedCustomer = await axios.put(
-      `${process.env.REACT_APP_SERVER_URL}/api/customers/:id`,
+      `${process.env.REACT_APP_SERVER_URL}/api/customers/${values.id}`,
       values
     );
     const allCustomers = await getAndSetCustomers();
