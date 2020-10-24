@@ -29,25 +29,28 @@ router.post("/", async (req, res, next) => {
   } = req.body;
 
   const userId = req.session.currentUser;
-
-  const {
-    rows,
-  } = await db.query(
-    'INSERT INTO "customers" ("firm", "firstName", "lastName", "street", "zip", "city", "country", "taxId", "hourlyRate", "userId") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *',
-    [
-      firm,
-      firstName,
-      lastName,
-      street,
-      zip,
-      city,
-      country,
-      taxId,
-      hourlyRate,
-      parseInt(userId),
-    ]
-  );
-  res.json(rows[0]);
+  try {
+    const {
+      rows,
+    } = await db.query(
+      'INSERT INTO "customers" ("firm", "firstName", "lastName", "street", "zip", "city", "country", "taxId", "hourlyRate", "userId") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *',
+      [
+        firm,
+        firstName,
+        lastName,
+        street,
+        zip,
+        city,
+        country,
+        taxId,
+        hourlyRate,
+        parseInt(userId),
+      ]
+    );
+    res.json(rows[0]);
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 router.put("/:customerId", async (req, res, next) => {
