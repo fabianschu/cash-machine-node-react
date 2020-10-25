@@ -35,13 +35,8 @@ router.put("/:customerId", async (req, res, next) => {
 /*  GET all customers */
 router.get("/", async (req, res, next) => {
   const userId = req.session.currentUser;
-  const {
-    rows,
-  } = await db.query(
-    'SELECT * FROM "customers" WHERE "userId" = $1 AND "active" = $2',
-    [userId, true]
-  );
-  res.json(rows);
+  const result = await Customer.where({ userId });
+  res.json(result);
 });
 
 // router.use("/:customerId/projects", projects);
