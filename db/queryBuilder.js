@@ -1,5 +1,4 @@
 const db = require("../db");
-const { tableName } = require("../models/Invoice");
 
 const selectStatement = (tableName, indexedAttributes) =>
   `SELECT * FROM "${tableName}" WHERE ${indexedAttributes}`;
