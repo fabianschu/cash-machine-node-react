@@ -81,6 +81,7 @@ const InvoiceOverview = () => {
       title: invoiceTitle,
       customerId: selectedCustomer.id,
     });
+    console.log(id);
     await editProjects(selectedProjects, { invoiceId: id });
   };
 

@@ -6,6 +6,8 @@ const insertStatement = (tableName, attributes, indices) =>
   `INSERT INTO "${tableName}" ${attributes} VALUES ${indices} RETURNING "id"`;
 const updateStatement = (tableName, indexedAttributes, conditions) =>
   `UPDATE "${tableName}" SET ${indexedAttributes} WHERE ${conditions} RETURNING *`;
+const updateMultipleStatement = (tableName, indexedAttributes, conditions) =>
+  `UPDATE "${tableName}" SET ${indexedAttributes} WHERE ${conditions} RETURNING *`;
 
 // ($1, $2, $3)
 const createIndices = (attributeNames) => {
@@ -51,14 +53,27 @@ const createIndexedAttributes = (attributeNames, seperator, startIdx) => {
   return indexedAttributesString;
 };
 
-const createIndexedSetAttributes = (attributeNames, startIdx = 1) => {
+// ("height" = $1, "length" = $2, "weight" = $3)
+const createIndexedCommaAttributes = (attributeNames, startIdx = 1) => {
   const seperator = ", ";
   return createIndexedAttributes(attributeNames, seperator, startIdx);
 };
 
+// ("height" = $1 AND "length" = $2 AND "weight" = $3)
 const createIndexedAndAttributes = (attributeNames, startIdx = 1) => {
   const seperator = " AND ";
   return createIndexedAttributes(attributeNames, seperator, startIdx);
+};
+
+// "height IN $1"
+const createInFragment = (attributeName, length, startIdx = 1) => {
+  let string = ` AND ${attributeName} IN (`;
+  for (let i = startIdx; i < length + startIdx; i++) {
+    string += `$${i}`;
+    if (i !== length + startIdx - 1) string += ", ";
+  }
+  string += ")";
+  return string;
 };
 
 const getNewStartingIdx = (oldArray) => oldArray.length + 1;
@@ -93,7 +108,7 @@ module.exports = {
     return {
       query: updateStatement(
         tableName,
-        createIndexedSetAttributes(attributeNames),
+        createIndexedCommaAttributes(attributeNames),
         createIndexedAndAttributes(
           conditionNames,
           getNewStartingIdx(attributeNames)
@@ -102,6 +117,31 @@ module.exports = {
       values: [
         ...createValues(attributeNames, attributes),
         ...createValues(conditionNames, conditions),
+      ],
+    };
+  },
+
+  updateMultiple: (tableName, attributes, ids, conditions) => {
+    const attributeNames = Object.keys(attributes);
+    const conditionNames = Object.keys(conditions);
+    return {
+      query: updateMultipleStatement(
+        tableName,
+        createIndexedCommaAttributes(attributeNames),
+        createIndexedAndAttributes(
+          conditionNames,
+          getNewStartingIdx(attributeNames)
+        ) +
+          createInFragment(
+            "id",
+            ids.length,
+            getNewStartingIdx([...attributeNames, ...conditionNames])
+          )
+      ),
+      values: [
+        ...createValues(attributeNames, attributes),
+        ...createValues(conditionNames, conditions),
+        ...ids,
       ],
     };
   },

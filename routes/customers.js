@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const Router = require("express-promise-router");
 const db = require("../db");
 const projects = require("./projects");
-const Customer = require("../models/Customer");
+const { Customer } = require("../models/baseModel");
 
 const router = new Router();
 
