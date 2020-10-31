@@ -90,6 +90,23 @@ class BaseModel {
       return e;
     }
   };
+
+  delete = async (conditions) => {
+    const { query, values } = queryBuilder.delete(this.tableName, {
+      ...conditions,
+    });
+    try {
+      const { id } = await db.query(query, values);
+      return id;
+    } catch (e) {
+      if (process.ENV === "development") {
+        console.log(e);
+        console.log(query);
+        console.log(values);
+      }
+      return e;
+    }
+  };
 }
 
 module.exports = {
