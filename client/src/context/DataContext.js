@@ -123,7 +123,7 @@ const DataContextProvider = ({ children }) => {
   const getUserProfile = async (id) => {
     try {
       const { data } = await axios.get(
-        `${process.env.REACT_APP_SERVER_URL}/api/user_profiles/${id}`
+        `${process.env.REACT_APP_SERVER_URL}/api/user_profile`
       );
       return setUserProfile(data);
     } catch (e) {
