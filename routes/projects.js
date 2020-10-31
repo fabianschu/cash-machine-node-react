@@ -44,17 +44,8 @@ router.put("/", async (req, res, next) => {
 router.delete("/:projectId", async (req, res, next) => {
   const { projectId } = req.params;
   const userId = req.session.currentUser;
-  try {
-    const {
-      rows,
-    } = await db.query(
-      'DELETE FROM "projects" WHERE "id" = ($1) AND "userId" = ($2)',
-      [projectId, userId]
-    );
-    res.json(rows);
-  } catch (e) {
-    console.log(e);
-  }
+  const result = await Project.delete({ id: projectId, userId });
+  res.json(result);
 });
 
 module.exports = router;

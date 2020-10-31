@@ -8,6 +8,8 @@ const updateStatement = (tableName, indexedAttributes, conditions) =>
   `UPDATE "${tableName}" SET ${indexedAttributes} WHERE ${conditions} RETURNING *`;
 const updateMultipleStatement = (tableName, indexedAttributes, conditions) =>
   `UPDATE "${tableName}" SET ${indexedAttributes} WHERE ${conditions} RETURNING *`;
+const deleteStatement = (tableName, conditions) =>
+  `DELETE FROM ${tableName} WHERE ${conditions} RETURNING "id"`;
 
 // ($1, $2, $3)
 const createIndices = (attributeNames) => {
@@ -61,6 +63,7 @@ const createIndexedCommaAttributes = (attributeNames, startIdx = 1) => {
 
 // ("height" = $1 AND "length" = $2 AND "weight" = $3)
 const createIndexedAndAttributes = (attributeNames, startIdx = 1) => {
+  console.log(attributeNames);
   const seperator = " AND ";
   return createIndexedAttributes(attributeNames, seperator, startIdx);
 };
@@ -143,6 +146,17 @@ module.exports = {
         ...createValues(conditionNames, conditions),
         ...ids,
       ],
+    };
+  },
+
+  delete: (tableName, conditions) => {
+    const conditionNames = Object.keys(conditions);
+    return {
+      query: deleteStatement(
+        tableName,
+        createIndexedAndAttributes(conditionNames)
+      ),
+      values: [...createValues(conditionNames, conditions)],
     };
   },
 };
