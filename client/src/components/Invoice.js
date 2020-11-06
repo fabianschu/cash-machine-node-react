@@ -12,6 +12,9 @@ import logo from "../logo.png";
 import moment from "moment";
 import lightMuseo from "../assets/light100.ttf";
 import regularMuseo from "../assets/normal500.ttf";
+import brandonLight from "../assets/brandonLight.ttf";
+import brandonMedium from "../assets/brandonMedium.ttf";
+import gretaRegular from "../assets/gretaRegular.ttf";
 
 const BORDER_COLOR = "#000";
 const BORDER_STYLE = "solid";
@@ -27,6 +30,16 @@ const DEFAULT_FONT_SIZE = 11;
 
 Font.register({ family: "Museo", src: lightMuseo, fontWeight: "light" });
 Font.register({ family: "Museo", src: regularMuseo, fontWeight: "regular" });
+Font.register({
+  family: "brandonLight",
+  src: brandonLight,
+  fontWeight: "light",
+});
+Font.register({
+  family: "gretaRegular",
+  src: gretaRegular,
+  fontWeight: "regular",
+});
 
 const styles = StyleSheet.create({
   body: {
@@ -73,7 +86,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
   },
   invoiceTitle: {
-    fontWeight: "bold",
+    fontFamily: "brandonMedium",
     marginBottom: BOTTOM_MARGIN_WITHIN_SECTIONS,
   },
   table: {
@@ -149,7 +162,7 @@ const styles = StyleSheet.create({
     fontWeight: "light",
   },
   serif: {
-    fontFamily: "Times-Roman",
+    fontFamily: "gretaRegular",
   },
   spacer: {
     marginBottom: BOTTOM_MARGIN_WITHIN_SECTIONS,
