@@ -1,117 +1,111 @@
 const db = require("../db");
 const queryBuilder = require("../db/queryBuilder");
 
-class BaseModel {
-  constructor(tablename) {
-    this.tableName = tablename;
-  }
-
-  create = async (attributes) => {
-    const updatedAt = new Date();
-    const createdAt = new Date();
-    const { query, values } = queryBuilder.create(this.tableName, {
-      ...attributes,
-      updatedAt,
-      createdAt,
-    });
-    try {
-      const { rows } = await db.query(query, values);
-      return rows[0];
-    } catch (e) {
-      if (process.ENV === "development") {
-        console.log(e);
-        console.log(query);
-        console.log(values);
-      }
-      return e;
-    }
-  };
-
-  where = async (attributes) => {
-    const { query, values } = queryBuilder.where(this.tableName, attributes);
-    try {
-      const { rows } = await db.query(query, values);
-      return rows;
-    } catch (e) {
-      if (process.ENV === "development") {
-        console.log(e);
-        console.log(query);
-        console.log(values);
-      }
-      return e;
-    }
-  };
-
-  update = async (attributes, conditions) => {
-    if (attributes.id) delete attributes.id;
-    console.log("attributes");
-    console.log(attributes);
-    console.log("conditions");
-    console.log(conditions);
-    const updatedAt = new Date();
-    const { query, values } = queryBuilder.update(
-      this.tableName,
-      { ...attributes, updatedAt },
-      conditions
-    );
-    try {
-      const { rows } = await db.query(query, values);
-      return rows[0];
-    } catch (e) {
-      if (process.ENV === "development") {
-        console.log(e);
-        console.log(query);
-        console.log(values);
-      }
-      return e;
-    }
-  };
-
-  updateMultiple = async (ids, payload, conditions) => {
-    const updatedAt = new Date();
-    const { query, values } = queryBuilder.updateMultiple(
-      this.tableName,
-      {
-        ...payload,
+const BaseModel = (tableName) => {
+  return {
+    create: async (attributes) => {
+      const updatedAt = new Date();
+      const createdAt = new Date();
+      const { query, values } = queryBuilder.create(tableName, {
+        ...attributes,
         updatedAt,
-      },
-      ids,
-      conditions
-    );
-    try {
-      const { rows } = await db.query(query, values);
-      return rows;
-    } catch (e) {
-      if (process.ENV === "development") {
-        console.log(e);
-        console.log(query);
-        console.log(values);
+        createdAt,
+      });
+      try {
+        const { rows } = await db.query(query, values);
+        return rows[0];
+      } catch (e) {
+        if (process.ENV === "development") {
+          console.log(e);
+          console.log(query);
+          console.log(values);
+        }
+        return e;
       }
-      return e;
-    }
-  };
+    },
 
-  delete = async (conditions) => {
-    const { query, values } = queryBuilder.delete(this.tableName, {
-      ...conditions,
-    });
-    try {
-      const { id } = await db.query(query, values);
-      return id;
-    } catch (e) {
-      if (process.ENV === "development") {
-        console.log(e);
-        console.log(query);
-        console.log(values);
+    where: async (attributes) => {
+      const { query, values } = queryBuilder.where(tableName, attributes);
+      try {
+        const { rows } = await db.query(query, values);
+        return rows;
+      } catch (e) {
+        if (process.ENV === "development") {
+          console.log(e);
+          console.log(query);
+          console.log(values);
+        }
+        return e;
       }
-      return e;
-    }
+    },
+
+    update: async (attributes, conditions) => {
+      if (attributes.id) delete attributes.id;
+      const updatedAt = new Date();
+      const { query, values } = queryBuilder.update(
+        tableName,
+        { ...attributes, updatedAt },
+        conditions
+      );
+      try {
+        const { rows } = await db.query(query, values);
+        return rows[0];
+      } catch (e) {
+        if (process.ENV === "development") {
+          console.log(e);
+          console.log(query);
+          console.log(values);
+        }
+        return e;
+      }
+    },
+
+    updateMultiple: async (ids, payload, conditions) => {
+      const updatedAt = new Date();
+      const { query, values } = queryBuilder.updateMultiple(
+        tableName,
+        {
+          ...payload,
+          updatedAt,
+        },
+        ids,
+        conditions
+      );
+      try {
+        const { rows } = await db.query(query, values);
+        return rows;
+      } catch (e) {
+        if (process.ENV === "development") {
+          console.log(e);
+          console.log(query);
+          console.log(values);
+        }
+        return e;
+      }
+    },
+
+    delete: async (conditions) => {
+      const { query, values } = queryBuilder.delete(tableName, {
+        ...conditions,
+      });
+      try {
+        const { id } = await db.query(query, values);
+        return id;
+      } catch (e) {
+        if (process.ENV === "development") {
+          console.log(e);
+          console.log(query);
+          console.log(values);
+        }
+        return e;
+      }
+    },
   };
-}
+};
 
 module.exports = {
-  Invoice: new BaseModel("invoices"),
-  Customer: new BaseModel("customers"),
-  Project: new BaseModel("projects"),
-  UserProfile: new BaseModel("userProfiles"),
+  Invoice: BaseModel("invoices"),
+  Customer: BaseModel("customers"),
+  Project: BaseModel("projects"),
+  UserProfile: BaseModel("userProfiles"),
 };
