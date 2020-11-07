@@ -36,6 +36,11 @@ Font.register({
   fontWeight: "light",
 });
 Font.register({
+  family: "brandonMedium",
+  src: brandonMedium,
+  fontWeight: "regular",
+});
+Font.register({
   family: "gretaRegular",
   src: gretaRegular,
   fontWeight: "regular",
@@ -70,9 +75,8 @@ const styles = StyleSheet.create({
     fontWeight: "light",
   },
   greenText: {
-    color: "#559495",
-    fontSize: 9,
-    fontWeight: "thin",
+    color: "#333333",
+    fontFamily: "brandonLight",
   },
   customerAddress: {
     display: "flex",
