@@ -1,7 +1,7 @@
 const db = require("../db");
 const queryBuilder = require("../db/queryBuilder");
 
-const BaseModel = (tableName) => {
+module.exports = BaseModel = (tableName) => {
   return {
     create: async (attributes) => {
       const updatedAt = new Date();
@@ -101,11 +101,4 @@ const BaseModel = (tableName) => {
       }
     },
   };
-};
-
-module.exports = {
-  Invoice: BaseModel("invoices"),
-  Customer: BaseModel("customers"),
-  Project: BaseModel("projects"),
-  UserProfile: BaseModel("userProfiles"),
 };

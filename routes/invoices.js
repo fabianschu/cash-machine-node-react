@@ -1,7 +1,7 @@
 var express = require("express");
 const Router = require("express-promise-router");
 const db = require("../db");
-const { Invoice } = require("../models/baseModel");
+const Invoice = require("../models/baseModel")("invoices");
 
 const router = new Router({ mergeParams: true });
 

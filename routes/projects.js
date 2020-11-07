@@ -1,5 +1,5 @@
 const Router = require("express-promise-router");
-const { Project } = require("../models/baseModel");
+const Project = require("../models/baseModel")("projects");
 
 const router = new Router({ mergeParams: true });
 
