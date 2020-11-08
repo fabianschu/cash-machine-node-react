@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Document,
-  Page,
-  View,
-  Text,
-  Image,
-  Font,
-  StyleSheet,
-} from "@react-pdf/renderer";
+import { View, Text, Font, StyleSheet } from "@react-pdf/renderer";
 import {
   invoiceTotal,
   invoiceHours,
@@ -197,7 +189,7 @@ const Table = (props) => {
               <Text style={{ ...styles.tableCell }}></Text>
             </View>
             <View style={{ ...styles.tableCol, ...styles.col4 }}>
-              <Text style={styles.boldTableCell}>{formatPrice(taxes)}</Text>
+              <Text style={styles.tableCell}>{formatPrice(taxes)}</Text>
             </View>
           </View>
         </>
@@ -207,12 +199,12 @@ const Table = (props) => {
           <Text style={styles.boldTableCell}>Gesamt</Text>
         </View>
         <View style={{ ...styles.tableCol, ...styles.col2 }}>
-          <Text style={styles.tableCell}></Text>
-        </View>
-        <View style={{ ...styles.tableCol, ...styles.col3 }}>
           <Text style={{ ...styles.boldTableCell, ...styles.alignRight }}>
             {tax && "inkl. USt"}
           </Text>
+        </View>
+        <View style={{ ...styles.tableCol, ...styles.col3 }}>
+          <Text></Text>
         </View>
         <View style={{ ...styles.tableCol, ...styles.col4 }}>
           <Text style={styles.boldTableCell}>
