@@ -15,7 +15,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { PDFDownloadLink } from "@react-pdf/renderer";
-import Invoice from "./Invoice";
+import Invoice from "./Invoice/Invoice";
 import TextField from "@material-ui/core/TextField";
 import InputField from "./InputField";
 

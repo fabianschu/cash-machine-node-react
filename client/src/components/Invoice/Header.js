@@ -13,17 +13,8 @@ import logo from "../../logo.png";
 
 const BLACK_EIGHTY = "#333333";
 const MINTY_GREEN = "#559495";
-const BORDER_COLOR = "#000";
-const BORDER_STYLE = "solid";
-const BORDER_WIDTH = 0.5;
-const COL1_WIDTH = 25;
-const COL2_WIDTH = 53;
-const COL3_WIDTH = 10;
-const COL4_WIDTH = 12;
-const MAIN_MARGIN = 40;
 const BOTTOM_MARGIN_BETWEEN_SECTIONS = 30;
 const BOTTOM_MARGIN_WITHIN_SECTIONS = 15;
-const DEFAULT_FONT_SIZE = 11;
 
 const styles = StyleSheet.create({
   header: {
