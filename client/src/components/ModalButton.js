@@ -61,11 +61,6 @@ const ModalButton = (props) => {
     }
   };
 
-  const renderMargin = () => {
-    if (type === "print" || type === "editCustomer") return 0;
-    return 2;
-  };
-
   return (
     <Box>
       <Button

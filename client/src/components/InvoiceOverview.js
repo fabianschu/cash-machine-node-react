@@ -38,13 +38,9 @@ const InvoiceOverview = () => {
     UiContext
   );
 
-  const {
-    userProfile,
-    addInvoice,
-    editProjects,
-    invoices,
-    getInvoices,
-  } = useContext(DataContext);
+  const { userProfile, addInvoice, editProjects, invoices } = useContext(
+    DataContext
+  );
 
   const {
     firm,
@@ -92,6 +88,17 @@ const InvoiceOverview = () => {
   const getNewInvoiceId = () => {
     return Math.max(...invoices.map((invoice) => invoice.id));
   };
+
+  const formalInvoiceId =
+    Math.max(...invoices.map((invoice) => invoice.id)) * 6 + 6000;
+
+  const fileName =
+    moment().format("MM-YY") +
+    "_" +
+    formalInvoiceId +
+    "_" +
+    formattedCustomerTitle() +
+    "_LenaRiegerDesign";
 
   const invoiceTemplate = {
     customer: { ...selectedCustomer },
@@ -206,15 +213,19 @@ const InvoiceOverview = () => {
           variant="contained"
           onClick={handleSubmit}
         >
-          <PDFDownloadLink
-            document={<Invoice template={invoiceTemplate} />}
-            fileName="somename.pdf"
-            className={classes.button}
-          >
-            {({ blob, url, loading, error }) =>
-              loading ? "PDF wird erstellt" : "PDF herunterladen"
-            }
-          </PDFDownloadLink>
+          {deactivatedPdfAssembling ? (
+            "PDF wird erstellt"
+          ) : (
+            <PDFDownloadLink
+              document={<Invoice template={invoiceTemplate} />}
+              fileName={fileName}
+              className={classes.button}
+            >
+              {({ blob, url, loading, error }) =>
+                loading ? "PDF wird erstellt" : "PDF herunterladen"
+              }
+            </PDFDownloadLink>
+          )}
         </Button>
       </DialogActions>
     </>

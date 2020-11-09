@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -8,7 +7,6 @@ import { UiContext } from "../context/UiContext";
 import { Formik, Form, Field } from "formik";
 import InputField from "./InputField";
 import FloatInputField from "./FloatInputField";
-import * as Yup from "yup";
 import { DataContext } from "../context/DataContext";
 
 const ProjectForm = () => {
@@ -30,7 +28,7 @@ const ProjectForm = () => {
       }}
       onSubmit={handleSubmit}
     >
-      {(props) => (
+      {() => (
         <Form>
           <DialogTitle id="responsive-dialog-title">
             {"Neues Projekt"}

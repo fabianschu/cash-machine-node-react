@@ -153,10 +153,7 @@ const DataContextProvider = ({ children }) => {
     };
 
     try {
-      const { result } = await axios.put(
-        `${process.env.REACT_APP_SERVER_URL}/api/projects`,
-        data
-      );
+      await axios.put(`${process.env.REACT_APP_SERVER_URL}/api/projects`, data);
       await getAndSetProjects();
     } catch (e) {
       console.log(e);

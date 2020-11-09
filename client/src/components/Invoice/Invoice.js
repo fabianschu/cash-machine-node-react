@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Document,
-  Page,
-  View,
-  Text,
-  Image,
-  Font,
-  StyleSheet,
-} from "@react-pdf/renderer";
+import { Document, Page, Font, StyleSheet } from "@react-pdf/renderer";
 import lightMuseo from "../../assets/light100.ttf";
 import regularMuseo from "../../assets/normal500.ttf";
 import brandonLight from "../../assets/brandonLight.ttf";

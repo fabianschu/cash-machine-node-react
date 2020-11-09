@@ -4,9 +4,7 @@ import { DataContext } from "./DataContext";
 const UiContext = createContext();
 
 const UiContextProvider = ({ children }) => {
-  const { addCustomer, editCustomer, archiveProjects } = useContext(
-    DataContext
-  );
+  const { addCustomer, editCustomer } = useContext(DataContext);
 
   const [creatingCustomer, setCreatingCustomer] = useState(false);
   const [editingCustomer, setEditingCustomer] = useState(false);

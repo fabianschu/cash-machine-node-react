@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Document,
-  Page,
-  View,
-  Text,
-  Image,
-  Font,
-  StyleSheet,
-} from "@react-pdf/renderer";
+import { View, Text, Image, StyleSheet } from "@react-pdf/renderer";
 import moment from "moment";
 import logo from "../../logo.png";
 
