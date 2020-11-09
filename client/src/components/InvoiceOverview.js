@@ -1,4 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import moment from "moment";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -17,7 +18,6 @@ import Paper from "@material-ui/core/Paper";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import Invoice from "./Invoice/Invoice";
 import TextField from "@material-ui/core/TextField";
-import InputField from "./InputField";
 
 const useStyles = makeStyles({
   table: {
@@ -34,6 +34,11 @@ const useStyles = makeStyles({
 
 const InvoiceOverview = () => {
   const [invoiceTitle, setInvoiceTitle] = useState("");
+  const [deactivatedPdfAssembling, setDeactivatedPdfAssembling] = useState(
+    true
+  );
+  const [pdfAssemblingTimeout, setPdfAssemblingTimeout] = useState(0);
+
   const { closeModal, selectedCustomer, selectedProjects } = useContext(
     UiContext
   );
@@ -55,6 +60,15 @@ const InvoiceOverview = () => {
     taxId,
     hourlyRate,
   } = selectedCustomer;
+
+  useEffect(() => {
+    setPdfAssemblingTimeout(
+      setTimeout(function () {
+        setDeactivatedPdfAssembling(false);
+      }, 500)
+    );
+  }, []);
+
   const classes = useStyles();
 
   const getTotal = () => {
@@ -81,28 +95,45 @@ const InvoiceOverview = () => {
       title: invoiceTitle,
       customerId: selectedCustomer.id,
     });
-    console.log(id);
     await editProjects(selectedProjects, { invoiceId: id });
   };
 
-  const calculateInvoiceId = (id) => {
-    return id * 6 + 6000;
+  const handleTextInput = (value) => {
+    if (pdfAssemblingTimeout) clearTimeout(pdfAssemblingTimeout);
+    setInvoiceTitle(value);
+    setDeactivatedPdfAssembling(true);
+    setPdfAssemblingTimeout(
+      setTimeout(function () {
+        setDeactivatedPdfAssembling(false);
+      }, 500)
+    );
   };
 
-  const getNewInvoiceId = () => {
-    return Math.max(...invoices.map((invoice) => invoice.id));
+  const formattedCustomerTitle = () => {
+    if (selectedCustomer.firm) {
+      return selectedCustomer.firm.split(" ").join("_");
+    }
+    return selectedCustomer.lastName + "_" + selectedCustomer.firstName;
   };
+
+  const formalInvoiceId =
+    Math.max(...invoices.map((invoice) => invoice.id)) * 6 + 6000;
+  const fileName =
+    moment().format("MM-YY") +
+    "_" +
+    formalInvoiceId +
+    "_" +
+    formattedCustomerTitle() +
+    "_LenaRiegerDesign";
 
   const invoiceTemplate = {
     customer: { ...selectedCustomer },
     positions: [...selectedProjects],
     total: getTotal(),
-    formalInvoiceId: calculateInvoiceId(getNewInvoiceId()),
+    formalInvoiceId,
     invoiceTitle,
     userProfile,
   };
-
-  console.log(invoiceTemplate);
 
   return (
     <>
@@ -144,7 +175,7 @@ const InvoiceOverview = () => {
           <TextField
             fullWidth
             value={invoiceTitle}
-            onChange={(e) => setInvoiceTitle(e.target.value)}
+            onChange={(e) => handleTextInput(e.target.value)}
             variant="outlined"
             type="text"
             label="Rechnungstitel"
@@ -205,16 +236,21 @@ const InvoiceOverview = () => {
           autoFocus
           variant="contained"
           onClick={handleSubmit}
+          disabled={deactivatedPdfAssembling}
         >
-          <PDFDownloadLink
-            document={<Invoice template={invoiceTemplate} />}
-            fileName="somename.pdf"
-            className={classes.button}
-          >
-            {({ blob, url, loading, error }) =>
-              loading ? "PDF wird erstellt" : "PDF herunterladen"
-            }
-          </PDFDownloadLink>
+          {deactivatedPdfAssembling ? (
+            "PDF wird erstellt"
+          ) : (
+            <PDFDownloadLink
+              document={<Invoice template={invoiceTemplate} />}
+              fileName="somename.pdf"
+              className={classes.button}
+            >
+              {({ blob, url, loading, error }) =>
+                loading ? "PDF wird erstellt" : "PDF herunterladen"
+              }
+            </PDFDownloadLink>
+          )}
         </Button>
       </DialogActions>
     </>
