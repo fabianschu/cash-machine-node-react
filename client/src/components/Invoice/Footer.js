@@ -1,10 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet } from "@react-pdf/renderer";
 
+const BLACK_NINETY = "#1A1A1A";
+
 const styles = StyleSheet.create({
   footer: {
-    fontFamily: "gretaRegular",
+    fontFamily: "brandonMedium",
     textAlign: "center",
+    color: BLACK_NINETY,
   },
 });
 

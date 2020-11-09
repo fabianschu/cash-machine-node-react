@@ -2,6 +2,8 @@ import React from "react";
 import { View, Text, StyleSheet } from "@react-pdf/renderer";
 import Table from "./Table";
 
+const BOTTOM_MARGIN_WITHIN_SECTIONS = 15;
+
 const styles = StyleSheet.create({
   body: {
     fontFamily: "brandonMedium",
@@ -16,6 +18,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexGrow: 1,
     fontFamily: "brandonLight",
+  },
+  invoiceTitle: {
+    marginBottom: BOTTOM_MARGIN_WITHIN_SECTIONS,
   },
 });
 

@@ -18,6 +18,7 @@ import Body from "./Body";
 import Footer from "./Footer";
 
 const BOTTOM_MARGIN_BETWEEN_SECTIONS = 30;
+const BOTTOM_MARGIN_WITHIN_SECTIONS = 15;
 const DEFAULT_FONT_SIZE = 11;
 
 Font.register({ family: "Museo", src: lightMuseo, fontWeight: "light" });
@@ -40,7 +41,7 @@ Font.register({
 
 const styles = StyleSheet.create({
   invoice: {
-    padding: `${BOTTOM_MARGIN_BETWEEN_SECTIONS} 40`,
+    padding: `${BOTTOM_MARGIN_BETWEEN_SECTIONS} 40 ${BOTTOM_MARGIN_WITHIN_SECTIONS} 40`,
     fontSize: DEFAULT_FONT_SIZE,
     display: "flex",
     flexDirection: "column",

@@ -4,7 +4,6 @@ import {
   invoiceTotal,
   invoiceHours,
   formatPrice,
-  taxRate,
 } from "../../helpers/invoiceHelpers";
 import lightMuseo from "../../assets/light100.ttf";
 import regularMuseo from "../../assets/normal500.ttf";
