@@ -2,8 +2,6 @@ export const taxRate = 0.16;
 
 export const invoiceTotal = (positions, hourlyRate) => {
   const netTotal = positions.reduce((acc, position) => {
-    console.log(position.hours);
-    console.log(hourlyRate);
     return acc + Number((position.hours * hourlyRate).toFixed(2));
   }, 0);
 

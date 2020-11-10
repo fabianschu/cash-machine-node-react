@@ -77,8 +77,8 @@ const Header = (props) => {
         <Text>{userProfile.phone}</Text>
       </View>
       <View>
-        {firm && <Text style={styles.customerTitle}>{firm}</Text>}
-        {lastName && (
+        {!!firm && <Text style={styles.customerTitle}>{firm}</Text>}
+        {!!lastName && (
           <Text style={styles.customerTitle}>
             {firstName} {lastName}
           </Text>

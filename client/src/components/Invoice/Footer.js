@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     fontFamily: "brandonMedium",
     textAlign: "center",
     color: BLACK_NINETY,
+    fontSize: 9,
   },
 });
 
@@ -20,8 +21,8 @@ const Footer = (props) => {
         {userProfile.city}
       </Text>
       <Text>
-        IBAN: {userProfile.iban} BIC: {userProfile.bic} Steuernummer:{" "}
-        {userProfile.taxId} UID: {userProfile.uId}
+        IBAN: {userProfile.iban} • BIC: {userProfile.bic} • Steuernummer:{" "}
+        {userProfile.taxId} • UID: {userProfile.uId}
       </Text>
     </View>
   );
