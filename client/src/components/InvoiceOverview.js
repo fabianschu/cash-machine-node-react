@@ -120,7 +120,7 @@ const InvoiceOverview = () => {
     formalInvoiceId +
     "_" +
     formattedCustomerTitle() +
-    "_LenaRiegerDesign";
+    "_LenaRiegerDesign.pdf";
 
   const invoiceTemplate = {
     customer: { ...selectedCustomer },
