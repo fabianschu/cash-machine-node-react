@@ -6,13 +6,16 @@ import * as serviceWorker from "./serviceWorker";
 import { UiContextProvider } from "./context/UiContext";
 import { DataContextProvider } from "./context/DataContext";
 import { AuthContextProvider } from "./context/AuthContext";
+import { CustomerContextProvider } from "./context/CustomerContext";
 import "./App.css";
 
 ReactDOM.render(
   <AuthContextProvider>
     <DataContextProvider>
       <UiContextProvider>
-        <App />
+        <CustomerContextProvider>
+          <App />
+        </CustomerContextProvider>
       </UiContextProvider>
     </DataContextProvider>
   </AuthContextProvider>,
