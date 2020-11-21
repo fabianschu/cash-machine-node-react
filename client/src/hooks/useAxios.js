@@ -1,5 +1,5 @@
 // useFetch.js
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
 const config = {
@@ -13,34 +13,37 @@ const useAxios = (url, initialValue) => {
   const [loading, setLoading] = useState(true);
   const [changeData, setChangeData] = useState(false);
 
-  const axiosRequest = function (method) {
-    return async function (payload) {
-      let id;
-      if (payload) {
-        id = payload.id;
-      }
-      try {
-        setLoading(true);
-        if (method !== "get") {
-          setChangeData(true);
+  const axiosRequest = useCallback(
+    (method) => {
+      return async (payload) => {
+        let id;
+        if (payload) {
+          id = payload.id;
         }
-        const response = await axiosInstance({
-          url: id ? url + "/" + id : url,
-          method,
-          data: payload,
-        });
-        if (response.status === 200 && method === "get") {
-          setData(response.data);
-        } else if (response.status === 200 && method !== "get") {
-          setChangeData(false);
+        try {
+          setLoading(true);
+          if (method !== "get") {
+            setChangeData(true);
+          }
+          const response = await axiosInstance({
+            url: id ? url + "/" + id : url,
+            method,
+            data: payload,
+          });
+          if (response.status === 200 && method === "get") {
+            setData(response.data);
+          } else if (response.status === 200 && method !== "get") {
+            setChangeData(false);
+          }
+        } catch (error) {
+          throw error;
+        } finally {
+          setLoading(false);
         }
-      } catch (error) {
-        throw error;
-      } finally {
-        setLoading(false);
-      }
-    };
-  };
+      };
+    },
+    [url]
+  );
 
   const postRequest = axiosRequest("post");
   const putRequest = axiosRequest("put");
@@ -51,7 +54,7 @@ const useAxios = (url, initialValue) => {
       const getRequest = axiosRequest("get");
       getRequest();
     }
-  }, [changeData]);
+  }, [changeData, axiosRequest]);
 
   return [data, loading, postRequest, putRequest, deleteRequest];
 };
