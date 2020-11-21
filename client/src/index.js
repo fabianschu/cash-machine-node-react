@@ -8,13 +8,19 @@ import { DataContextProvider } from "./context/DataContext";
 import { AuthContextProvider } from "./context/AuthContext";
 import { CustomerContextProvider } from "./context/CustomerContext";
 import "./App.css";
+import { InvoiceContextProvider } from "./context/InvoiceContext";
+import { ProjectContextProvider } from "./context/ProjectContext";
 
 ReactDOM.render(
   <AuthContextProvider>
     <DataContextProvider>
       <UiContextProvider>
         <CustomerContextProvider>
-          <App />
+          <InvoiceContextProvider>
+            <ProjectContextProvider>
+              <App />
+            </ProjectContextProvider>
+          </InvoiceContextProvider>
         </CustomerContextProvider>
       </UiContextProvider>
     </DataContextProvider>

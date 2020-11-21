@@ -7,6 +7,7 @@ import { DataContext } from "../context/DataContext";
 import SelectOne from "./SelectOne";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "../components/Modal";
+import { CustomerContext } from "../context/CustomerContext";
 
 const useStyles = makeStyles((theme) => ({
   outer: {
@@ -25,7 +26,8 @@ const CustomerWidget = (props) => {
     setCreatingCustomer,
     setSelectedCustomer,
   } = useContext(UiContext);
-  const { customers } = useContext(DataContext);
+
+  const { customers } = useContext(CustomerContext);
   const classes = useStyles();
 
   return (
