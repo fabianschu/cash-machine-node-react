@@ -5,6 +5,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { UiContext } from "../context/UiContext";
+import { CustomerContext } from "../context/CustomerContext";
 import { Formik, Form, Field } from "formik";
 import InputField from "./InputField";
 import FloatInputField from "./FloatInputField";
@@ -25,9 +26,13 @@ const CustomerForm = () => {
     modifyCustomers,
   } = useContext(UiContext);
 
+  const { updateCustomer } = useContext(CustomerContext);
+
   const handleSubmit = async (values) => {
     closeModal();
-    await modifyCustomers(values);
+    console.log(values);
+    // await modifyCustomers(values);
+    updateCustomer(values);
   };
 
   const getInitialValues = () => {
