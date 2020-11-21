@@ -26,13 +26,13 @@ const CustomerForm = () => {
     modifyCustomers,
   } = useContext(UiContext);
 
-  const { updateCustomer } = useContext(CustomerContext);
+  const { putCustomer } = useContext(CustomerContext);
 
   const handleSubmit = async (values) => {
     closeModal();
     console.log(values);
     // await modifyCustomers(values);
-    updateCustomer(values);
+    putCustomer(values);
   };
 
   const getInitialValues = () => {

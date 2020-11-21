@@ -8,21 +8,31 @@ const config = {
 
 const axiosInstance = axios.create(config);
 
-// custom hook for performing GET request
 const useAxios = (url, initialValue) => {
   const [data, setData] = useState(initialValue);
   const [loading, setLoading] = useState(true);
+  const [changeData, setChangeData] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async function () {
+  const axiosRequest = function (method) {
+    return async function (payload) {
+      let id;
+      if (payload) {
+        id = payload.id;
+      }
       try {
         setLoading(true);
+        if (method !== "get") {
+          setChangeData(true);
+        }
         const response = await axiosInstance({
-          url,
-          method: "get",
+          url: id ? url + "/" + id : url,
+          method,
+          data: payload,
         });
-        if (response.status === 200) {
+        if (response.status === 200 && method === "get") {
           setData(response.data);
+        } else if (response.status === 200 && method !== "get") {
+          setChangeData(false);
         }
       } catch (error) {
         throw error;
@@ -30,47 +40,20 @@ const useAxios = (url, initialValue) => {
         setLoading(false);
       }
     };
-    fetchData();
-  }, []);
+  };
 
-  async function getRequest() {
-    try {
-      setLoading(true);
-      const response = await axiosInstance({
-        url: url,
-        method: "get",
-      });
-      if (response.status === 200) {
-        setData(response.data);
-      }
-    } catch (error) {
-      throw error;
-    } finally {
-      setLoading(false);
+  const postRequest = axiosRequest("post");
+  const putRequest = axiosRequest("put");
+  const deleteRequest = axiosRequest("delete");
+
+  useEffect(() => {
+    if (!changeData) {
+      const getRequest = axiosRequest("get");
+      getRequest();
     }
-  }
+  }, [changeData]);
 
-  async function putRequest(payload) {
-    const { id } = payload;
-
-    try {
-      setLoading(true);
-      const response = await axiosInstance({
-        url: url + "/" + id,
-        method: "put",
-        data: payload,
-      });
-      if (response.status === 200) {
-        setData(response.data);
-      }
-    } catch (error) {
-      throw error;
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  return [data, loading, getRequest, putRequest];
+  return [data, loading, postRequest, putRequest, deleteRequest];
 };
 
 export default useAxios;
