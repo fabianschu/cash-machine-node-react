@@ -8,13 +8,16 @@ import { Formik, Form, Field } from "formik";
 import InputField from "./InputField";
 import FloatInputField from "./FloatInputField";
 import { DataContext } from "../context/DataContext";
+import { ProjectContext } from "../context/ProjectContext";
 
 const ProjectForm = () => {
   const { closeModal, selectedCustomer } = useContext(UiContext);
   const { addProject } = useContext(DataContext);
+  const { postProject } = useContext(ProjectContext);
 
   const handleSubmit = async (values) => {
-    addProject(values);
+    // addProject(values);
+    postProject(values);
     closeModal();
   };
 
