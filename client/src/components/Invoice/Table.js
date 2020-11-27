@@ -19,6 +19,7 @@ const BOTTOM_MARGIN_BETWEEN_SECTIONS = 30;
 
 Font.register({ family: "Museo", src: lightMuseo, fontWeight: "light" });
 Font.register({ family: "Museo", src: regularMuseo, fontWeight: "regular" });
+Font.registerHyphenationCallback((word) => [word]);
 
 const styles = StyleSheet.create({
   table: {
