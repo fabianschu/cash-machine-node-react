@@ -24,16 +24,18 @@ const CustomerForm = () => {
     editingCustomer,
     selectedCustomer,
     modifyCustomers,
+    setSelectedCustomer,
   } = useContext(UiContext);
 
   const { putCustomer } = useContext(CustomerContext);
 
-  const handleSubmit = async (values) => {
-    closeModal();
-    console.log(values);
-    // await modifyCustomers(values);
-    putCustomer(values);
-  };
+  // const handleSubmit = async (values) => {
+  //   closeModal();
+  //   console.log("BLUB");
+  //   const blub = await putCustomer(values);
+  //   console.log(blub);
+  //   setSelectedCustomer(values);
+  // };
 
   const getInitialValues = () => {
     if (editingCustomer) {
@@ -63,7 +65,14 @@ const CustomerForm = () => {
     <Formik
       initialValues={getInitialValues()}
       validationSchema={SignupSchema}
-      onSubmit={handleSubmit}
+      onSubmit={async (values) => {
+        closeModal();
+        console.log("BLUB");
+        console.log(values);
+        const blub = await putCustomer(values);
+        console.log(blub);
+        setSelectedCustomer(values);
+      }}
     >
       {(props) => (
         <Form>
@@ -82,7 +91,7 @@ const CustomerForm = () => {
             <Field component={InputField} name="taxId" />
           </DialogContent>
           <DialogActions>
-            <Box mr="auto">
+            {/* <Box mr="auto">
               {editingCustomer && (
                 <Button
                   onClick={() =>
@@ -92,7 +101,7 @@ const CustomerForm = () => {
                   Löschen
                 </Button>
               )}
-            </Box>
+            </Box> */}
             <Button autoFocus onClick={closeModal} color="primary">
               Abbrechen
             </Button>

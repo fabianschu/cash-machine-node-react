@@ -16,6 +16,7 @@ const useAxios = (url, initialValue) => {
   const axiosRequest = useCallback(
     (method) => {
       return async (payload) => {
+        console.log(payload);
         let id;
         if (payload) {
           id = payload.id;
@@ -34,6 +35,7 @@ const useAxios = (url, initialValue) => {
             setData(response.data);
           } else if (response.status === 200 && method !== "get") {
             setChangeData(false);
+            return response.data.id;
           }
         } catch (error) {
           throw error;

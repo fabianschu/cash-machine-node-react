@@ -18,6 +18,7 @@ const SelectOne = (props) => {
   const classes = useStyles();
   const { options, selected, handleSelection, disabled, type, display } = props;
   const [inputValue, setInputValue] = React.useState("");
+
   return (
     <Autocomplete
       value={selected}
@@ -28,6 +29,11 @@ const SelectOne = (props) => {
       getOptionLabel={(option) => {
         if (!option) return "";
         return option[display];
+      }}
+      getOptionSelected={(option) => {
+        if (option.id === selected.id) {
+          return true;
+        }
       }}
       renderOption={(option, { s }) => {
         return <React.Fragment>{option[display]}</React.Fragment>;

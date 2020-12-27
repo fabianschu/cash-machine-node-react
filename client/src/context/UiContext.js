@@ -12,7 +12,7 @@ const UiContextProvider = ({ children }) => {
 
   const [creatingProject, setCreatingProject] = useState(false);
 
-  const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [selectedCustomer, setSelectedCustomerId] = useState(null);
   const [selectedProjects, setSelectedProjects] = useState([]);
 
   const [accordionExpanded, setAccordionExpanded] = useState(false);
