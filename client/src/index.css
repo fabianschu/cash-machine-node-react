@@ -2,10 +2,6 @@ html {
   height: auto;
   min-height: 100%;
 }
-html {
-  background-image: radial-gradient(circle, #ffffff, #fdfdfd, #fbfafc, #f9f8fa, #f8f5f8, #f5f2f5, #f3eff2, #f0ecef, #ebe7ea, #e7e3e6, #e2dee1, #dedadd);
-
-}
 
 body {
   margin: 0;
