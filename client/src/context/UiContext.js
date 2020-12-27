@@ -4,7 +4,7 @@ import { DataContext } from "./DataContext";
 const UiContext = createContext();
 
 const UiContextProvider = ({ children }) => {
-  const { addCustomer, editCustomer } = useContext(DataContext);
+  const { addCustomer, editCustomer, customers } = useContext(DataContext);
 
   const [creatingCustomer, setCreatingCustomer] = useState(false);
   const [editingCustomer, setEditingCustomer] = useState(false);
@@ -12,10 +12,15 @@ const UiContextProvider = ({ children }) => {
 
   const [creatingProject, setCreatingProject] = useState(false);
 
-  const [selectedCustomer, setSelectedCustomerId] = useState(null);
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [selectedProjects, setSelectedProjects] = useState([]);
 
   const [accordionExpanded, setAccordionExpanded] = useState(false);
+
+  const setSelectedCustomerById = (id) => {
+    if (!id) return setSelectedCustomer(null);
+    setSelectedCustomer(customers.find((customer) => customer.id === id));
+  };
 
   useEffect(() => {
     setSelectedProjects([]);
@@ -37,20 +42,6 @@ const UiContextProvider = ({ children }) => {
     setCreatingProject(false);
   };
 
-  const modifyCustomers = async (values) => {
-    if (creatingCustomer) {
-      setSelectedCustomer(null);
-      const newCustomer = await addCustomer(values);
-      setSelectedCustomer(newCustomer);
-    }
-    if (editingCustomer) {
-      setSelectedCustomer(null);
-      const updatedCustomer = await editCustomer(values);
-      if (!updatedCustomer) setSelectedCustomer(null);
-      else setSelectedCustomer(updatedCustomer);
-    }
-  };
-
   const defaultContext = {
     creatingCustomer,
     editingCustomer,
@@ -66,7 +57,7 @@ const UiContextProvider = ({ children }) => {
     closeModal,
     setAccordionExpanded,
     setSelectedProjects,
-    modifyCustomers,
+    setSelectedCustomerById,
     creatingProject,
   };
 

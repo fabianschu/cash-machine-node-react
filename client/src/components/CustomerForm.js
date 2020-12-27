@@ -22,12 +22,12 @@ const CustomerForm = () => {
   const {
     closeModal,
     editingCustomer,
+    creatingCustomer,
     selectedCustomer,
-    modifyCustomers,
     setSelectedCustomer,
   } = useContext(UiContext);
 
-  const { putCustomer } = useContext(CustomerContext);
+  const { putCustomer, postCustomer } = useContext(CustomerContext);
 
   // const handleSubmit = async (values) => {
   //   closeModal();
@@ -67,10 +67,9 @@ const CustomerForm = () => {
       validationSchema={SignupSchema}
       onSubmit={async (values) => {
         closeModal();
-        console.log("BLUB");
-        console.log(values);
-        const blub = await putCustomer(values);
-        console.log(blub);
+        let id;
+        if (editingCustomer) id = await putCustomer(values);
+        else if (creatingCustomer) id = await postCustomer(values);
         setSelectedCustomer(values);
       }}
     >

@@ -25,6 +25,7 @@ const CustomerWidget = (props) => {
     selectedCustomer,
     setCreatingCustomer,
     setSelectedCustomer,
+    setSelectedCustomerById,
   } = useContext(UiContext);
 
   const { customers } = useContext(CustomerContext);
@@ -43,7 +44,7 @@ const CustomerWidget = (props) => {
           {customers && (
             <SelectOne
               options={customers}
-              handleSelection={setSelectedCustomer}
+              handleSelection={setSelectedCustomerById}
               selected={selectedCustomer}
               type="Kunden"
               display="firm"
