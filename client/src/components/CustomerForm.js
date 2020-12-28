@@ -10,6 +10,9 @@ import InputField from "./InputField";
 import FloatInputField from "./FloatInputField";
 import * as Yup from "yup";
 
+import { connect } from "react-redux";
+import { fetchCustomers, saveCustomer } from "../redux/actions/customersAction";
+
 const SignupSchema = Yup.object().shape({
   firm: Yup.string()
     .min(2, "Too Short!")
@@ -17,17 +20,25 @@ const SignupSchema = Yup.object().shape({
     .required("Required"),
 });
 
-const CustomerForm = () => {
+const CustomerForm = (props) => {
   const {
     closeModal,
     editingCustomer,
     selectedCustomer,
     modifyCustomers,
   } = useContext(UiContext);
+  const { customers, saveCustomer, fetchCustomers } = props;
 
-  const handleSubmit = async (values) => {
-    closeModal();
-    await modifyCustomers(values);
+  // const handleSubmit = async (values) => {
+  //   closeModal();
+  //   await modifyCustomers(values);
+  // };
+
+  const handleSubmit = (values) => {
+    console.log("what?");
+    console.log(values);
+    saveCustomer(values);
+    fetchCustomers();
   };
 
   const getInitialValues = () => {
@@ -101,4 +112,15 @@ const CustomerForm = () => {
   );
 };
 
-export default CustomerForm;
+const mapStateToProps = (state) => {
+  return {
+    customers: state.customersReducer,
+  };
+};
+
+const mapDispatchToProps = {
+  fetchCustomers,
+  saveCustomer,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CustomerForm);
