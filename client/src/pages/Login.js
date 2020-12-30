@@ -11,6 +11,8 @@ import Button from "@material-ui/core/Button";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { login } from "../redux/actions/authAction";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -57,19 +59,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = () => {
+const Login = (props) => {
   const theme = useTheme();
   const classes = useStyles(useMediaQuery(theme.breakpoints.down("xs")));
-  const { authenticatedUser, setAuthenticatedUser } = useContext(AuthContext);
+  const { login, auth } = props;
+  const { userId, error, loading } = auth;
 
   const handleSubmit = (values) => {
-    axios
-      .post(`${process.env.REACT_APP_SERVER_URL}/api/auth/login`, values)
-      .then((res) => setAuthenticatedUser(res.data.id))
-      .catch((err) => console.log(err));
+    login(values);
   };
 
-  if (authenticatedUser) {
+  if (loading) {
+    // TODO
+  }
+
+  if (error) {
+    // TODO
+  }
+
+  if (userId) {
     return <Redirect to="/" />;
   }
 
@@ -103,4 +111,15 @@ const Login = () => {
     </Box>
   );
 };
-export default Login;
+
+const mapStateToProps = (state) => {
+  return {
+    auth: state.authReducer,
+  };
+};
+
+const mapDispatchToProps = {
+  login,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -16,7 +16,6 @@ const App = (props) => {
     fetchCustomers();
   }, []);
 
-  console.log(customers);
   return (
     <BrowserRouter>
       <Layout>

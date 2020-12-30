@@ -44,7 +44,6 @@ const getCustomersFailure = (error) => ({
 export function saveCustomer(customer) {
   return function (dispatch) {
     dispatch(saveCustomerStarted());
-    console.log(customer);
     return axios
       .post(`${process.env.REACT_APP_SERVER_URL}/api/customers`, customer)
       .then(({ data }) => {
