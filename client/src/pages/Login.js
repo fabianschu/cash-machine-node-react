@@ -11,8 +11,8 @@ import Button from "@material-ui/core/Button";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import { Redirect } from "react-router-dom";
-import { connect } from "react-redux";
 import { login } from "../redux/actions/authAction";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -59,14 +59,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = (props) => {
+const Login = () => {
+  const userId = useSelector(({ authReducer }) => authReducer.userId);
+  const error = useSelector(({ authReducer }) => authReducer.error);
+  const loading = useSelector(({ authReducer }) => authReducer.loading);
+  const dispatch = useDispatch();
+
   const theme = useTheme();
   const classes = useStyles(useMediaQuery(theme.breakpoints.down("xs")));
-  const { login, auth } = props;
-  const { userId, error, loading } = auth;
 
   const handleSubmit = (values) => {
-    login(values);
+    dispatch(login(values));
   };
 
   if (loading) {
@@ -112,14 +115,4 @@ const Login = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    auth: state.authReducer,
-  };
-};
-
-const mapDispatchToProps = {
-  login,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Login;

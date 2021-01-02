@@ -7,6 +7,7 @@ import { DataContext } from "../context/DataContext";
 import SelectOne from "./SelectOne";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "../components/Modal";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   outer: {
@@ -25,9 +26,17 @@ const CustomerWidget = (props) => {
     setCreatingCustomer,
     setSelectedCustomer,
   } = useContext(UiContext);
-  const { customers } = useContext(DataContext);
+  // const { customers } = useContext(DataContext);
   const classes = useStyles();
+  const customers = useSelector(
+    ({ customersReducer }) => customersReducer.customers
+  );
+  const error = useSelector(({ customersReducer }) => customersReducer.error);
+  const loading = useSelector(
+    ({ customersReducer }) => customersReducer.loading
+  );
 
+  console.log(customers);
   return (
     <>
       <Box boxShadow={5}>

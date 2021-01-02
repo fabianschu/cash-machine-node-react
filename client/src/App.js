@@ -5,15 +5,19 @@ import CustomerWidget from "./components/CustomerWidget";
 import Login from "./pages/Login";
 import PrivateRoute from "./components/PrivateRoute";
 import "./App.css";
+import { useDispatch, useSelector } from "react-redux";
 
-import { connect } from "react-redux";
 import { fetchCustomers } from "./redux/actions/customersAction";
+import { fetchProjects } from "./redux/actions/projectsAction";
+import { fetchInvoices } from "./redux/actions/invoicesAction";
 
 const App = (props) => {
-  const { customers, fetchCustomers } = props;
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchCustomers();
+    dispatch(fetchCustomers());
+    dispatch(fetchProjects());
+    dispatch(fetchInvoices());
   }, []);
 
   return (
@@ -28,16 +32,4 @@ const App = (props) => {
   );
 };
 
-// export default App;
-
-const mapStateToProps = (state) => {
-  return {
-    customers: state.customersReducer,
-  };
-};
-
-const mapDispatchToProps = {
-  fetchCustomers,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

@@ -32,3 +32,33 @@ const loginFailure = (error) => ({
     error,
   },
 });
+
+export function authenticate() {
+  return function (dispatch) {
+    dispatch(authenticateStarted());
+    return axios
+      .get(`${process.env.REACT_APP_SERVER_URL}/api/auth`)
+      .then(({ data }) => {
+        dispatch(authenticateSuccess(data));
+      })
+      .catch((err) => {
+        dispatch(authenticateFailure(err.message));
+      });
+  };
+}
+
+const authenticateStarted = () => ({
+  type: LOGIN_STARTED,
+});
+
+const authenticateSuccess = (data) => ({
+  type: LOGIN_SUCCESS,
+  payload: data.id,
+});
+
+const authenticateFailure = (error) => ({
+  type: LOGIN_FAILURE,
+  payload: {
+    error,
+  },
+});

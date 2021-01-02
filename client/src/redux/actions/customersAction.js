@@ -17,6 +17,7 @@ export function fetchCustomers() {
     return axios
       .get(`${process.env.REACT_APP_SERVER_URL}/api/customers`)
       .then(({ data }) => {
+        console.log(data);
         dispatch(getCustomersSuccess(data));
       })
       .catch((err) => {

@@ -26,83 +26,83 @@ export function fetchInvoices() {
 }
 
 const getInvoicesStarted = () => ({
-  type: GET_PROJECTS_STARTED,
+  type: GET_INVOICES_STARTED,
 });
 
 const getInvoicesSuccess = (invoices) => ({
-  type: GET_PROJECTS_SUCCESS,
+  type: GET_INVOICES_SUCCESS,
   payload: [...invoices],
 });
 
 const getInvoicesFailure = (error) => ({
-  type: GET_PROJECTS_FAILURE,
+  type: GET_INVOICES_FAILURE,
   payload: {
     error,
   },
 });
 
-export function saveProject(invoice) {
+export function saveInvoice(invoice) {
   return function (dispatch) {
-    dispatch(saveProjectStarted());
+    dispatch(saveInvoiceStarted());
     return axios
       .post(`${process.env.REACT_APP_SERVER_URL}/api/invoices`, invoice)
       .then(({ data }) => {
-        dispatch(saveProjectSuccess(data));
+        dispatch(saveInvoiceSuccess(data));
       })
       .catch((err) => {
-        dispatch(saveProjectFailure(err.message));
+        dispatch(saveInvoiceFailure(err.message));
       });
   };
 }
 
-const saveProjectStarted = () => ({
-  type: SAVE_PROJECT_STARTED,
+const saveInvoiceStarted = () => ({
+  type: SAVE_INVOICE_STARTED,
 });
 
-const saveProjectSuccess = (invoice) => ({
-  type: SAVE_PROJECT_SUCCESS,
+const saveInvoiceSuccess = (invoice) => ({
+  type: SAVE_INVOICE_SUCCESS,
   payload: {
     invoice,
   },
 });
 
-const saveProjectFailure = (error) => ({
-  type: SAVE_PROJECT_FAILURE,
+const saveInvoiceFailure = (error) => ({
+  type: SAVE_INVOICE_FAILURE,
   payload: {
     error,
   },
 });
 
-export function updateProject(invoice) {
+export function updateInvoice(invoice) {
   return function (dispatch) {
-    dispatch(updateProjectStarted());
+    dispatch(updateInvoiceStarted());
     return axios
       .post(
         `${process.env.REACT_APP_SERVER_URL}/api/invoices/${invoice.id}`,
         invoice
       )
       .then(({ data }) => {
-        dispatch(updateProjectSuccess(data));
+        dispatch(updateInvoiceSuccess(data));
       })
       .catch((err) => {
-        dispatch(updateProjectFailure(err.message));
+        dispatch(updateInvoiceFailure(err.message));
       });
   };
 }
 
-const updateProjectStarted = () => ({
-  type: UPDATE_PROJECT_STARTED,
+const updateInvoiceStarted = () => ({
+  type: UPDATE_INVOICE_STARTED,
 });
 
-const updateProjectSuccess = (invoice) => ({
-  type: UPDATE_PROJECT_SUCCESS,
+const updateInvoiceSuccess = (invoice) => ({
+  type: UPDATE_INVOICE_SUCCESS,
   payload: {
     invoice,
   },
 });
 
-const updateProjectFailure = (error) => ({
-  type: UPDATE_PROJECT_FAILURE,
+const updateInvoiceFailure = (error) => ({
+  type: UPDATE_INVOICE_FAILURE,
   payload: {
     error,
   },
