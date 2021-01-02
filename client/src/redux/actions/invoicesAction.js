@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../apiClient";
 import {
   GET_INVOICES_STARTED,
   GET_INVOICES_SUCCESS,
@@ -15,7 +15,7 @@ export function fetchInvoices() {
   return function (dispatch) {
     dispatch(getInvoicesStarted());
     return axios
-      .get(`${process.env.REACT_APP_SERVER_URL}/api/invoices`)
+      .get(`/invoices`)
       .then(({ data }) => {
         dispatch(getInvoicesSuccess(data));
       })
@@ -45,7 +45,7 @@ export function saveInvoice(invoice) {
   return function (dispatch) {
     dispatch(saveInvoiceStarted());
     return axios
-      .post(`${process.env.REACT_APP_SERVER_URL}/api/invoices`, invoice)
+      .post(`/invoices`, invoice)
       .then(({ data }) => {
         dispatch(saveInvoiceSuccess(data));
       })
@@ -77,10 +77,7 @@ export function updateInvoice(invoice) {
   return function (dispatch) {
     dispatch(updateInvoiceStarted());
     return axios
-      .post(
-        `${process.env.REACT_APP_SERVER_URL}/api/invoices/${invoice.id}`,
-        invoice
-      )
+      .post(`/invoices/${invoice.id}`, invoice)
       .then(({ data }) => {
         dispatch(updateInvoiceSuccess(data));
       })

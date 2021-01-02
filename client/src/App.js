@@ -10,14 +10,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCustomers } from "./redux/actions/customersAction";
 import { fetchProjects } from "./redux/actions/projectsAction";
 import { fetchInvoices } from "./redux/actions/invoicesAction";
+import { authenticate } from "./redux/actions/authAction";
 
 const App = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchCustomers());
-    dispatch(fetchProjects());
-    dispatch(fetchInvoices());
+    authenticate();
+    // dispatch(fetchCustomers());
+    // dispatch(fetchProjects());
+    // dispatch(fetchInvoices());
   }, []);
 
   return (

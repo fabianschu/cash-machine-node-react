@@ -19,6 +19,7 @@ const SelectOne = (props) => {
   const { options, selected, handleSelection, disabled, type, display } = props;
   const [inputValue, setInputValue] = React.useState("");
   console.log(props);
+  console.log(options);
   return (
     <Autocomplete
       value={selected}
@@ -27,6 +28,7 @@ const SelectOne = (props) => {
       options={options}
       className={classes.formControl}
       getOptionLabel={(option) => {
+        console.log(option);
         if (!option) return "";
         return option[display];
       }}

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../apiClient";
 import { LOGIN_STARTED, LOGIN_SUCCESS, LOGIN_FAILURE } from "../types";
 
 axios.defaults.withCredentials = true;
@@ -7,7 +7,7 @@ export function login(credentials) {
   return function (dispatch) {
     dispatch(loginStarted());
     return axios
-      .post(`${process.env.REACT_APP_SERVER_URL}/api/auth/login`, credentials)
+      .post(`/login`, credentials)
       .then(({ data }) => {
         dispatch(loginSuccess(data));
       })
@@ -37,7 +37,7 @@ export function authenticate() {
   return function (dispatch) {
     dispatch(authenticateStarted());
     return axios
-      .get(`${process.env.REACT_APP_SERVER_URL}/api/auth`)
+      .get(`/auth`)
       .then(({ data }) => {
         dispatch(authenticateSuccess(data));
       })

@@ -9,13 +9,13 @@ import {
   UPDATE_CUSTOMER_SUCCESS,
   UPDATE_CUSTOMER_FAILURE,
 } from "../types";
-import axios from "axios";
+import axios from "../apiClient";
 
 export function fetchCustomers() {
   return function (dispatch) {
     dispatch(getCustomersStarted());
     return axios
-      .get(`${process.env.REACT_APP_SERVER_URL}/api/customers`)
+      .get(`/customers`)
       .then(({ data }) => {
         console.log(data);
         dispatch(getCustomersSuccess(data));
@@ -46,7 +46,7 @@ export function saveCustomer(customer) {
   return function (dispatch) {
     dispatch(saveCustomerStarted());
     return axios
-      .post(`${process.env.REACT_APP_SERVER_URL}/api/customers`, customer)
+      .post(`/customers`, customer)
       .then(({ data }) => {
         dispatch(saveCustomerSuccess(data));
       })
@@ -78,10 +78,7 @@ export function updateCustomer(customer) {
   return function (dispatch) {
     dispatch(updateCustomerStarted());
     return axios
-      .post(
-        `${process.env.REACT_APP_SERVER_URL}/api/customers/${customer.id}`,
-        customer
-      )
+      .post(`/customers/${customer.id}`, customer)
       .then(({ data }) => {
         dispatch(updateCustomerSuccess(data));
       })

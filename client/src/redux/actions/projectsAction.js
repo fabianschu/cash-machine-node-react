@@ -10,13 +10,13 @@ import {
   UPDATE_PROJECT_FAILURE,
 } from "../types";
 
-import axios from "axios";
+import axios from "../apiClient";
 
 export function fetchProjects() {
   return function (dispatch) {
     dispatch(getProjectsStarted());
     return axios
-      .get(`${process.env.REACT_APP_SERVER_URL}/api/projects`)
+      .get(`/projects`)
       .then(({ data }) => {
         dispatch(getProjectsSuccess(data));
       })
@@ -46,7 +46,7 @@ export function saveProject(project) {
   return function (dispatch) {
     dispatch(saveProjectStarted());
     return axios
-      .post(`${process.env.REACT_APP_SERVER_URL}/api/projects`, project)
+      .post(`/projects`, project)
       .then(({ data }) => {
         dispatch(saveProjectSuccess(data));
       })
@@ -78,10 +78,7 @@ export function updateProject(project) {
   return function (dispatch) {
     dispatch(updateProjectStarted());
     return axios
-      .post(
-        `${process.env.REACT_APP_SERVER_URL}/api/projects/${project.id}`,
-        project
-      )
+      .post(`/projects/${project.id}`, project)
       .then(({ data }) => {
         dispatch(updateProjectSuccess(data));
       })
