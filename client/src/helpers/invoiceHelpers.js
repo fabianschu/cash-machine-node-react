@@ -1,4 +1,4 @@
-export const taxRate = 0.16;
+export const taxRate = 0.19;
 
 export const invoiceTotal = (positions, hourlyRate) => {
   const netTotal = positions.reduce((acc, position) => {
