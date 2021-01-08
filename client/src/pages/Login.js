@@ -81,7 +81,7 @@ const Login = () => {
   }
 
   if (userId) {
-    return <Redirect to="/" />;
+    return <Redirect to="/customers" />;
   }
 
   return (

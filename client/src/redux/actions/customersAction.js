@@ -43,16 +43,16 @@ const getCustomersFailure = (error) => ({
 });
 
 export function saveCustomer(customer) {
-  return function (dispatch) {
+  return async (dispatch) => {
     dispatch(saveCustomerStarted());
-    return axios
-      .post(`/customers`, customer)
-      .then(({ data }) => {
-        dispatch(saveCustomerSuccess(data));
-      })
-      .catch((err) => {
-        dispatch(saveCustomerFailure(err.message));
-      });
+    try {
+      const { data } = await axios.post(`/customers`, customer);
+      dispatch(saveCustomerSuccess(data));
+      dispatch(fetchCustomers());
+    } catch (err) {
+      console.log(err);
+      dispatch(saveCustomerFailure(err.message));
+    }
   };
 }
 

@@ -37,11 +37,12 @@ export function authenticate() {
   return function (dispatch) {
     dispatch(authenticateStarted());
     return axios
-      .get(`/auth`)
+      .get(`/auth/authenticate`)
       .then(({ data }) => {
         dispatch(authenticateSuccess(data));
       })
       .catch((err) => {
+        console.log("buha");
         dispatch(authenticateFailure(err.message));
       });
   };

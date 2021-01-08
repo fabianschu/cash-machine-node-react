@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import ModalButton from "./ModalButton";
 import Accordion from "./Accordion";
 import Box from "@material-ui/core/Box";
@@ -6,8 +6,12 @@ import { UiContext } from "../context/UiContext";
 import { DataContext } from "../context/DataContext";
 import SelectOne from "./SelectOne";
 import { makeStyles } from "@material-ui/core/styles";
-import Modal from "../components/Modal";
+import Modal from "./Modal";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchCustomers } from "../redux/actions/customersAction";
+import { fetchProjects } from "../redux/actions/projectsAction";
+import { fetchInvoices } from "../redux/actions/invoicesAction";
+import { useParams } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   outer: {
@@ -19,10 +23,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CustomerWidget = (props) => {
+const MainWidget = (props) => {
+  const dispatch = useDispatch();
   const {
     creatingCustomer,
-    selectedCustomer,
+    // selectedCustomer,
     setCreatingCustomer,
     setSelectedCustomer,
   } = useContext(UiContext);
@@ -35,8 +40,17 @@ const CustomerWidget = (props) => {
   const loading = useSelector(
     ({ customersReducer }) => customersReducer.loading
   );
+  const { customerId } = useParams();
 
-  console.log(customers);
+  useEffect(() => {
+    dispatch(fetchCustomers());
+    dispatch(fetchProjects());
+    dispatch(fetchInvoices());
+  }, []);
+
+  const selectedCustomer =
+    customers.find((customer) => customer.id == customerId) || null;
+
   return (
     <>
       <Box boxShadow={5}>
@@ -59,7 +73,7 @@ const CustomerWidget = (props) => {
         </Box>
         <Accordion
           disabled={!selectedCustomer}
-          title={selectedCustomer && selectedCustomer.firm}
+          selectedCustomer={selectedCustomer}
         />
       </Box>
       <Modal />
@@ -67,4 +81,4 @@ const CustomerWidget = (props) => {
   );
 };
 
-export default CustomerWidget;
+export default MainWidget;

@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import { useHistory, useParams } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -18,8 +19,9 @@ const SelectOne = (props) => {
   const classes = useStyles();
   const { options, selected, handleSelection, disabled, type, display } = props;
   const [inputValue, setInputValue] = React.useState("");
+  const history = useHistory();
+  const params = useParams();
   console.log(props);
-  console.log(options);
   return (
     <Autocomplete
       value={selected}
@@ -28,14 +30,18 @@ const SelectOne = (props) => {
       options={options}
       className={classes.formControl}
       getOptionLabel={(option) => {
-        console.log(option);
         if (!option) return "";
         return option[display];
       }}
       renderOption={(option, { s }) => {
         return <React.Fragment>{option[display]}</React.Fragment>;
       }}
-      onChange={(e, newValue) => {
+      onChange={(e, newValue, reason) => {
+        if (reason === "clear") {
+          history.push(`/customers`);
+        }
+        if (!newValue) return;
+        history.push(`/customers/${newValue.id}/projects`);
         handleSelection(newValue);
       }}
       onInputChange={(event, newInputValue) => {

@@ -9,9 +9,9 @@ import { Formik, Form, Field } from "formik";
 import InputField from "./InputField";
 import FloatInputField from "./FloatInputField";
 import * as Yup from "yup";
-
-import { connect } from "react-redux";
-import { fetchCustomers, saveCustomer } from "../redux/actions/customersAction";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { saveCustomer } from "../redux/actions/customersAction";
+import { withRouter } from "react-router";
 
 const SignupSchema = Yup.object().shape({
   firm: Yup.string()
@@ -21,24 +21,25 @@ const SignupSchema = Yup.object().shape({
 });
 
 const CustomerForm = (props) => {
+  const error = useSelector(({ customersReducer }) => customersReducer.error);
+  const loading = useSelector(
+    ({ customersReducer }) => customersReducer.loading
+  );
+  const customers = useSelector(
+    ({ customersReducer }) => customersReducer.customers
+  );
+  const dispatch = useDispatch();
   const {
     closeModal,
     editingCustomer,
     selectedCustomer,
     modifyCustomers,
   } = useContext(UiContext);
-  const { customers, saveCustomer, fetchCustomers } = props;
-
-  // const handleSubmit = async (values) => {
-  //   closeModal();
-  //   await modifyCustomers(values);
-  // };
 
   const handleSubmit = (values) => {
-    console.log("what?");
+    console.log("submit");
     console.log(values);
-    saveCustomer(values);
-    fetchCustomers();
+    dispatch(saveCustomer(values));
   };
 
   const getInitialValues = () => {
@@ -112,15 +113,4 @@ const CustomerForm = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    customers: state.customersReducer,
-  };
-};
-
-const mapDispatchToProps = {
-  fetchCustomers,
-  saveCustomer,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CustomerForm);
+export default CustomerForm;

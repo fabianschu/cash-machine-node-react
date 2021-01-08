@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
@@ -9,6 +9,7 @@ import ModalButton from "./ModalButton";
 import Table from "./Table";
 import { UiContext } from "../context/UiContext";
 import Box from "@material-ui/core/Box";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   accordionContent: {
@@ -51,21 +52,35 @@ export default function ControlledAccordions(props) {
     setAccordionExpanded,
     setCreatingInvoice,
     selectedProjects,
-    selectedCustomer,
+    // selectedCustomer,
     editingCustomer,
     setEditingCustomer,
     setCreatingProject,
   } = useContext(UiContext);
-  const { disabled, data } = props;
+
+  const [expanded, setExpanded] = useState(false);
+
+  const { disabled, selectedCustomer, data } = props;
+
+  useEffect(() => {
+    if (!selectedCustomer) {
+      setExpanded(false);
+      return;
+    }
+
+    if (selectedCustomer) {
+      setExpanded(true);
+    }
+  }, [selectedCustomer]);
 
   const handleChange = () => (event, isExpanded) => {
-    setAccordionExpanded(isExpanded ? true : false);
+    setExpanded(isExpanded ? true : false);
   };
 
   return (
     <div className={classes.accordion}>
       <Accordion
-        expanded={accordionExpanded}
+        expanded={expanded}
         onChange={handleChange(true)}
         elevation={0}
         square

@@ -28,7 +28,7 @@ export const customersReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: null,
-        customers: [state.customers, ...action.payload],
+        customers: [...action.payload],
       };
     case GET_CUSTOMERS_FAILURE:
       return {

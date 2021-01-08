@@ -20,6 +20,8 @@ import AddCircleIcon from "@material-ui/icons/AddCircle";
 import { UiContext } from "../context/UiContext";
 import { DataContext } from "../context/DataContext";
 import Paper from "@material-ui/core/Paper";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 const tableIcons = {
   Add: forwardRef((props, ref) => (
@@ -53,16 +55,17 @@ const tableIcons = {
 
 const Table = (props) => {
   const { useState } = React;
-  const { projects, addProject, editProject, deleteProject } = useContext(
-    DataContext
+  const { customerId } = useParams;
+  const projects = useSelector(
+    ({ projectsReducer }) => projectsReducer.projects
   );
+  const { addProject, editProject, deleteProject } = useContext(DataContext);
   const { selectedCustomer } = useContext(UiContext);
   const { selectedProjects, setSelectedProjects } = useContext(UiContext);
   let rows = projects;
 
   rows = projects.filter(
-    (project) =>
-      !project.invoiceId && project.customerId === selectedCustomer.id
+    (project) => !project.invoiceId && project.customerId == customerId
   );
 
   rows = rows.map((row) => {

@@ -1,34 +1,38 @@
 import React, { useEffect } from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Layout from "./pages/Layout";
-import CustomerWidget from "./components/CustomerWidget";
+import MainWidget from "./components/MainWidget";
 import Login from "./pages/Login";
 import PrivateRoute from "./components/PrivateRoute";
 import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
-
-import { fetchCustomers } from "./redux/actions/customersAction";
-import { fetchProjects } from "./redux/actions/projectsAction";
-import { fetchInvoices } from "./redux/actions/invoicesAction";
 import { authenticate } from "./redux/actions/authAction";
 
-const App = (props) => {
+const App = () => {
   const dispatch = useDispatch();
+  const loading = useSelector(({ authReducer }) => authReducer.loading);
 
   useEffect(() => {
-    authenticate();
-    // dispatch(fetchCustomers());
-    // dispatch(fetchProjects());
-    // dispatch(fetchInvoices());
+    dispatch(authenticate());
   }, []);
+
+  if (loading) return <p>LOADING</p>;
 
   return (
     <BrowserRouter>
       <Layout>
-        <PrivateRoute exact path="/" component={CustomerWidget} />
-        <Route exact path="/login">
-          <Login />
-        </Route>
+        <Switch>
+          <PrivateRoute exact path="/" component={MainWidget} />
+          <PrivateRoute
+            exact
+            path="/customers/:customerId"
+            component={MainWidget}
+          />
+          <PrivateRoute path="/customers" component={MainWidget} />
+          <Route exact path="/login">
+            <Login />
+          </Route>
+        </Switch>
       </Layout>
     </BrowserRouter>
   );
