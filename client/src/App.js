@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Layout from "./pages/Layout";
 import MainWidget from "./components/MainWidget";
 import Login from "./pages/Login";
@@ -22,7 +22,9 @@ const App = () => {
     <BrowserRouter>
       <Layout>
         <Switch>
-          <PrivateRoute exact path="/" component={MainWidget} />
+          <Route exact path="/">
+            <Redirect to="/customers" />
+          </Route>
           <PrivateRoute
             exact
             path="/customers/:customerId"

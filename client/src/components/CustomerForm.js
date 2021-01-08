@@ -11,7 +11,7 @@ import FloatInputField from "./FloatInputField";
 import * as Yup from "yup";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { saveCustomer } from "../redux/actions/customersAction";
-import { withRouter } from "react-router";
+import { useHistory } from "react-router-dom";
 
 const SignupSchema = Yup.object().shape({
   firm: Yup.string()
@@ -29,6 +29,7 @@ const CustomerForm = (props) => {
     ({ customersReducer }) => customersReducer.customers
   );
   const dispatch = useDispatch();
+  const history = useHistory();
   const {
     closeModal,
     editingCustomer,
@@ -37,9 +38,7 @@ const CustomerForm = (props) => {
   } = useContext(UiContext);
 
   const handleSubmit = (values) => {
-    console.log("submit");
-    console.log(values);
-    dispatch(saveCustomer(values));
+    dispatch(saveCustomer(values, history));
   };
 
   const getInitialValues = () => {
