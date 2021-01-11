@@ -22,17 +22,12 @@ const App = () => {
     <BrowserRouter>
       <Layout>
         <Switch>
-          <Route exact path="/">
-            <Redirect to="/customers" />
-          </Route>
-          <PrivateRoute
-            exact
-            path="/customers/:customerId"
-            component={MainWidget}
-          />
-          <PrivateRoute path="/customers" component={MainWidget} />
+          <PrivateRoute path="/main" component={MainWidget} />
           <Route exact path="/login">
             <Login />
+          </Route>
+          <Route path="/">
+            <Redirect to="/main" />
           </Route>
         </Switch>
       </Layout>

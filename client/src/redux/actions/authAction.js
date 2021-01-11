@@ -6,13 +6,16 @@ axios.defaults.withCredentials = true;
 export function login(credentials) {
   return function (dispatch) {
     dispatch(loginStarted());
+    console.log(credentials);
     return axios
-      .post(`/login`, credentials)
+      .post(`/auth/login`, credentials)
       .then(({ data }) => {
         dispatch(loginSuccess(data));
+        console.log("login success");
       })
       .catch((err) => {
         dispatch(loginFailure(err.message));
+        console.log(err);
       });
   };
 }

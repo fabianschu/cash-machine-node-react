@@ -37,6 +37,7 @@ const SelectOne = (props) => {
         return <React.Fragment>{option[display]}</React.Fragment>;
       }}
       onChange={(e, newValue, reason) => {
+        // TODO: handle selection state
         if (reason === "clear") {
           history.push(`/customers`);
         }
