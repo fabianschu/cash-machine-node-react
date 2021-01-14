@@ -52,12 +52,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ControlledAccordions(props) {
   const classes = useStyles();
-  const { setCreatingInvoice, selectedProjects } = useContext(UiContext);
+  const { setCreatingInvoice } = useContext(UiContext);
   const dispatch = useDispatch();
 
   const [expanded, setExpanded] = useState(false);
 
   const { disabled, selectedCustomer, data } = props;
+
+  const selectedProjects = useSelector(
+    ({ projectsReducer }) => projectsReducer.selectedProjects
+  );
 
   useEffect(() => {
     if (!selectedCustomer) {
@@ -139,8 +143,8 @@ export default function ControlledAccordions(props) {
           {selectedCustomer && <Table rows={data} />}
           <Box mt={2}>
             <ModalButton
-              handleClick={() => setCreatingInvoice(true)}
-              type="print"
+              handleClick={() => ({ type: "TOGGLE_INVOICE_CREATION" })}
+              type="createInvoice"
               disabled={selectedProjects.length === 0}
               className={classes.printButton}
             />

@@ -26,6 +26,7 @@ import {
   saveProject,
   updateProject,
   deleteProject,
+  toggleProjectSelection,
 } from "../redux/actions/projectsAction";
 
 const tableIcons = {
@@ -67,36 +68,35 @@ const Table = (props) => {
   const customerId = useSelector(
     ({ customersReducer }) => customersReducer.selectedCustomer.id
   );
-  const { selectedProjects, setSelectedProjects } = useContext(UiContext);
-  console.log(projects.length);
-  let rows = projects;
+  const [selectedProjects, setSelectedProjects] = useState([]);
 
-  rows = projects.filter(
-    (project) => !project.invoiceId && project.customerId == customerId
-  );
+  const currentProjects = () =>
+    projects.filter(
+      (project) => !project.invoiceId && project.customerId == customerId
+    );
 
-  rows = rows.map((row) => {
-    if (
-      selectedProjects
-        .map((selectedProject) => selectedProject.id)
-        .includes(row.id)
-    ) {
-      return {
-        ...row,
-        tableData: {
-          ...row.tableData,
-          checked: true,
-        },
-      };
-    }
-    return {
-      ...row,
-      tableData: {
-        ...row.tableData,
-        checked: false,
-      },
-    };
-  });
+  // rows = rows.map((row) => {
+  //   if (
+  //     selectedProjects
+  //       .map((selectedProject) => selectedProject.id)
+  //       .includes(row.id)
+  //   ) {
+  //     return {
+  //       ...row,
+  //       tableData: {
+  //         ...row.tableData,
+  //         checked: true,
+  //       },
+  //     };
+  //   }
+  //   return {
+  //     ...row,
+  //     tableData: {
+  //       ...row.tableData,
+  //       checked: false,
+  //     },
+  //   };
+  // });
 
   const [columns] = useState([
     { title: "Projekt", field: "name", width: 200 },
@@ -140,13 +140,15 @@ const Table = (props) => {
           },
           selection: true,
         }}
-        onSelectionChange={(rows) => setSelectedProjects(rows)}
+        onSelectionChange={(projects) =>
+          dispatch(toggleProjectSelection(projects))
+        }
         title="Projekte"
         components={{
           Container: (props) => <Paper {...props} elevation={2} />,
         }}
         columns={columns}
-        data={rows}
+        data={currentProjects()}
         editable={{
           onRowAdd: async (projectData) => {
             await dispatch(saveProject({ ...projectData, customerId }));

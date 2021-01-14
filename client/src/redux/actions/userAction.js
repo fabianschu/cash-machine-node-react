@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../apiClient";
 import { GET_USER_STARTED, GET_USER_SUCCESS, GET_USER_FAILURE } from "../types";
 
 export function fetchUser() {

@@ -41,19 +41,18 @@ const getInvoicesFailure = (error) => ({
   },
 });
 
-export function saveInvoice(invoice) {
-  return function (dispatch) {
+export const saveInvoice = (invoice) => {
+  return async (dispatch) => {
     dispatch(saveInvoiceStarted());
-    return axios
-      .post(`/invoices`, invoice)
-      .then(({ data }) => {
-        dispatch(saveInvoiceSuccess(data));
-      })
-      .catch((err) => {
-        dispatch(saveInvoiceFailure(err.message));
-      });
+    try {
+      const { data } = await axios.post(`/invoices`, invoice);
+      dispatch(saveInvoiceSuccess(data));
+      dispatch(fetchInvoices());
+    } catch (err) {
+      dispatch(saveInvoiceFailure(err.message));
+    }
   };
-}
+};
 
 const saveInvoiceStarted = () => ({
   type: SAVE_INVOICE_STARTED,

@@ -8,7 +8,7 @@ import {
   UPDATE_PROJECT_STARTED,
   UPDATE_PROJECT_SUCCESS,
   UPDATE_PROJECT_FAILURE,
-  SELECT_PROJECT,
+  TOGGLE_PROJECT_SELECTION,
   TOGGLE_PROJECT_CREATION,
   TOGGLE_PROJECT_EDIT,
   DELETE_PROJECT_STARTED,
@@ -111,12 +111,13 @@ const updateProjectFailure = (error) => ({
   },
 });
 
-export const selectProject = (customerId) => ({
-  type: SELECT_PROJECT,
-  payload: {
-    customerId,
-  },
-});
+export const toggleProjectSelection = (projects) => {
+  console.log(projects);
+  return {
+    type: TOGGLE_PROJECT_SELECTION,
+    payload: projects,
+  };
+};
 
 export const toggleProjectCreation = () => ({
   type: TOGGLE_PROJECT_CREATION,
@@ -127,13 +128,10 @@ export const toggleProjectEdit = () => ({
 });
 
 export const deleteProject = (projectId) => {
-  console.log("lol?");
   return async (dispatch) => {
     dispatch(deleteProjectStarted());
     try {
-      console.log(projectId);
       const { data } = await axios.delete(`/projects/${projectId}`);
-      console.log(data);
       dispatch(deleteProjectSuccess(data));
       dispatch(fetchProjects());
     } catch (err) {

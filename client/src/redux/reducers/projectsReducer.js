@@ -8,7 +8,7 @@ import {
   UPDATE_PROJECT_STARTED,
   UPDATE_PROJECT_SUCCESS,
   UPDATE_PROJECT_FAILURE,
-  SELECT_PROJECT,
+  TOGGLE_PROJECT_SELECTION,
   TOGGLE_PROJECT_CREATION,
   TOGGLE_PROJECT_EDIT,
   DELETE_PROJECT_STARTED,
@@ -20,7 +20,7 @@ const initialState = {
   projects: [],
   loading: false,
   error: null,
-  selectedProject: null,
+  selectedProjects: [],
   creatingProject: false,
   editingProject: false,
 };
@@ -96,12 +96,10 @@ export const projectsReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload.error,
       };
-    case SELECT_PROJECT:
+    case TOGGLE_PROJECT_SELECTION:
       return {
         ...state,
-        selectedProject: state.projects.find(
-          (project) => action.payload.projectId === project.id
-        ),
+        selectedProjects: action.payload,
       };
     case TOGGLE_PROJECT_CREATION:
       return {

@@ -1,5 +1,6 @@
 import axios from "../apiClient";
 import { LOGIN_STARTED, LOGIN_SUCCESS, LOGIN_FAILURE } from "../types";
+import { fetchUser } from "./userAction";
 
 axios.defaults.withCredentials = true;
 
@@ -11,7 +12,6 @@ export function login(credentials) {
       .post(`/auth/login`, credentials)
       .then(({ data }) => {
         dispatch(loginSuccess(data));
-        console.log("login success");
       })
       .catch((err) => {
         dispatch(loginFailure(err.message));
@@ -36,20 +36,18 @@ const loginFailure = (error) => ({
   },
 });
 
-export function authenticate() {
-  return function (dispatch) {
+export const authenticate = () => {
+  return async (dispatch) => {
     dispatch(authenticateStarted());
-    return axios
-      .get(`/auth/authenticate`)
-      .then(({ data }) => {
-        dispatch(authenticateSuccess(data));
-      })
-      .catch((err) => {
-        console.log("buha");
-        dispatch(authenticateFailure(err.message));
-      });
+    try {
+      const { data } = axios.get(`/auth/authenticate`);
+      dispatch(fetchUser());
+      dispatch(authenticateSuccess(data));
+    } catch (err) {
+      dispatch(authenticateFailure(err.message));
+    }
   };
-}
+};
 
 const authenticateStarted = () => ({
   type: LOGIN_STARTED,

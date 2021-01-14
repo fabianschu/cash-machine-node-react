@@ -28,7 +28,7 @@ const ModalButton = (props) => {
         return <AddIcon />;
       case "editCustomer":
         return <EditIcon />;
-      case "print":
+      case "createInvoice":
         return <PictureAsPdfIcon />;
       default:
         return null;
@@ -41,7 +41,7 @@ const ModalButton = (props) => {
         return "Erstellen";
       case "editCustomer":
         return "Bearbeiten";
-      case "print":
+      case "createInvoice":
         return "Rechnung";
       case "createProject":
         return "Projekt";
@@ -54,7 +54,7 @@ const ModalButton = (props) => {
     switch (type) {
       case "createCustomer":
         return "primary";
-      case "print":
+      case "createInvoice":
         return "secondary";
       case "createProject":
         return "secondary";

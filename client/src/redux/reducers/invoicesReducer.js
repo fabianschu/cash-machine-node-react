@@ -8,12 +8,14 @@ import {
   UPDATE_INVOICE_STARTED,
   UPDATE_INVOICE_SUCCESS,
   UPDATE_INVOICE_FAILURE,
+  TOGGLE_INVOICE_CREATION,
 } from "../types";
 
 const initialState = {
   invoices: [],
   loading: false,
   error: null,
+  creatingInvoice: false,
 };
 
 export const invoicesReducer = (state = initialState, action) => {
@@ -69,6 +71,11 @@ export const invoicesReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.payload.error,
+      };
+    case TOGGLE_INVOICE_CREATION:
+      return {
+        ...state,
+        creatingInvoice: !state.creatingInvoice,
       };
     default:
       return state;

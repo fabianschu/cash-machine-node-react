@@ -18,6 +18,7 @@ import Paper from "@material-ui/core/Paper";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import Invoice from "./Invoice/Invoice";
 import TextField from "@material-ui/core/TextField";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles({
   table: {
@@ -39,13 +40,16 @@ const InvoiceOverview = () => {
   );
   const [pdfAssemblingTimeout, setPdfAssemblingTimeout] = useState(0);
 
-  const { closeModal, selectedCustomer, selectedProjects } = useContext(
-    UiContext
+  const selectedProjects = useSelector(
+    ({ projectsReducer }) => projectsReducer.selectedProjects
   );
+  const selectedCustomer = useSelector(
+    ({ customersReducer }) => customersReducer.selectedCustomer
+  );
+  const userProfile = useSelector(({ userReducer }) => userReducer.user);
+  const dispatch = useDispatch();
 
-  const { userProfile, addInvoice, editProjects, invoices } = useContext(
-    DataContext
-  );
+  const { addInvoice, editProjects, invoices } = useContext(DataContext);
 
   const {
     firm,
@@ -86,7 +90,7 @@ const InvoiceOverview = () => {
   const { totalHours, totalPrice } = getTotal();
 
   const handleSubmit = async () => {
-    closeModal();
+    dispatch({ type: "TOGGLE_INVOICE_CREATION" });
     const { id } = await addInvoice({
       title: invoiceTitle,
       customerId: selectedCustomer.id,
@@ -224,7 +228,11 @@ const InvoiceOverview = () => {
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button autoFocus onClick={closeModal} color="primary">
+        <Button
+          autoFocus
+          onClick={() => dispatch({ type: "TOGGLE_INVOICE_CREATION" })}
+          color="primary"
+        >
           Abbrechen
         </Button>
         <Button
