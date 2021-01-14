@@ -9,10 +9,12 @@ import InputField from "./InputField";
 import FloatInputField from "./FloatInputField";
 import { DataContext } from "../context/DataContext";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  saveProject,
+  toggleProjectCreation,
+} from "../redux/actions/projectsAction";
 
 const ProjectForm = () => {
-  const { closeModal } = useContext(UiContext);
-  const { addProject } = useContext(DataContext);
   const dispatch = useDispatch();
 
   const selectedCustomer = useSelector(
@@ -20,8 +22,12 @@ const ProjectForm = () => {
   );
 
   const handleSubmit = async (values) => {
-    addProject(values);
+    dispatch(saveProject(values));
     closeModal();
+  };
+
+  const closeModal = () => {
+    dispatch(toggleProjectCreation());
   };
 
   return (
