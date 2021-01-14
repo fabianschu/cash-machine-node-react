@@ -15,6 +15,7 @@ router.use((req, res, next) => {
 router.get("/", async (req, res, next) => {
   const userId = req.session.currentUser;
   const result = await Project.where({ userId });
+  console.log(result.length);
   res.json(result);
 });
 

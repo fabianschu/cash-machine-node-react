@@ -11,6 +11,9 @@ import {
   SELECT_PROJECT,
   TOGGLE_PROJECT_CREATION,
   TOGGLE_PROJECT_EDIT,
+  DELETE_PROJECT_STARTED,
+  DELETE_PROJECT_SUCCESS,
+  DELETE_PROJECT_FAILURE,
 } from "../types";
 
 import axios from "../apiClient";
@@ -21,6 +24,7 @@ export function fetchProjects() {
     return axios
       .get(`/projects`)
       .then(({ data }) => {
+        console.log(data);
         dispatch(getProjectsSuccess(data));
       })
       .catch((err) => {
@@ -76,19 +80,18 @@ const saveProjectFailure = (error) => ({
   },
 });
 
-export function updateProject(project) {
-  return function (dispatch) {
+export const updateProject = (project) => {
+  return async (dispatch) => {
     dispatch(updateProjectStarted());
-    return axios
-      .post(`/projects/${project.id}`, project)
-      .then(({ data }) => {
-        dispatch(updateProjectSuccess(data));
-      })
-      .catch((err) => {
-        dispatch(updateProjectFailure(err.message));
-      });
+    try {
+      const { data } = await axios.put(`/projects/${project.id}`, project);
+      dispatch(updateProjectSuccess(data));
+      dispatch(fetchProjects());
+    } catch (err) {
+      dispatch(updateProjectFailure(err.message));
+    }
   };
-}
+};
 
 const updateProjectStarted = () => ({
   type: UPDATE_PROJECT_STARTED,
@@ -121,4 +124,39 @@ export const toggleProjectCreation = () => ({
 
 export const toggleProjectEdit = () => ({
   type: TOGGLE_PROJECT_EDIT,
+});
+
+export const deleteProject = (projectId) => {
+  console.log("lol?");
+  return async (dispatch) => {
+    dispatch(deleteProjectStarted());
+    try {
+      console.log(projectId);
+      const { data } = await axios.delete(`/projects/${projectId}`);
+      console.log(data);
+      dispatch(deleteProjectSuccess(data));
+      dispatch(fetchProjects());
+    } catch (err) {
+      console.log(err);
+      dispatch(deleteProjectFailure(err.message));
+    }
+  };
+};
+
+const deleteProjectStarted = () => ({
+  type: DELETE_PROJECT_STARTED,
+});
+
+const deleteProjectSuccess = (project) => ({
+  type: DELETE_PROJECT_SUCCESS,
+  payload: {
+    project,
+  },
+});
+
+const deleteProjectFailure = (error) => ({
+  type: DELETE_PROJECT_FAILURE,
+  payload: {
+    error,
+  },
 });

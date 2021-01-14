@@ -11,6 +11,9 @@ import {
   SELECT_PROJECT,
   TOGGLE_PROJECT_CREATION,
   TOGGLE_PROJECT_EDIT,
+  DELETE_PROJECT_STARTED,
+  DELETE_PROJECT_SUCCESS,
+  DELETE_PROJECT_FAILURE,
 } from "../types";
 
 const initialState = {
@@ -71,6 +74,23 @@ export const projectsReducer = (state = initialState, action) => {
         error: null,
       };
     case UPDATE_PROJECT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+      };
+    case DELETE_PROJECT_STARTED:
+      return {
+        ...state,
+        loading: true,
+      };
+    case DELETE_PROJECT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+      };
+    case DELETE_PROJECT_FAILURE:
       return {
         ...state,
         loading: false,

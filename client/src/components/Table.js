@@ -20,8 +20,13 @@ import AddCircleIcon from "@material-ui/icons/AddCircle";
 import { UiContext } from "../context/UiContext";
 import { DataContext } from "../context/DataContext";
 import Paper from "@material-ui/core/Paper";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import {
+  saveProject,
+  updateProject,
+  deleteProject,
+} from "../redux/actions/projectsAction";
 
 const tableIcons = {
   Add: forwardRef((props, ref) => (
@@ -54,6 +59,7 @@ const tableIcons = {
 };
 
 const Table = (props) => {
+  const dispatch = useDispatch();
   const { useState } = React;
   const projects = useSelector(
     ({ projectsReducer }) => projectsReducer.projects
@@ -61,9 +67,8 @@ const Table = (props) => {
   const customerId = useSelector(
     ({ customersReducer }) => customersReducer.selectedCustomer.id
   );
-  const { addProject, editProject, deleteProject } = useContext(DataContext);
-  const { selectedCustomer } = useContext(UiContext);
   const { selectedProjects, setSelectedProjects } = useContext(UiContext);
+  console.log(projects.length);
   let rows = projects;
 
   rows = projects.filter(
@@ -144,19 +149,13 @@ const Table = (props) => {
         data={rows}
         editable={{
           onRowAdd: async (projectData) => {
-            await addProject({
-              ...projectData,
-              customerId: selectedCustomer.id,
-            });
-          },
-          onRowUpdate: async (projectData) => {
-            await editProject(projectData.id, {
-              ...projectData,
-              customerId: selectedCustomer.id,
-            });
+            await dispatch(saveProject({ ...projectData, customerId }));
           },
           onRowDelete: async (projectData) => {
-            await deleteProject(projectData.id);
+            await dispatch(deleteProject(projectData.id));
+          },
+          onRowUpdate: async (projectData) => {
+            await dispatch(updateProject({ ...projectData, customerId }));
           },
         }}
       />

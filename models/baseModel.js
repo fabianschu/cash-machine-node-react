@@ -89,8 +89,9 @@ module.exports = BaseModel = (tableName) => {
         ...conditions,
       });
       try {
-        const { id } = await db.query(query, values);
-        return id;
+        const { rows } = await db.query(query, values);
+        if (rows.length === 0) throw Error("Project doesn't exist");
+        return rows[0].id;
       } catch (e) {
         if (process.ENV === "development") {
           console.log(e);
