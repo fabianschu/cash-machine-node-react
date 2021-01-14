@@ -55,9 +55,11 @@ const tableIcons = {
 
 const Table = (props) => {
   const { useState } = React;
-  const { customerId } = useParams;
   const projects = useSelector(
     ({ projectsReducer }) => projectsReducer.projects
+  );
+  const customerId = useSelector(
+    ({ customersReducer }) => customersReducer.selectedCustomer.id
   );
   const { addProject, editProject, deleteProject } = useContext(DataContext);
   const { selectedCustomer } = useContext(UiContext);

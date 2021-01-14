@@ -29,12 +29,6 @@ const useStyles = makeStyles((theme) => ({
 
 const MainWidget = (props) => {
   const dispatch = useDispatch();
-  const {
-    creatingCustomer,
-    // selectedCustomer,
-    setCreatingCustomer,
-  } = useContext(UiContext);
-  // const { customers } = useContext(DataContext);
   const classes = useStyles();
   const customers = useSelector(
     ({ customersReducer }) => customersReducer.customers
@@ -52,7 +46,7 @@ const MainWidget = (props) => {
     dispatch(fetchCustomers());
     dispatch(fetchProjects());
     dispatch(fetchInvoices());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

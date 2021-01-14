@@ -46,16 +46,15 @@ const getProjectsFailure = (error) => ({
 });
 
 export function saveProject(project) {
-  return function (dispatch) {
+  return async (dispatch) => {
     dispatch(saveProjectStarted());
-    return axios
-      .post(`/projects`, project)
-      .then(({ data }) => {
-        dispatch(saveProjectSuccess(data));
-      })
-      .catch((err) => {
-        dispatch(saveProjectFailure(err.message));
-      });
+    try {
+      const { data } = await axios.post(`/projects`, project);
+      dispatch(saveProjectSuccess(data));
+      dispatch(fetchProjects());
+    } catch (err) {
+      dispatch(saveProjectFailure(err.message));
+    }
   };
 }
 

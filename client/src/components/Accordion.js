@@ -52,16 +52,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ControlledAccordions(props) {
   const classes = useStyles();
-  const {
-    accordionExpanded,
-    setAccordionExpanded,
-    setCreatingInvoice,
-    selectedProjects,
-    // selectedCustomer,
-    editingCustomer,
-    setEditingCustomer,
-    setCreatingProject,
-  } = useContext(UiContext);
+  const { setCreatingInvoice, selectedProjects } = useContext(UiContext);
   const dispatch = useDispatch();
 
   const [expanded, setExpanded] = useState(false);

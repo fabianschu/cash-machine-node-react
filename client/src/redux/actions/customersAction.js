@@ -45,14 +45,13 @@ const getCustomersFailure = (error) => ({
   },
 });
 
-export function saveCustomer(customer, history) {
+export function saveCustomer(customer) {
   return async (dispatch) => {
     dispatch(saveCustomerStarted());
     try {
       const { data } = await axios.post(`/customers`, customer);
       dispatch(saveCustomerSuccess(data));
       dispatch(fetchCustomers());
-      history.push(`/customers/${data.id}`);
     } catch (err) {
       console.log(err);
       dispatch(saveCustomerFailure(err.message));

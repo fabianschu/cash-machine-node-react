@@ -36,10 +36,9 @@ const CustomerForm = (props) => {
     ({ customersReducer }) => customersReducer.editingCustomer
   );
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const handleSubmit = (values) => {
-    dispatch(saveCustomer(values, history));
+    dispatch(saveCustomer(values));
   };
 
   const closeModal = () => {
