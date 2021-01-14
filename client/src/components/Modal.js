@@ -6,17 +6,22 @@ import { UiContext } from "../context/UiContext";
 import CustomerForm from "./CustomerForm";
 import ProjectForm from "./ProjectForm";
 import InvoiceOverview from "./InvoiceOverview";
+import { useDispatch, useSelector } from "react-redux";
 
 const Modal = (props) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const {
-    closeModal,
-    creatingCustomer,
-    editingCustomer,
-    creatingInvoice,
-    creatingProject,
-  } = useContext(UiContext);
+  const { closeModal, creatingInvoice, creatingProject } = useContext(
+    UiContext
+  );
+  const dispatch = useDispatch();
+
+  const creatingCustomer = useSelector(
+    ({ customersReducer }) => customersReducer.creatingCustomer
+  );
+  const editingCustomer = useSelector(
+    ({ customersReducer }) => customersReducer.editingCustomer
+  );
 
   const renderModalContent = () => {
     if (creatingCustomer || editingCustomer) {

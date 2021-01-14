@@ -9,6 +9,10 @@ import ModalButton from "./ModalButton";
 import Table from "./Table";
 import { UiContext } from "../context/UiContext";
 import Box from "@material-ui/core/Box";
+import {
+  toggleCustomerCreation,
+  toggleCustomerEdit,
+} from "../redux/actions/customersAction";
 import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -118,8 +122,7 @@ export default function ControlledAccordions(props) {
                   </Box>
                   <Box>
                     <ModalButton
-                      handleClick={setEditingCustomer}
-                      currentState={editingCustomer}
+                      handleClick={toggleCustomerEdit}
                       type="editCustomer"
                       disabled={!selectedCustomer}
                     />

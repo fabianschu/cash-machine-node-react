@@ -8,6 +8,7 @@ import {
   UPDATE_PROJECT_STARTED,
   UPDATE_PROJECT_SUCCESS,
   UPDATE_PROJECT_FAILURE,
+  SELECT_PROJECT,
 } from "../types";
 
 import axios from "../apiClient";
@@ -103,5 +104,12 @@ const updateProjectFailure = (error) => ({
   type: UPDATE_PROJECT_FAILURE,
   payload: {
     error,
+  },
+});
+
+export const selectProject = (customerId) => ({
+  type: SELECT_PROJECT,
+  payload: {
+    customerId,
   },
 });

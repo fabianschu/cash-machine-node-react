@@ -8,12 +8,14 @@ import {
   UPDATE_PROJECT_STARTED,
   UPDATE_PROJECT_SUCCESS,
   UPDATE_PROJECT_FAILURE,
+  SELECT_PROJECT,
 } from "../types";
 
 const initialState = {
   projects: [],
   loading: false,
   error: null,
+  selectedProject: null,
 };
 
 export const projectsReducer = (state = initialState, action) => {
@@ -69,6 +71,13 @@ export const projectsReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.payload.error,
+      };
+    case SELECT_PROJECT:
+      return {
+        ...state,
+        selectedProject: state.projects.find(
+          (project) => action.payload.projectId === project.id
+        ),
       };
     default:
       return state;

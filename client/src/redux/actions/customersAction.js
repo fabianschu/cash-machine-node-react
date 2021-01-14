@@ -9,6 +9,8 @@ import {
   UPDATE_CUSTOMER_SUCCESS,
   UPDATE_CUSTOMER_FAILURE,
   SELECT_CUSTOMER,
+  TOGGLE_CUSTOMER_CREATION,
+  TOGGLE_CUSTOMER_EDIT,
 } from "../types";
 import axios from "../apiClient";
 
@@ -108,18 +110,17 @@ const updateCustomerFailure = (error) => ({
   },
 });
 
-export const selectCustomer = (customerId) => {
-  console.log({
-    type: SELECT_CUSTOMER,
-    payload: {
-      customerId,
-    },
-  });
+export const selectCustomer = (customerId) => ({
+  type: SELECT_CUSTOMER,
+  payload: {
+    customerId,
+  },
+});
 
-  return {
-    type: SELECT_CUSTOMER,
-    payload: {
-      customerId,
-    },
-  };
-};
+export const toggleCustomerCreation = () => ({
+  type: TOGGLE_CUSTOMER_CREATION,
+});
+
+export const toggleCustomerEdit = () => ({
+  type: TOGGLE_CUSTOMER_EDIT,
+});

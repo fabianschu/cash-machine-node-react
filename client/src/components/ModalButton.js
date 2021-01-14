@@ -5,6 +5,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import Button from "@material-ui/core/Button";
 import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
 import Box from "@material-ui/core/Box";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,8 +16,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ModalButton = (props) => {
-  const { disabled, handleClick, currentState, type } = props;
+  const { disabled, handleClick, type } = props;
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const renderIcon = () => {
     switch (type) {
@@ -70,7 +72,7 @@ const ModalButton = (props) => {
         disabled={disabled}
         onClick={(e) => {
           e.stopPropagation();
-          handleClick(!currentState);
+          dispatch(handleClick());
         }}
         startIcon={renderIcon()}
       >

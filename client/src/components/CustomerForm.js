@@ -12,6 +12,10 @@ import * as Yup from "yup";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { saveCustomer } from "../redux/actions/customersAction";
 import { useHistory } from "react-router-dom";
+import {
+  toggleCustomerCreation,
+  toggleCustomerEdit,
+} from "../redux/actions/customersAction";
 
 const SignupSchema = Yup.object().shape({
   firm: Yup.string()
@@ -25,20 +29,29 @@ const CustomerForm = (props) => {
   const loading = useSelector(
     ({ customersReducer }) => customersReducer.loading
   );
-  const customers = useSelector(
-    ({ customersReducer }) => customersReducer.customers
+  const selectedCustomer = useSelector(
+    ({ customersReducer }) => customersReducer.selectedCustomer
+  );
+  const editingCustomer = useSelector(
+    ({ customersReducer }) => customersReducer.editingCustomer
+  );
+  const creatingCustomer = useSelector(
+    ({ customersReducer }) => customersReducer.creatingCustomer
   );
   const dispatch = useDispatch();
   const history = useHistory();
-  const {
-    closeModal,
-    editingCustomer,
-    selectedCustomer,
-    modifyCustomers,
-  } = useContext(UiContext);
+  const { modifyCustomers } = useContext(UiContext);
 
   const handleSubmit = (values) => {
     dispatch(saveCustomer(values, history));
+  };
+
+  const closeModal = () => {
+    if (editingCustomer) {
+      dispatch(toggleCustomerEdit());
+    } else {
+      dispatch(toggleCustomerCreation());
+    }
   };
 
   const getInitialValues = () => {

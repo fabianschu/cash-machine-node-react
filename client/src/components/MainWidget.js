@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchCustomers,
   selectCustomer,
+  toggleCustomerCreation,
 } from "../redux/actions/customersAction";
 import { fetchProjects } from "../redux/actions/projectsAction";
 import { fetchInvoices } from "../redux/actions/invoicesAction";
@@ -52,14 +53,13 @@ const MainWidget = (props) => {
     dispatch(fetchProjects());
     dispatch(fetchInvoices());
   }, []);
-  console.log(selectedCustomer);
+
   return (
     <>
       <Box boxShadow={5}>
         <Box className={classes.outer}>
           <ModalButton
-            handleClick={setCreatingCustomer}
-            currentState={creatingCustomer}
+            handleClick={toggleCustomerCreation}
             type="createCustomer"
             m={0}
           />

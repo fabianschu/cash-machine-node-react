@@ -9,6 +9,8 @@ import {
   UPDATE_CUSTOMER_SUCCESS,
   UPDATE_CUSTOMER_FAILURE,
   SELECT_CUSTOMER,
+  TOGGLE_CUSTOMER_CREATION,
+  TOGGLE_CUSTOMER_EDIT,
 } from "../types";
 
 const initialState = {
@@ -16,6 +18,8 @@ const initialState = {
   loading: false,
   error: null,
   selectedCustomer: null,
+  editingCustomer: false,
+  creatingCustomer: false,
 };
 
 export const customersReducer = (state = initialState, action) => {
@@ -79,6 +83,16 @@ export const customersReducer = (state = initialState, action) => {
           state.customers.find(
             (customer) => action.payload.customerId === customer.id
           ) || null,
+      };
+    case TOGGLE_CUSTOMER_CREATION:
+      return {
+        ...state,
+        creatingCustomer: !state.creatingCustomer,
+      };
+    case TOGGLE_CUSTOMER_EDIT:
+      return {
+        ...state,
+        editingCustomer: !state.editingCustomer,
       };
     default:
       return state;
