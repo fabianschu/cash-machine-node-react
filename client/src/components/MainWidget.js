@@ -8,7 +8,10 @@ import SelectOne from "./SelectOne";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "./Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCustomers } from "../redux/actions/customersAction";
+import {
+  fetchCustomers,
+  selectCustomer,
+} from "../redux/actions/customersAction";
 import { fetchProjects } from "../redux/actions/projectsAction";
 import { fetchInvoices } from "../redux/actions/invoicesAction";
 import { useParams } from "react-router-dom";
@@ -64,7 +67,7 @@ const MainWidget = (props) => {
           {customers && (
             <SelectOne
               options={customers}
-              handleSelection={setSelectedCustomer}
+              handleSelection={selectCustomer}
               selected={selectedCustomer}
               type="Kunden"
               display="firm"

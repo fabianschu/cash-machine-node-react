@@ -8,6 +8,7 @@ import {
   UPDATE_CUSTOMER_STARTED,
   UPDATE_CUSTOMER_SUCCESS,
   UPDATE_CUSTOMER_FAILURE,
+  SELECT_CUSTOMER,
 } from "../types";
 import axios from "../apiClient";
 
@@ -106,3 +107,19 @@ const updateCustomerFailure = (error) => ({
     error,
   },
 });
+
+export const selectCustomer = (customerId) => {
+  console.log({
+    type: SELECT_CUSTOMER,
+    payload: {
+      customerId,
+    },
+  });
+
+  return {
+    type: SELECT_CUSTOMER,
+    payload: {
+      customerId,
+    },
+  };
+};

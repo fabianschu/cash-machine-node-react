@@ -8,12 +8,14 @@ import {
   UPDATE_CUSTOMER_STARTED,
   UPDATE_CUSTOMER_SUCCESS,
   UPDATE_CUSTOMER_FAILURE,
+  SELECT_CUSTOMER,
 } from "../types";
 
 const initialState = {
   customers: [],
   loading: false,
   error: null,
+  selectedCustomer: null,
 };
 
 export const customersReducer = (state = initialState, action) => {
@@ -69,6 +71,13 @@ export const customersReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.payload.error,
+      };
+    case SELECT_CUSTOMER:
+      return {
+        ...state,
+        selectedCustomer: state.customers.find(
+          (customer) => action.payload.customerId === customer.id
+        ),
       };
     default:
       return state;

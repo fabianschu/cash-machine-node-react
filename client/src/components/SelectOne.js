@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { useHistory, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -19,9 +19,8 @@ const SelectOne = (props) => {
   const classes = useStyles();
   const { options, selected, handleSelection, disabled, type, display } = props;
   const [inputValue, setInputValue] = React.useState("");
-  const history = useHistory();
-  const params = useParams();
-  console.log(props);
+  const dispatch = useDispatch();
+
   return (
     <Autocomplete
       value={selected}
@@ -38,12 +37,7 @@ const SelectOne = (props) => {
       }}
       onChange={(e, newValue, reason) => {
         // TODO: handle selection state
-        if (reason === "clear") {
-          history.push(`/customers`);
-        }
-        if (!newValue) return;
-        history.push(`/customers/${newValue.id}/projects`);
-        handleSelection(newValue);
+        dispatch(handleSelection(newValue.id));
       }}
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);
