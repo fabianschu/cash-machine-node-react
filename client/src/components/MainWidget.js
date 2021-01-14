@@ -32,12 +32,14 @@ const MainWidget = (props) => {
     creatingCustomer,
     // selectedCustomer,
     setCreatingCustomer,
-    setSelectedCustomer,
   } = useContext(UiContext);
   // const { customers } = useContext(DataContext);
   const classes = useStyles();
   const customers = useSelector(
     ({ customersReducer }) => customersReducer.customers
+  );
+  const selectedCustomer = useSelector(
+    ({ customersReducer }) => customersReducer.selectedCustomer
   );
   const error = useSelector(({ customersReducer }) => customersReducer.error);
   const loading = useSelector(
@@ -50,10 +52,7 @@ const MainWidget = (props) => {
     dispatch(fetchProjects());
     dispatch(fetchInvoices());
   }, []);
-
-  const selectedCustomer =
-    customers.find((customer) => customer.id == customerId) || null;
-
+  console.log(selectedCustomer);
   return (
     <>
       <Box boxShadow={5}>

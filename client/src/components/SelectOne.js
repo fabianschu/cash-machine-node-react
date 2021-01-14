@@ -36,8 +36,7 @@ const SelectOne = (props) => {
         return <React.Fragment>{option[display]}</React.Fragment>;
       }}
       onChange={(e, newValue, reason) => {
-        // TODO: handle selection state
-        dispatch(handleSelection(newValue.id));
+        dispatch(handleSelection(newValue ? newValue.id : null));
       }}
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);

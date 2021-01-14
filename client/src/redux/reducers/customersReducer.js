@@ -75,9 +75,10 @@ export const customersReducer = (state = initialState, action) => {
     case SELECT_CUSTOMER:
       return {
         ...state,
-        selectedCustomer: state.customers.find(
-          (customer) => action.payload.customerId === customer.id
-        ),
+        selectedCustomer:
+          state.customers.find(
+            (customer) => action.payload.customerId === customer.id
+          ) || null,
       };
     default:
       return state;
