@@ -8,10 +8,16 @@ import { Formik, Form, Field } from "formik";
 import InputField from "./InputField";
 import FloatInputField from "./FloatInputField";
 import { DataContext } from "../context/DataContext";
+import { useDispatch, useSelector } from "react-redux";
 
 const ProjectForm = () => {
-  const { closeModal, selectedCustomer } = useContext(UiContext);
+  const { closeModal } = useContext(UiContext);
   const { addProject } = useContext(DataContext);
+  const dispatch = useDispatch();
+
+  const selectedCustomer = useSelector(
+    ({ customersReducer }) => customersReducer.selectedCustomer
+  );
 
   const handleSubmit = async (values) => {
     addProject(values);

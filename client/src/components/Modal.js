@@ -11,9 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 const Modal = (props) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const { closeModal, creatingInvoice, creatingProject } = useContext(
-    UiContext
-  );
+  const { closeModal, creatingInvoice } = useContext(UiContext);
   const dispatch = useDispatch();
 
   const creatingCustomer = useSelector(
@@ -21,6 +19,12 @@ const Modal = (props) => {
   );
   const editingCustomer = useSelector(
     ({ customersReducer }) => customersReducer.editingCustomer
+  );
+  const editingProject = useSelector(
+    ({ projectsReducer }) => projectsReducer.editingProject
+  );
+  const creatingProject = useSelector(
+    ({ projectsReducer }) => projectsReducer.creatingProject
   );
 
   const renderModalContent = () => {

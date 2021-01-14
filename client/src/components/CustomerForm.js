@@ -35,12 +35,8 @@ const CustomerForm = (props) => {
   const editingCustomer = useSelector(
     ({ customersReducer }) => customersReducer.editingCustomer
   );
-  const creatingCustomer = useSelector(
-    ({ customersReducer }) => customersReducer.creatingCustomer
-  );
   const dispatch = useDispatch();
   const history = useHistory();
-  const { modifyCustomers } = useContext(UiContext);
 
   const handleSubmit = (values) => {
     dispatch(saveCustomer(values, history));

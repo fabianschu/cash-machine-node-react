@@ -9,6 +9,8 @@ import {
   UPDATE_PROJECT_SUCCESS,
   UPDATE_PROJECT_FAILURE,
   SELECT_PROJECT,
+  TOGGLE_PROJECT_CREATION,
+  TOGGLE_PROJECT_EDIT,
 } from "../types";
 
 const initialState = {
@@ -16,6 +18,8 @@ const initialState = {
   loading: false,
   error: null,
   selectedProject: null,
+  creatingProject: false,
+  editingProject: false,
 };
 
 export const projectsReducer = (state = initialState, action) => {
@@ -78,6 +82,16 @@ export const projectsReducer = (state = initialState, action) => {
         selectedProject: state.projects.find(
           (project) => action.payload.projectId === project.id
         ),
+      };
+    case TOGGLE_PROJECT_CREATION:
+      return {
+        ...state,
+        creatingProject: !state.creatingProject,
+      };
+    case TOGGLE_PROJECT_EDIT:
+      return {
+        ...state,
+        editingProject: !state.editingProject,
       };
     default:
       return state;

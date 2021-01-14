@@ -9,6 +9,8 @@ import {
   UPDATE_PROJECT_SUCCESS,
   UPDATE_PROJECT_FAILURE,
   SELECT_PROJECT,
+  TOGGLE_PROJECT_CREATION,
+  TOGGLE_PROJECT_EDIT,
 } from "../types";
 
 import axios from "../apiClient";
@@ -112,4 +114,12 @@ export const selectProject = (customerId) => ({
   payload: {
     customerId,
   },
+});
+
+export const toggleProjectCreation = () => ({
+  type: TOGGLE_PROJECT_CREATION,
+});
+
+export const toggleProjectEdit = () => ({
+  type: TOGGLE_PROJECT_EDIT,
 });
