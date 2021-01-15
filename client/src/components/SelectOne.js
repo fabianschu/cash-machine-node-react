@@ -32,7 +32,7 @@ const SelectOne = (props) => {
         if (!option) return "";
         return option[display];
       }}
-      getOptionSelected={() => true}
+      getOptionSelected={(option, selected) => option.id === selected.id}
       renderOption={(option, { s }) => {
         return <React.Fragment>{option[display]}</React.Fragment>;
       }}
