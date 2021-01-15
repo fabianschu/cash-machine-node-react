@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import { Formik, Form, Field } from "formik";
 import InputField from "../components/InputField";
 import Button from "@material-ui/core/Button";
-import axios from "axios";
-import { AuthContext } from "../context/AuthContext";
+// import axios from "axios";
+// import { AuthContext } from "../context/AuthContext";
 import { Redirect } from "react-router-dom";
 import styled from "styled-components";
 import illustration from "../assets/login-illustration.png";
@@ -86,18 +86,18 @@ const SoftButton = styled.button`
 `;
 
 const LoginPage = () => {
-  const { authenticatedUser, setAuthenticatedUser } = useContext(AuthContext);
+  // const { authenticatedUser, setAuthenticatedUser } = useContext(AuthContext);
 
   const handleSubmit = (values) => {
-    axios
-      .post(`${process.env.REACT_APP_SERVER_URL}/api/auth/login`, values)
-      .then((res) => setAuthenticatedUser(res.data.id))
-      .catch((err) => console.log(err));
+    // axios
+    //   .post(`${process.env.REACT_APP_SERVER_URL}/api/auth/login`, values)
+    //   .then((res) => setAuthenticatedUser(res.data.id))
+    //   .catch((err) => console.log(err));
   };
 
-  if (authenticatedUser) {
-    return <Redirect to="/" />;
-  }
+  // if (authenticatedUser) {
+  //   return <Redirect to="/" />;
+  // }
 
   return (
     <LoginPageLayout>
