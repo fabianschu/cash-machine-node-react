@@ -11,6 +11,7 @@ import { authenticate } from "./redux/actions/authAction";
 const App = () => {
   const dispatch = useDispatch();
   const loading = useSelector(({ authReducer }) => authReducer.loading);
+  const error = useSelector(({ authReducer }) => authReducer.error);
 
   useEffect(() => {
     dispatch(authenticate());
@@ -22,7 +23,9 @@ const App = () => {
     <BrowserRouter>
       <Layout>
         <Switch>
-          <PrivateRoute path="/main" component={MainWidget} />
+          <PrivateRoute path="/main">
+            <MainWidget />
+          </PrivateRoute>
           <Route exact path="/login">
             <Login />
           </Route>

@@ -40,7 +40,11 @@ export const authenticate = () => {
   return async (dispatch) => {
     dispatch(authenticateStarted());
     try {
-      const { data } = axios.get(`/auth/authenticate`);
+      // const status = axios.get(`/auth/authenticate`);
+      const { data } = await axios.get(`/auth/authenticate`);
+      // console.log(status);
+      // const { data } = status;
+      console.log(data);
       dispatch(fetchUser());
       dispatch(authenticateSuccess(data));
     } catch (err) {
