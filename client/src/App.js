@@ -9,7 +9,7 @@ import muiTheme from "./styles/muiTheme";
 import theme from "./styles/theme";
 import Login from "./pages/LoginPage";
 import PrivateRoute from "./components/PrivateRoute";
-import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
+import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import { ThemeProvider } from "styled-components";
 import Button from "@material-ui/core/Button";
 

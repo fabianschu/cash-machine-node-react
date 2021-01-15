@@ -2,11 +2,11 @@ import React, { useContext } from "react";
 import { Formik, Form, Field } from "formik";
 import InputField from "../components/InputField";
 import Button from "@material-ui/core/Button";
-// import axios from "axios";
-// import { AuthContext } from "../context/AuthContext";
 import { Redirect } from "react-router-dom";
 import styled from "styled-components";
 import illustration from "../assets/login-illustration.png";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../redux/actions/authAction";
 
 const LoginPageLayout = styled.div`
   background: url(${illustration}) 15% 100% / auto 50% no-repeat,
@@ -87,17 +87,18 @@ const SoftButton = styled.button`
 
 const LoginPage = () => {
   // const { authenticatedUser, setAuthenticatedUser } = useContext(AuthContext);
+  const isAuthenticated = useSelector(({ authReducer }) => authReducer.userId);
+  const error = useSelector(({ authReducer }) => authReducer.error);
+  const loading = useSelector(({ authReducer }) => authReducer.loading);
+  const dispatch = useDispatch();
 
   const handleSubmit = (values) => {
-    // axios
-    //   .post(`${process.env.REACT_APP_SERVER_URL}/api/auth/login`, values)
-    //   .then((res) => setAuthenticatedUser(res.data.id))
-    //   .catch((err) => console.log(err));
+    dispatch(login(values));
   };
 
-  // if (authenticatedUser) {
-  //   return <Redirect to="/" />;
-  // }
+  if (isAuthenticated) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <LoginPageLayout>
