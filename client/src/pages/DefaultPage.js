@@ -11,14 +11,13 @@ const DefaultPageLayout = styled.div`
   padding: 20px 30px;
   div {
     height: 100%;
-    background-color: red;
   }
 `;
 
 const DefaultPage = ({ children }) => {
   return (
     <DefaultPageLayout>
-      <div>{children}ll</div>
+      <div>{children}</div>
     </DefaultPageLayout>
   );
 };
