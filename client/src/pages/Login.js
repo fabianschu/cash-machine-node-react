@@ -81,7 +81,7 @@ const Login = () => {
   if (userId) {
     return <Redirect to="/customers" />;
   }
-
+  console.log(userId);
   return (
     <Box className={classes.container}>
       <Paper square className={classes.loginBox} elevation={0}>
