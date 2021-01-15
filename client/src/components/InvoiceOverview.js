@@ -5,7 +5,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
-import { UiContext } from "../context/UiContext";
 import { DataContext } from "../context/DataContext";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -19,6 +18,7 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import Invoice from "./Invoice/Invoice";
 import TextField from "@material-ui/core/TextField";
 import { useDispatch, useSelector } from "react-redux";
+import { saveInvoice } from "../redux/actions/invoicesAction";
 
 const useStyles = makeStyles({
   table: {
@@ -89,13 +89,16 @@ const InvoiceOverview = () => {
 
   const { totalHours, totalPrice } = getTotal();
 
-  const handleSubmit = async () => {
-    dispatch({ type: "TOGGLE_INVOICE_CREATION" });
-    const { id } = await addInvoice({
-      title: invoiceTitle,
-      customerId: selectedCustomer.id,
-    });
-    await editProjects(selectedProjects, { invoiceId: id });
+  const handleSubmit = () => {
+    dispatch(
+      saveInvoice(
+        {
+          title: invoiceTitle,
+          customerId: selectedCustomer.id,
+        },
+        selectedProjects.map((project) => project.id)
+      )
+    );
   };
 
   const handleTextInput = (value) => {

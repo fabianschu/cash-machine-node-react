@@ -1,5 +1,8 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { toggleCustomerEdit } from "../redux/actions/customersAction";
+import { toggleProjectCreation } from "../redux/actions/projectsAction";
+import { useDispatch, useSelector } from "react-redux";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Paper from "@material-ui/core/Paper";
@@ -7,14 +10,7 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ModalButton from "./ModalButton";
 import Table from "./Table";
-import { UiContext } from "../context/UiContext";
 import Box from "@material-ui/core/Box";
-import { toggleCustomerEdit } from "../redux/actions/customersAction";
-import {
-  toggleProjectCreation,
-  toggleProjectEdit,
-} from "../redux/actions/projectsAction";
-import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   accordionContent: {
@@ -52,7 +48,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ControlledAccordions(props) {
   const classes = useStyles();
-  const { setCreatingInvoice } = useContext(UiContext);
   const dispatch = useDispatch();
 
   const [expanded, setExpanded] = useState(false);

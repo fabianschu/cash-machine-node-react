@@ -10,6 +10,7 @@ import {
   UPDATE_INVOICE_SUCCESS,
   UPDATE_INVOICE_FAILURE,
 } from "../types";
+import { bulkUpdateProjects } from "./projectsAction";
 
 export function fetchInvoices() {
   return function (dispatch) {
@@ -41,13 +42,15 @@ const getInvoicesFailure = (error) => ({
   },
 });
 
-export const saveInvoice = (invoice) => {
+export const saveInvoice = (invoice, projectIds) => {
   return async (dispatch) => {
     dispatch(saveInvoiceStarted());
     try {
       const { data } = await axios.post(`/invoices`, invoice);
-      dispatch(saveInvoiceSuccess(data));
+      dispatch({ type: "TOGGLE_INVOICE_CREATION" });
+      dispatch(bulkUpdateProjects({ invoiceId: data.id }, projectIds));
       dispatch(fetchInvoices());
+      dispatch(saveInvoiceSuccess(data));
     } catch (err) {
       dispatch(saveInvoiceFailure(err.message));
     }

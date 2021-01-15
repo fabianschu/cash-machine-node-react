@@ -14,6 +14,9 @@ import {
   DELETE_PROJECT_STARTED,
   DELETE_PROJECT_SUCCESS,
   DELETE_PROJECT_FAILURE,
+  BULK_UPDATE_PROJECTS_STARTED,
+  BULK_UPDATE_PROJECTS_SUCCESS,
+  BULK_UPDATE_PROJECTS_FAILURE,
 } from "../types";
 
 import axios from "../apiClient";
@@ -106,6 +109,34 @@ const updateProjectSuccess = (project) => ({
 
 const updateProjectFailure = (error) => ({
   type: UPDATE_PROJECT_FAILURE,
+  payload: {
+    error,
+  },
+});
+
+export const bulkUpdateProjects = (payload, projectIds) => {
+  return async (dispatch) => {
+    dispatch(bulkUpdateProjectsStarted());
+    try {
+      await axios.put(`/projects`, { ids: projectIds, payload });
+      dispatch(bulkUpdateProjectsSuccess());
+      dispatch(fetchProjects());
+    } catch (err) {
+      dispatch(bulkUpdateProjectsFailure(err.message));
+    }
+  };
+};
+
+const bulkUpdateProjectsStarted = () => ({
+  type: BULK_UPDATE_PROJECTS_STARTED,
+});
+
+const bulkUpdateProjectsSuccess = (project) => ({
+  type: BULK_UPDATE_PROJECTS_SUCCESS,
+});
+
+const bulkUpdateProjectsFailure = (error) => ({
+  type: BULK_UPDATE_PROJECTS_FAILURE,
   payload: {
     error,
   },

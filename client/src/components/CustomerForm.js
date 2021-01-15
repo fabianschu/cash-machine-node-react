@@ -1,21 +1,19 @@
-import React, { useContext } from "react";
+import React from "react";
+import * as Yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import { Formik, Form, Field } from "formik";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { UiContext } from "../context/UiContext";
-import { Formik, Form, Field } from "formik";
-import InputField from "./InputField";
-import FloatInputField from "./FloatInputField";
-import * as Yup from "yup";
-import { connect, useDispatch, useSelector } from "react-redux";
 import { saveCustomer } from "../redux/actions/customersAction";
-import { useHistory } from "react-router-dom";
 import {
   toggleCustomerCreation,
   toggleCustomerEdit,
 } from "../redux/actions/customersAction";
+import InputField from "./InputField";
+import FloatInputField from "./FloatInputField";
 
 const SignupSchema = Yup.object().shape({
   firm: Yup.string()

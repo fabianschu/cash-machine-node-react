@@ -14,6 +14,9 @@ import {
   DELETE_PROJECT_STARTED,
   DELETE_PROJECT_SUCCESS,
   DELETE_PROJECT_FAILURE,
+  BULK_UPDATE_PROJECTS_STARTED,
+  BULK_UPDATE_PROJECTS_SUCCESS,
+  BULK_UPDATE_PROJECTS_FAILURE,
 } from "../types";
 
 const initialState = {
@@ -74,6 +77,23 @@ export const projectsReducer = (state = initialState, action) => {
         error: null,
       };
     case UPDATE_PROJECT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+      };
+    case BULK_UPDATE_PROJECTS_STARTED:
+      return {
+        ...state,
+        loading: true,
+      };
+    case BULK_UPDATE_PROJECTS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+      };
+    case BULK_UPDATE_PROJECTS_FAILURE:
       return {
         ...state,
         loading: false,
