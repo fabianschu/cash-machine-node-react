@@ -5,7 +5,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
-import { DataContext } from "../context/DataContext";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -47,9 +46,12 @@ const InvoiceOverview = () => {
     ({ customersReducer }) => customersReducer.selectedCustomer
   );
   const userProfile = useSelector(({ userReducer }) => userReducer.user);
+  const maxInvoiceId = Math.max(
+    ...useSelector(({ invoicesReducer }) =>
+      invoicesReducer.invoices.map((invoice) => invoice.id)
+    )
+  );
   const dispatch = useDispatch();
-
-  const { addInvoice, editProjects, invoices } = useContext(DataContext);
 
   const {
     firm,
@@ -119,8 +121,8 @@ const InvoiceOverview = () => {
     return selectedCustomer.lastName + "_" + selectedCustomer.firstName;
   };
 
-  const formalInvoiceId =
-    Math.max(...invoices.map((invoice) => invoice.id)) * 6 + 6000;
+  const formalInvoiceId = maxInvoiceId * 6 + 6000;
+
   const fileName =
     moment().format("MM-YY") +
     "_" +
