@@ -31,6 +31,12 @@ export default createMuiTheme({
       xlarge: "4.5rem",
     },
   },
+  rounded: {
+    borderRadius: "49px",
+  },
+  shadows: {
+    normal: "0px 3px 6px #00000029",
+  },
   overrides: {
     MuiButton: {
       root: {

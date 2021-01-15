@@ -13,6 +13,7 @@ import {
 } from "../redux/actions/customersAction";
 import { fetchProjects } from "../redux/actions/projectsAction";
 import { fetchInvoices } from "../redux/actions/invoicesAction";
+import styled from "styled-components";
 // import { useParams } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -24,6 +25,12 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
 }));
+
+const StyledWidgetBox = styled.div`
+  border-radius: ${({ theme }) => theme.rounded.borderRadius};
+  box-shadow: ${({ theme }) => theme.shadows.normal};
+  background-color: white;
+`;
 
 const MainWidget = (props) => {
   const dispatch = useDispatch();
@@ -47,31 +54,32 @@ const MainWidget = (props) => {
   }, [dispatch]);
 
   return (
-    <>
-      <Box boxShadow={5}>
-        <Box className={classes.outer}>
-          <ModalButton
-            handleClick={toggleCustomerCreation}
-            type="createCustomer"
-            m={0}
-          />
-          {customers && (
-            <SelectOne
-              options={customers}
-              handleSelection={selectCustomer}
-              selected={selectedCustomer}
-              type="Kunden"
-              display="firm"
-            />
-          )}
-        </Box>
-        <Accordion
-          disabled={!selectedCustomer}
-          selectedCustomer={selectedCustomer}
-        />
-      </Box>
-      <Modal />
-    </>
+    <StyledWidgetBox>lol</StyledWidgetBox>
+    // <>
+    //   <Box boxShadow={5}>
+    //     <Box className={classes.outer}>
+    //       <ModalButton
+    //         handleClick={toggleCustomerCreation}
+    //         type="createCustomer"
+    //         m={0}
+    //       />
+    //       {customers && (
+    //         <SelectOne
+    //           options={customers}
+    //           handleSelection={selectCustomer}
+    //           selected={selectedCustomer}
+    //           type="Kunden"
+    //           display="firm"
+    //         />
+    //       )}
+    //     </Box>
+    //     <Accordion
+    //       disabled={!selectedCustomer}
+    //       selectedCustomer={selectedCustomer}
+    //     />
+    //   </Box>
+    //   <Modal />
+    // </>
   );
 };
 
