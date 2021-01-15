@@ -17,6 +17,7 @@ import axios from "../apiClient";
 export function fetchCustomers() {
   return function (dispatch) {
     dispatch(getCustomersStarted());
+    console.log("fetching");
     return axios
       .get(`/customers`)
       .then(({ data }) => {
@@ -78,30 +79,18 @@ const saveCustomerFailure = (error) => ({
 });
 
 export function updateCustomer(customer) {
-  return function (dispatch) {
-    dispatch(updateCustomerStarted());
-    console.log(customer);
-    return axios
-      .put(`/customers/${customer.id}`, customer)
-      .then(({ data }) => {
-        dispatch(updateCustomerSuccess(data));
-      })
-      .catch((err) => {
-        dispatch(updateCustomerFailure(err.message));
-      });
-  };
-}
-
-export function updateCustomer(customer) {
   return async (dispatch) => {
     dispatch(updateCustomerStarted());
+    console.log("updating");
     try {
       const { data } = await axios.put(`/customers/${customer.id}`, customer);
-      dispatch(saveCustomerSuccess(data));
-      dispatch(fetchCustomers());
+      console.log(data);
+      await dispatch(updateCustomerSuccess(data));
+      await dispatch(fetchCustomers());
+      dispatch(selectCustomer(data.id));
     } catch (err) {
       console.log(err);
-      dispatch(saveCustomerFailure(err.message));
+      dispatch(updateCustomerFailure(err.message));
     }
   };
 }
