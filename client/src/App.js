@@ -11,11 +11,11 @@ import { authenticate } from "./redux/actions/authAction";
 const App = () => {
   const dispatch = useDispatch();
   const loading = useSelector(({ authReducer }) => authReducer.loading);
-  const error = useSelector(({ authReducer }) => authReducer.error);
+  // const error = useSelector(({ authReducer }) => authReducer.error);
 
   useEffect(() => {
     dispatch(authenticate());
-  }, []);
+  }, [dispatch]);
 
   if (loading) return <p>LOADING</p>;
 

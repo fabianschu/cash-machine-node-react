@@ -23,10 +23,10 @@ const SignupSchema = Yup.object().shape({
 });
 
 const CustomerForm = (props) => {
-  const error = useSelector(({ customersReducer }) => customersReducer.error);
-  const loading = useSelector(
-    ({ customersReducer }) => customersReducer.loading
-  );
+  // const error = useSelector(({ customersReducer }) => customersReducer.error);
+  // const loading = useSelector(
+  //   ({ customersReducer }) => customersReducer.loading
+  // );
   const selectedCustomer = useSelector(
     ({ customersReducer }) => customersReducer.selectedCustomer
   );

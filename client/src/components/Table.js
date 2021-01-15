@@ -65,11 +65,10 @@ const Table = (props) => {
   const customerId = useSelector(
     ({ customersReducer }) => customersReducer.selectedCustomer.id
   );
-  const [selectedProjects, setSelectedProjects] = useState([]);
 
   const currentProjects = () =>
     projects.filter(
-      (project) => !project.invoiceId && project.customerId == customerId
+      (project) => !project.invoiceId && project.customerId === customerId
     );
 
   // rows = rows.map((row) => {

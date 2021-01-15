@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -32,6 +32,7 @@ const SelectOne = (props) => {
         if (!option) return "";
         return option[display];
       }}
+      getOptionSelected={() => true}
       renderOption={(option, { s }) => {
         return <React.Fragment>{option[display]}</React.Fragment>;
       }}

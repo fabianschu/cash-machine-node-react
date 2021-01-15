@@ -7,7 +7,6 @@ axios.defaults.withCredentials = true;
 export function login(credentials) {
   return function (dispatch) {
     dispatch(loginStarted());
-    console.log(credentials);
     return axios
       .post(`/auth/login`, credentials)
       .then(({ data }) => {
@@ -15,7 +14,6 @@ export function login(credentials) {
       })
       .catch((err) => {
         dispatch(loginFailure(err.message));
-        console.log(err);
       });
   };
 }
@@ -40,11 +38,7 @@ export const authenticate = () => {
   return async (dispatch) => {
     dispatch(authenticateStarted());
     try {
-      // const status = axios.get(`/auth/authenticate`);
       const { data } = await axios.get(`/auth/authenticate`);
-      // console.log(status);
-      // const { data } = status;
-      console.log(data);
       dispatch(fetchUser());
       dispatch(authenticateSuccess(data));
     } catch (err) {

@@ -17,11 +17,10 @@ import axios from "../apiClient";
 export function fetchCustomers() {
   return function (dispatch) {
     dispatch(getCustomersStarted());
-    console.log("fetching");
+
     return axios
       .get(`/customers`)
       .then(({ data }) => {
-        console.log(data);
         dispatch(getCustomersSuccess(data));
       })
       .catch((err) => {
@@ -51,8 +50,9 @@ export function saveCustomer(customer) {
     dispatch(saveCustomerStarted());
     try {
       const { data } = await axios.post(`/customers`, customer);
-      dispatch(saveCustomerSuccess(data));
       dispatch(fetchCustomers());
+      dispatch(saveCustomerSuccess(data));
+      selectCustomer(data.id);
     } catch (err) {
       console.log(err);
       dispatch(saveCustomerFailure(err.message));
@@ -81,15 +81,12 @@ const saveCustomerFailure = (error) => ({
 export function updateCustomer(customer) {
   return async (dispatch) => {
     dispatch(updateCustomerStarted());
-    console.log("updating");
     try {
       const { data } = await axios.put(`/customers/${customer.id}`, customer);
-      console.log(data);
-      await dispatch(updateCustomerSuccess(data));
       await dispatch(fetchCustomers());
       dispatch(selectCustomer(data.id));
+      await dispatch(updateCustomerSuccess(data));
     } catch (err) {
-      console.log(err);
       dispatch(updateCustomerFailure(err.message));
     }
   };
@@ -99,11 +96,8 @@ const updateCustomerStarted = () => ({
   type: UPDATE_CUSTOMER_STARTED,
 });
 
-const updateCustomerSuccess = (customer) => ({
+const updateCustomerSuccess = () => ({
   type: UPDATE_CUSTOMER_SUCCESS,
-  payload: {
-    customer,
-  },
 });
 
 const updateCustomerFailure = (error) => ({
@@ -113,12 +107,14 @@ const updateCustomerFailure = (error) => ({
   },
 });
 
-export const selectCustomer = (customerId) => ({
-  type: SELECT_CUSTOMER,
-  payload: {
-    customerId,
-  },
-});
+export const selectCustomer = (customerId) => {
+  return {
+    type: SELECT_CUSTOMER,
+    payload: {
+      customerId,
+    },
+  };
+};
 
 export const toggleCustomerCreation = () => ({
   type: TOGGLE_CUSTOMER_CREATION,

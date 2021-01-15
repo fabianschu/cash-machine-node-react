@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { toggleCustomerEdit } from "../redux/actions/customersAction";
 import { toggleProjectCreation } from "../redux/actions/projectsAction";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Paper from "@material-ui/core/Paper";
@@ -48,7 +48,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ControlledAccordions(props) {
   const classes = useStyles();
-  const dispatch = useDispatch();
 
   const [expanded, setExpanded] = useState(false);
 

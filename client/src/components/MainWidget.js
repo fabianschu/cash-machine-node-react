@@ -13,7 +13,7 @@ import {
 } from "../redux/actions/customersAction";
 import { fetchProjects } from "../redux/actions/projectsAction";
 import { fetchInvoices } from "../redux/actions/invoicesAction";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   outer: {
@@ -34,11 +34,11 @@ const MainWidget = (props) => {
   const selectedCustomer = useSelector(
     ({ customersReducer }) => customersReducer.selectedCustomer
   );
-  const error = useSelector(({ customersReducer }) => customersReducer.error);
-  const loading = useSelector(
-    ({ customersReducer }) => customersReducer.loading
-  );
-  const { customerId } = useParams();
+  // const error = useSelector(({ customersReducer }) => customersReducer.error);
+  // const loading = useSelector(
+  //   ({ customersReducer }) => customersReducer.loading
+  // );
+  // const { customerId } = useParams();
 
   useEffect(() => {
     dispatch(fetchCustomers());

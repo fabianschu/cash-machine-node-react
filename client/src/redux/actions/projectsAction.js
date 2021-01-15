@@ -27,7 +27,6 @@ export function fetchProjects() {
     return axios
       .get(`/projects`)
       .then(({ data }) => {
-        console.log(data);
         dispatch(getProjectsSuccess(data));
       })
       .catch((err) => {
@@ -143,7 +142,6 @@ const bulkUpdateProjectsFailure = (error) => ({
 });
 
 export const toggleProjectSelection = (projects) => {
-  console.log(projects);
   return {
     type: TOGGLE_PROJECT_SELECTION,
     payload: projects,
@@ -166,7 +164,6 @@ export const deleteProject = (projectId) => {
       dispatch(deleteProjectSuccess(data));
       dispatch(fetchProjects());
     } catch (err) {
-      console.log(err);
       dispatch(deleteProjectFailure(err.message));
     }
   };
