@@ -25,6 +25,13 @@ const Modal = (props) => {
     ({ projectsReducer }) => projectsReducer.creatingProject
   );
 
+  const closeModals = () => {
+    if (creatingCustomer) dispatch({ type: "TOGGLE_CUSTOMER_CREATION" });
+    if (editingCustomer) dispatch({ type: "TOGGLE_CUSTOMER_EDIT" });
+    if (creatingInvoice) dispatch({ type: "TOGGLE_INVOICE_CREATION" });
+    if (creatingProject) dispatch({ type: "TOGGLE_PROJECT_CREATION" });
+  };
+
   const renderModalContent = () => {
     if (creatingCustomer || editingCustomer) {
       return <CustomerForm />;
@@ -47,6 +54,7 @@ const Modal = (props) => {
           creatingInvoice ||
           creatingProject
         }
+        onClose={closeModals}
         aria-labelledby="responsive-dialog-title"
       >
         {renderModalContent()}
