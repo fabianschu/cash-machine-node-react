@@ -1,8 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import Dialog from "@material-ui/core/Dialog";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
-import { UiContext } from "../context/UiContext";
 import CustomerForm from "./CustomerForm";
 import ProjectForm from "./ProjectForm";
 import InvoiceOverview from "./InvoiceOverview";
@@ -11,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 const Modal = (props) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const { closeModal } = useContext(UiContext);
   const dispatch = useDispatch();
 
   const creatingCustomer = useSelector(
@@ -49,7 +47,6 @@ const Modal = (props) => {
           creatingInvoice ||
           creatingProject
         }
-        onClose={closeModal}
         aria-labelledby="responsive-dialog-title"
       >
         {renderModalContent()}

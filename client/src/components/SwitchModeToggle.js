@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
-import { UiContext } from "../context/UiContext";
 import { withStyles } from "@material-ui/core/styles";
 import white from "./white.png";
 
@@ -22,7 +21,7 @@ const StyledToggleButtonGroup = withStyles((theme) => ({
 }))(ToggleButtonGroup);
 
 export default function SwitchModeToggle() {
-  const { mode, setMode, setSelectedProjects } = useContext(UiContext);
+  const mode, setMode, setSelectedProjects;
 
   const handleAlignment = (event, newMode) => {
     if (newMode !== null) {

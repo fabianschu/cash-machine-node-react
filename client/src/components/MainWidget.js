@@ -1,9 +1,7 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import ModalButton from "./ModalButton";
 import Accordion from "./Accordion";
 import Box from "@material-ui/core/Box";
-import { UiContext } from "../context/UiContext";
-import { DataContext } from "../context/DataContext";
 import SelectOne from "./SelectOne";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "./Modal";

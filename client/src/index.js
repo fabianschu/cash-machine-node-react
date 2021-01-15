@@ -4,21 +4,12 @@ import { Provider } from "react-redux";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import { UiContextProvider } from "./context/UiContext";
-import { DataContextProvider } from "./context/DataContext";
-import { AuthContextProvider } from "./context/AuthContext";
 import "./App.css";
 import store from "./redux/store";
 
 ReactDOM.render(
   <Provider store={store}>
-    <AuthContextProvider>
-      <DataContextProvider>
-        <UiContextProvider>
-          <App />
-        </UiContextProvider>
-      </DataContextProvider>
-    </AuthContextProvider>
+    <App />
   </Provider>,
   document.getElementById("root")
 );

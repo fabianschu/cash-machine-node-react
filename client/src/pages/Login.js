@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
@@ -8,8 +8,6 @@ import { Typography } from "@material-ui/core";
 import { Formik, Form, Field } from "formik";
 import InputField from "../components/InputField";
 import Button from "@material-ui/core/Button";
-import axios from "axios";
-import { AuthContext } from "../context/AuthContext";
 import { Redirect } from "react-router-dom";
 import { login } from "../redux/actions/authAction";
 import { useDispatch, useSelector } from "react-redux";

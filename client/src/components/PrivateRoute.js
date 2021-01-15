@@ -1,7 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
-import MainWidget from "./MainWidget";
 import { useSelector } from "react-redux";
 
 const PrivateRoute = (props) => {
