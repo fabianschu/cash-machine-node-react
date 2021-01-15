@@ -7,7 +7,7 @@ import Box from "@material-ui/core/Box";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { saveCustomer } from "../redux/actions/customersAction";
+import { saveCustomer, updateCustomer } from "../redux/actions/customersAction";
 import {
   toggleCustomerCreation,
   toggleCustomerEdit,
@@ -36,7 +36,12 @@ const CustomerForm = (props) => {
   const dispatch = useDispatch();
 
   const handleSubmit = (values) => {
-    dispatch(saveCustomer(values));
+    if (editingCustomer) {
+      dispatch(updateCustomer(values));
+    } else {
+      dispatch(saveCustomer(values));
+    }
+    closeModal();
   };
 
   const closeModal = () => {

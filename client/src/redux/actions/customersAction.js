@@ -80,14 +80,29 @@ const saveCustomerFailure = (error) => ({
 export function updateCustomer(customer) {
   return function (dispatch) {
     dispatch(updateCustomerStarted());
+    console.log(customer);
     return axios
-      .post(`/customers/${customer.id}`, customer)
+      .put(`/customers/${customer.id}`, customer)
       .then(({ data }) => {
         dispatch(updateCustomerSuccess(data));
       })
       .catch((err) => {
         dispatch(updateCustomerFailure(err.message));
       });
+  };
+}
+
+export function updateCustomer(customer) {
+  return async (dispatch) => {
+    dispatch(updateCustomerStarted());
+    try {
+      const { data } = await axios.put(`/customers/${customer.id}`, customer);
+      dispatch(saveCustomerSuccess(data));
+      dispatch(fetchCustomers());
+    } catch (err) {
+      console.log(err);
+      dispatch(saveCustomerFailure(err.message));
+    }
   };
 }
 
