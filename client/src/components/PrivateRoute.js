@@ -1,23 +1,16 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
-import CustomerWidget from "./CustomerWidget";
+import { useSelector } from "react-redux";
 
-function PrivateRoute({ component: Component, ...rest }) {
-  const { authenticatedUser } = useContext(AuthContext);
+const PrivateRoute = (props) => {
+  const isAuthenticated = useSelector(({ authReducer }) => authReducer.userId);
+  const { children } = props;
 
   return (
-    <Route
-      {...rest}
-      render={(props) => {
-        if (authenticatedUser) {
-          return <CustomerWidget />;
-        } else {
-          return <Redirect to="/login" />;
-        }
-      }}
-    />
+    <Route {...props}>
+      {isAuthenticated ? children : <Redirect to="/login" />}
+    </Route>
   );
-}
+};
 
 export default PrivateRoute;

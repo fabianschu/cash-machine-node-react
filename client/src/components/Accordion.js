@@ -1,5 +1,8 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { toggleCustomerEdit } from "../redux/actions/customersAction";
+import { toggleProjectCreation } from "../redux/actions/projectsAction";
+import { useSelector } from "react-redux";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Paper from "@material-ui/core/Paper";
@@ -7,7 +10,6 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ModalButton from "./ModalButton";
 import Table from "./Table";
-import { UiContext } from "../context/UiContext";
 import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles((theme) => ({
@@ -46,26 +48,34 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ControlledAccordions(props) {
   const classes = useStyles();
-  const {
-    accordionExpanded,
-    setAccordionExpanded,
-    setCreatingInvoice,
-    selectedProjects,
-    selectedCustomer,
-    editingCustomer,
-    setEditingCustomer,
-    setCreatingProject,
-  } = useContext(UiContext);
-  const { disabled, data } = props;
+
+  const [expanded, setExpanded] = useState(false);
+
+  const { disabled, selectedCustomer, data } = props;
+
+  const selectedProjects = useSelector(
+    ({ projectsReducer }) => projectsReducer.selectedProjects
+  );
+
+  useEffect(() => {
+    if (!selectedCustomer) {
+      setExpanded(false);
+      return;
+    }
+
+    if (selectedCustomer) {
+      setExpanded(true);
+    }
+  }, [selectedCustomer]);
 
   const handleChange = () => (event, isExpanded) => {
-    setAccordionExpanded(isExpanded ? true : false);
+    setExpanded(isExpanded ? true : false);
   };
 
   return (
     <div className={classes.accordion}>
       <Accordion
-        expanded={accordionExpanded}
+        expanded={expanded}
         onChange={handleChange(true)}
         elevation={0}
         square
@@ -103,8 +113,7 @@ export default function ControlledAccordions(props) {
                   </Box>
                   <Box>
                     <ModalButton
-                      handleClick={setEditingCustomer}
-                      currentState={editingCustomer}
+                      handleClick={toggleCustomerEdit}
                       type="editCustomer"
                       disabled={!selectedCustomer}
                     />
@@ -113,7 +122,7 @@ export default function ControlledAccordions(props) {
               </Paper>
               <Box className={classes.buttonBox}>
                 <ModalButton
-                  handleClick={() => setCreatingProject(true)}
+                  handleClick={toggleProjectCreation}
                   type="createProject"
                   disabled={!selectedCustomer}
                   className={classes.printButton}
@@ -128,8 +137,8 @@ export default function ControlledAccordions(props) {
           {selectedCustomer && <Table rows={data} />}
           <Box mt={2}>
             <ModalButton
-              handleClick={() => setCreatingInvoice(true)}
-              type="print"
+              handleClick={() => ({ type: "TOGGLE_INVOICE_CREATION" })}
+              type="createInvoice"
               disabled={selectedProjects.length === 0}
               className={classes.printButton}
             />

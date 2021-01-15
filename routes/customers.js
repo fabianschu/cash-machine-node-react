@@ -1,8 +1,4 @@
-var express = require("express");
-const bcrypt = require("bcrypt");
 const Router = require("express-promise-router");
-const db = require("../db");
-const projects = require("./projects");
 const Customer = require("../models/baseModel")("customers");
 
 const router = new Router();
@@ -22,6 +18,7 @@ router.post("/", async (req, res, next) => {
   res.json(result);
 });
 
+/* UPDATE CUSTOMER. */
 router.put("/:customerId", async (req, res, next) => {
   const userId = req.session.currentUser;
   const { customerId } = req.params;
@@ -38,7 +35,5 @@ router.get("/", async (req, res, next) => {
   const result = await Customer.where({ userId });
   res.json(result);
 });
-
-// router.use("/:customerId/projects", projects);
 
 module.exports = router;

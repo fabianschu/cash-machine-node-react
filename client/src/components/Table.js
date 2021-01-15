@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { forwardRef } from "react";
 import MaterialTable from "material-table";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
@@ -17,9 +17,14 @@ import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
 import TextField from "@material-ui/core/TextField";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
-import { UiContext } from "../context/UiContext";
-import { DataContext } from "../context/DataContext";
 import Paper from "@material-ui/core/Paper";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  saveProject,
+  updateProject,
+  deleteProject,
+  toggleProjectSelection,
+} from "../redux/actions/projectsAction";
 
 const tableIcons = {
   Add: forwardRef((props, ref) => (
@@ -52,41 +57,42 @@ const tableIcons = {
 };
 
 const Table = (props) => {
+  const dispatch = useDispatch();
   const { useState } = React;
-  const { projects, addProject, editProject, deleteProject } = useContext(
-    DataContext
+  const projects = useSelector(
+    ({ projectsReducer }) => projectsReducer.projects
   );
-  const { selectedCustomer } = useContext(UiContext);
-  const { selectedProjects, setSelectedProjects } = useContext(UiContext);
-  let rows = projects;
-
-  rows = projects.filter(
-    (project) =>
-      !project.invoiceId && project.customerId === selectedCustomer.id
+  const customerId = useSelector(
+    ({ customersReducer }) => customersReducer.selectedCustomer.id
   );
 
-  rows = rows.map((row) => {
-    if (
-      selectedProjects
-        .map((selectedProject) => selectedProject.id)
-        .includes(row.id)
-    ) {
-      return {
-        ...row,
-        tableData: {
-          ...row.tableData,
-          checked: true,
-        },
-      };
-    }
-    return {
-      ...row,
-      tableData: {
-        ...row.tableData,
-        checked: false,
-      },
-    };
-  });
+  const currentProjects = () =>
+    projects.filter(
+      (project) => !project.invoiceId && project.customerId === customerId
+    );
+
+  // rows = rows.map((row) => {
+  //   if (
+  //     selectedProjects
+  //       .map((selectedProject) => selectedProject.id)
+  //       .includes(row.id)
+  //   ) {
+  //     return {
+  //       ...row,
+  //       tableData: {
+  //         ...row.tableData,
+  //         checked: true,
+  //       },
+  //     };
+  //   }
+  //   return {
+  //     ...row,
+  //     tableData: {
+  //       ...row.tableData,
+  //       checked: false,
+  //     },
+  //   };
+  // });
 
   const [columns] = useState([
     { title: "Projekt", field: "name", width: 200 },
@@ -130,28 +136,24 @@ const Table = (props) => {
           },
           selection: true,
         }}
-        onSelectionChange={(rows) => setSelectedProjects(rows)}
+        onSelectionChange={(projects) =>
+          dispatch(toggleProjectSelection(projects))
+        }
         title="Projekte"
         components={{
           Container: (props) => <Paper {...props} elevation={2} />,
         }}
         columns={columns}
-        data={rows}
+        data={currentProjects()}
         editable={{
           onRowAdd: async (projectData) => {
-            await addProject({
-              ...projectData,
-              customerId: selectedCustomer.id,
-            });
-          },
-          onRowUpdate: async (projectData) => {
-            await editProject(projectData.id, {
-              ...projectData,
-              customerId: selectedCustomer.id,
-            });
+            await dispatch(saveProject({ ...projectData, customerId }));
           },
           onRowDelete: async (projectData) => {
-            await deleteProject(projectData.id);
+            await dispatch(deleteProject(projectData.id));
+          },
+          onRowUpdate: async (projectData) => {
+            await dispatch(updateProject({ ...projectData, customerId }));
           },
         }}
       />

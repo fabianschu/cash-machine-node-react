@@ -63,7 +63,6 @@ const createIndexedCommaAttributes = (attributeNames, startIdx = 1) => {
 
 // ("height" = $1 AND "length" = $2 AND "weight" = $3)
 const createIndexedAndAttributes = (attributeNames, startIdx = 1) => {
-  console.log(attributeNames);
   const seperator = " AND ";
   return createIndexedAttributes(attributeNames, seperator, startIdx);
 };

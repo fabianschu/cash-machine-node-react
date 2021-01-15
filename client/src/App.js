@@ -1,19 +1,38 @@
-import React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Layout from "./pages/Layout";
-import CustomerWidget from "./components/CustomerWidget";
+import MainWidget from "./components/MainWidget";
 import Login from "./pages/Login";
 import PrivateRoute from "./components/PrivateRoute";
 import "./App.css";
+import { useDispatch, useSelector } from "react-redux";
+import { authenticate } from "./redux/actions/authAction";
 
 const App = () => {
+  const dispatch = useDispatch();
+  const loading = useSelector(({ authReducer }) => authReducer.loading);
+  // const error = useSelector(({ authReducer }) => authReducer.error);
+
+  useEffect(() => {
+    dispatch(authenticate());
+  }, [dispatch]);
+
+  if (loading) return <p>LOADING</p>;
+
   return (
     <BrowserRouter>
       <Layout>
-        <PrivateRoute exact path="/" component={CustomerWidget} />
-        <Route exact path="/login">
-          <Login />
-        </Route>
+        <Switch>
+          <PrivateRoute path="/main">
+            <MainWidget />
+          </PrivateRoute>
+          <Route exact path="/login">
+            <Login />
+          </Route>
+          <Route path="/">
+            <Redirect to="/main" />
+          </Route>
+        </Switch>
       </Layout>
     </BrowserRouter>
   );

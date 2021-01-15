@@ -1,12 +1,10 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
-import { UiContext } from "../context/UiContext";
-import { DataContext } from "../context/DataContext";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -18,6 +16,8 @@ import Paper from "@material-ui/core/Paper";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import Invoice from "./Invoice/Invoice";
 import TextField from "@material-ui/core/TextField";
+import { useDispatch, useSelector } from "react-redux";
+import { saveInvoice } from "../redux/actions/invoicesAction";
 
 const useStyles = makeStyles({
   table: {
@@ -39,13 +39,19 @@ const InvoiceOverview = () => {
   );
   const [pdfAssemblingTimeout, setPdfAssemblingTimeout] = useState(0);
 
-  const { closeModal, selectedCustomer, selectedProjects } = useContext(
-    UiContext
+  const selectedProjects = useSelector(
+    ({ projectsReducer }) => projectsReducer.selectedProjects
   );
-
-  const { userProfile, addInvoice, editProjects, invoices } = useContext(
-    DataContext
+  const selectedCustomer = useSelector(
+    ({ customersReducer }) => customersReducer.selectedCustomer
   );
+  const userProfile = useSelector(({ userReducer }) => userReducer.user);
+  const maxInvoiceId = Math.max(
+    ...useSelector(({ invoicesReducer }) =>
+      invoicesReducer.invoices.map((invoice) => invoice.id)
+    )
+  );
+  const dispatch = useDispatch();
 
   const {
     firm,
@@ -85,13 +91,16 @@ const InvoiceOverview = () => {
 
   const { totalHours, totalPrice } = getTotal();
 
-  const handleSubmit = async () => {
-    closeModal();
-    const { id } = await addInvoice({
-      title: invoiceTitle,
-      customerId: selectedCustomer.id,
-    });
-    await editProjects(selectedProjects, { invoiceId: id });
+  const handleSubmit = () => {
+    dispatch(
+      saveInvoice(
+        {
+          title: invoiceTitle,
+          customerId: selectedCustomer.id,
+        },
+        selectedProjects.map((project) => project.id)
+      )
+    );
   };
 
   const handleTextInput = (value) => {
@@ -112,8 +121,8 @@ const InvoiceOverview = () => {
     return selectedCustomer.lastName + "_" + selectedCustomer.firstName;
   };
 
-  const formalInvoiceId =
-    Math.max(...invoices.map((invoice) => invoice.id)) * 6 + 6000;
+  const formalInvoiceId = maxInvoiceId * 6 + 6000;
+
   const fileName =
     moment().format("MM-YY") +
     "_" +
@@ -224,7 +233,11 @@ const InvoiceOverview = () => {
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button autoFocus onClick={closeModal} color="primary">
+        <Button
+          autoFocus
+          onClick={() => dispatch({ type: "TOGGLE_INVOICE_CREATION" })}
+          color="primary"
+        >
           Abbrechen
         </Button>
         <Button

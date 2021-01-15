@@ -1,22 +1,36 @@
-import React, { useContext } from "react";
+import React from "react";
 import Dialog from "@material-ui/core/Dialog";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
-import { UiContext } from "../context/UiContext";
 import CustomerForm from "./CustomerForm";
 import ProjectForm from "./ProjectForm";
 import InvoiceOverview from "./InvoiceOverview";
+import { useDispatch, useSelector } from "react-redux";
 
 const Modal = (props) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const {
-    closeModal,
-    creatingCustomer,
-    editingCustomer,
-    creatingInvoice,
-    creatingProject,
-  } = useContext(UiContext);
+  const dispatch = useDispatch();
+
+  const creatingCustomer = useSelector(
+    ({ customersReducer }) => customersReducer.creatingCustomer
+  );
+  const editingCustomer = useSelector(
+    ({ customersReducer }) => customersReducer.editingCustomer
+  );
+  const creatingInvoice = useSelector(
+    ({ invoicesReducer }) => invoicesReducer.creatingInvoice
+  );
+  const creatingProject = useSelector(
+    ({ projectsReducer }) => projectsReducer.creatingProject
+  );
+
+  const closeModals = () => {
+    if (creatingCustomer) dispatch({ type: "TOGGLE_CUSTOMER_CREATION" });
+    if (editingCustomer) dispatch({ type: "TOGGLE_CUSTOMER_EDIT" });
+    if (creatingInvoice) dispatch({ type: "TOGGLE_INVOICE_CREATION" });
+    if (creatingProject) dispatch({ type: "TOGGLE_PROJECT_CREATION" });
+  };
 
   const renderModalContent = () => {
     if (creatingCustomer || editingCustomer) {
@@ -40,7 +54,7 @@ const Modal = (props) => {
           creatingInvoice ||
           creatingProject
         }
-        onClose={closeModal}
+        onClose={closeModals}
         aria-labelledby="responsive-dialog-title"
       >
         {renderModalContent()}

@@ -1,14 +1,19 @@
-import React, { useContext } from "react";
+import React from "react";
+import * as Yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import { Formik, Form, Field } from "formik";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { UiContext } from "../context/UiContext";
-import { Formik, Form, Field } from "formik";
+import { saveCustomer, updateCustomer } from "../redux/actions/customersAction";
+import {
+  toggleCustomerCreation,
+  toggleCustomerEdit,
+} from "../redux/actions/customersAction";
 import InputField from "./InputField";
 import FloatInputField from "./FloatInputField";
-import * as Yup from "yup";
 
 const SignupSchema = Yup.object().shape({
   firm: Yup.string()
@@ -17,17 +22,34 @@ const SignupSchema = Yup.object().shape({
     .required("Required"),
 });
 
-const CustomerForm = () => {
-  const {
-    closeModal,
-    editingCustomer,
-    selectedCustomer,
-    modifyCustomers,
-  } = useContext(UiContext);
+const CustomerForm = (props) => {
+  // const error = useSelector(({ customersReducer }) => customersReducer.error);
+  // const loading = useSelector(
+  //   ({ customersReducer }) => customersReducer.loading
+  // );
+  const selectedCustomer = useSelector(
+    ({ customersReducer }) => customersReducer.selectedCustomer
+  );
+  const editingCustomer = useSelector(
+    ({ customersReducer }) => customersReducer.editingCustomer
+  );
+  const dispatch = useDispatch();
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = (values) => {
+    if (editingCustomer) {
+      dispatch(updateCustomer(values));
+    } else {
+      dispatch(saveCustomer(values));
+    }
     closeModal();
-    await modifyCustomers(values);
+  };
+
+  const closeModal = () => {
+    if (editingCustomer) {
+      dispatch(toggleCustomerEdit());
+    } else {
+      dispatch(toggleCustomerCreation());
+    }
   };
 
   const getInitialValues = () => {
