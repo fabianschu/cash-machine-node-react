@@ -29,13 +29,15 @@ const StyledAccordion = withStyles({
   },
 })(Accordion);
 
-const StyledAccordionSummary = withStyles({
+const StyledAccordionSummary = withStyles((theme) => ({
   root: {
     backgroundColor: "white",
-    height: `${({ theme }) => theme.spacing(2)}px`,
     padding: 0,
   },
-})(AccordionSummary);
+  expandIcon: {
+    color: theme.palette.primary.light,
+  },
+}))(AccordionSummary);
 
 const StyledAccordionDetails = withStyles({
   root: {
