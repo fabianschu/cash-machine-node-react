@@ -32,9 +32,7 @@ const App = () => {
         <ThemeProvider theme={muiTheme}>
           <Switch>
             <PrivateRoute path="/main">
-              <MainPage>
-                <MainWidget />
-              </MainPage>
+              <MainPage />
             </PrivateRoute>
             <Route exact path="/login">
               <LoginPage />

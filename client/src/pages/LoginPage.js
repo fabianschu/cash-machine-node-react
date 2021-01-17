@@ -123,7 +123,8 @@ const LoginPage = () => {
               >
                 Login
               </Button>
-              <SoftButton type="submit">Registrieren</SoftButton>
+              <Button variant="text">Registrieren</Button>
+              {/* <SoftButton type="submit">Registrieren</SoftButton> */}
             </StyledInteractionContainer>
           </Form>
         </Formik>

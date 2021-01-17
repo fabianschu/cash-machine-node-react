@@ -3,31 +3,38 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useDispatch } from "react-redux";
+import styled from "styled-components";
 
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
-    flexGrow: 1,
-    minWidth: "200px",
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
-}));
+const StyledAutocomplete = styled(Autocomplete)`
+  max-width: 600px;
+  flex: 1;
+  margin: ${({ theme }) => `0 ${theme.spacing(2)}px;`};
+`;
+
+// const useStyles = makeStyles((theme) => ({
+//   formControl: {
+//     margin: theme.spacing(1),
+//     flexGrow: 1,
+//     minWidth: "200px",
+//   },
+//   selectEmpty: {
+//     marginTop: theme.spacing(2),
+//   },
+// }));
 
 const SelectOne = (props) => {
-  const classes = useStyles();
+  // const classes = useStyles();
   const { options, selected, handleSelection, disabled, type, display } = props;
   const [inputValue, setInputValue] = React.useState("");
   const dispatch = useDispatch();
 
   return (
-    <Autocomplete
+    <StyledAutocomplete
       value={selected}
       inputValue={inputValue}
       disabled={disabled}
       options={options}
-      className={classes.formControl}
+      // className={classes.formControl}
       getOptionLabel={(option) => {
         if (!option) return "";
         return option[display];

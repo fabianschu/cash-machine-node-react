@@ -31,12 +31,7 @@ export default createMuiTheme({
       xlarge: "4.5rem",
     },
   },
-  rounded: {
-    borderRadius: "49px",
-  },
-  shadows: {
-    normal: "0px 3px 6px #00000029",
-  },
+  rounded: "49px",
   overrides: {
     MuiButton: {
       root: {
@@ -44,16 +39,25 @@ export default createMuiTheme({
         fontWeight: "bold",
       },
       sizeLarge: {
-        width: "250px",
+        width: "272px",
         height: "52px",
-        fontSize: "3rem",
+        fontSize: "40px",
+        fontWeight: "bold",
       },
       contained: {
         boxShadow: "0px 3px 6px #00000029",
         borderRadius: "49px",
       },
+      text: {
+        fontWeight: "normal",
+        color: colors.primary.main,
+        border: "none",
+        textDecoration: "underline",
+        background: "none",
+      },
       containedPrimary: {
         backgroundColor: colors.primary.main,
+        color: "white",
       },
       containedSecondary: {
         backgroundColor: colors.secondary.main,

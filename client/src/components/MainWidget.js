@@ -14,38 +14,32 @@ import {
 import { fetchProjects } from "../redux/actions/projectsAction";
 import { fetchInvoices } from "../redux/actions/invoicesAction";
 import styled from "styled-components";
-// import { useParams } from "react-router-dom";
-
-const useStyles = makeStyles((theme) => ({
-  outer: {
-    padding: "20px 16px",
-    backgroundColor: "white",
-    display: "flex",
-    flexWrap: "wrap",
-    alignItems: "center",
-  },
-}));
+import StyledSubHeading from "../styled/SubHeading";
 
 const StyledWidgetBox = styled.div`
-  border-radius: ${({ theme }) => theme.rounded.borderRadius};
-  box-shadow: ${({ theme }) => theme.shadows.normal};
+  border-radius: ${({ theme }) => theme.rounded};
+  box-shadow: ${({ theme }) => theme.shadows[1]};
   background-color: white;
+  padding: ${({ theme }) =>
+    `${theme.spacing(6)}px ${theme.spacing(6)}px 0 ${theme.spacing(6)}px`};
+  min-width: 700px;
+`;
+
+const StyledFlexBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
 `;
 
 const MainWidget = (props) => {
   const dispatch = useDispatch();
-  const classes = useStyles();
   const customers = useSelector(
     ({ customersReducer }) => customersReducer.customers
   );
   const selectedCustomer = useSelector(
     ({ customersReducer }) => customersReducer.selectedCustomer
   );
-  // const error = useSelector(({ customersReducer }) => customersReducer.error);
-  // const loading = useSelector(
-  //   ({ customersReducer }) => customersReducer.loading
-  // );
-  // const { customerId } = useParams();
 
   useEffect(() => {
     dispatch(fetchCustomers());
@@ -54,29 +48,53 @@ const MainWidget = (props) => {
   }, [dispatch]);
 
   return (
-    <StyledWidgetBox>lol</StyledWidgetBox>
+    <StyledWidgetBox>
+      <StyledFlexBox>
+        <div>
+          <StyledSubHeading>LOG HOURS,</StyledSubHeading>
+          <StyledSubHeading>CREATE PROJECTS</StyledSubHeading>
+          <StyledSubHeading>AND BILLS</StyledSubHeading>
+        </div>
+        <SelectOne
+          options={customers}
+          handleSelection={selectCustomer}
+          selected={selectedCustomer}
+          type="Kunden"
+          display="firm"
+        />
+        <ModalButton
+          handleClick={toggleCustomerCreation}
+          type="createCustomer"
+          m={0}
+        />
+      </StyledFlexBox>
+      <Accordion
+        // disabled={!selectedCustomer}
+        selectedCustomer={selectedCustomer}
+      />
+    </StyledWidgetBox>
     // <>
     //   <Box boxShadow={5}>
     //     <Box className={classes.outer}>
-    //       <ModalButton
-    //         handleClick={toggleCustomerCreation}
-    //         type="createCustomer"
-    //         m={0}
-    //       />
-    //       {customers && (
-    //         <SelectOne
-    //           options={customers}
-    //           handleSelection={selectCustomer}
-    //           selected={selectedCustomer}
-    //           type="Kunden"
-    //           display="firm"
-    //         />
-    //       )}
+    // <ModalButton
+    //   handleClick={toggleCustomerCreation}
+    //   type="createCustomer"
+    //   m={0}
+    // />
+    // {customers && (
+    //   <SelectOne
+    //     options={customers}
+    //     handleSelection={selectCustomer}
+    //     selected={selectedCustomer}
+    //     type="Kunden"
+    //     display="firm"
+    //   />
+    // )}
     //     </Box>
-    //     <Accordion
-    //       disabled={!selectedCustomer}
-    //       selectedCustomer={selectedCustomer}
-    //     />
+    // <Accordion
+    //   disabled={!selectedCustomer}
+    //   selectedCustomer={selectedCustomer}
+    // />
     //   </Box>
     //   <Modal />
     // </>
