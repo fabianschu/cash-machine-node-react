@@ -47,6 +47,8 @@ module.exports = BaseModel = (tableName) => {
         { ...attributes, updatedAt },
         conditions
       );
+      console.log(query);
+      console.log(values);
       try {
         const { rows } = await db.query(query, values);
         return rows[0];

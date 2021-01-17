@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
-import DialogActions from "@material-ui/core/DialogActions";
+import styled from "styled-components";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
@@ -18,6 +18,8 @@ import Invoice from "./Invoice/Invoice";
 import TextField from "@material-ui/core/TextField";
 import { useDispatch, useSelector } from "react-redux";
 import { saveInvoice } from "../redux/actions/invoicesAction";
+import StyledDialogActions from "../styled/DialogActions";
+import StyledSoftButton from "../styled/SoftButton";
 
 const useStyles = makeStyles({
   table: {
@@ -29,6 +31,7 @@ const useStyles = makeStyles({
   button: {
     textDecoration: "none",
     color: "white",
+    fontSize: "1.8rem",
   },
 });
 
@@ -232,36 +235,32 @@ const InvoiceOverview = () => {
           </TableContainer>
         </Box>
       </DialogContent>
-      <DialogActions>
-        <Button
-          autoFocus
+      <StyledDialogActions>
+        <StyledSoftButton
           onClick={() => dispatch({ type: "TOGGLE_INVOICE_CREATION" })}
-          color="primary"
         >
           Abbrechen
-        </Button>
+        </StyledSoftButton>
         <Button
           color="secondary"
-          autoFocus
           variant="contained"
+          size="large"
           onClick={handleSubmit}
           disabled={deactivatedPdfAssembling}
         >
           {deactivatedPdfAssembling ? (
-            "PDF wird erstellt"
+            "LÄDT"
           ) : (
             <PDFDownloadLink
               document={<Invoice template={invoiceTemplate} />}
               fileName={fileName}
               className={classes.button}
             >
-              {({ blob, url, loading, error }) =>
-                loading ? "PDF wird erstellt" : "PDF herunterladen"
-              }
+              {({ blob, url, loading, error }) => (loading ? "LÄDT" : "PDF")}
             </PDFDownloadLink>
           )}
         </Button>
-      </DialogActions>
+      </StyledDialogActions>
     </>
   );
 };

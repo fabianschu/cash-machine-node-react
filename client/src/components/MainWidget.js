@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
 import ModalButton from "./ModalButton";
 import Accordion from "./Accordion";
-import Box from "@material-ui/core/Box";
 import SelectOne from "./SelectOne";
-import { makeStyles } from "@material-ui/core/styles";
 import Modal from "./Modal";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -57,7 +55,7 @@ const MainWidget = (props) => {
             <StyledSubHeading>AND BILLS</StyledSubHeading>
           </div>
           <SelectOne
-            options={customers}
+            options={customers.filter((customer) => customer.active)}
             handleSelection={selectCustomer}
             selected={selectedCustomer}
             type="Kunden"
@@ -76,31 +74,6 @@ const MainWidget = (props) => {
       </StyledWidgetBox>
       <Modal />
     </>
-    // <>
-    //   <Box boxShadow={5}>
-    //     <Box className={classes.outer}>
-    // <ModalButton
-    //   handleClick={toggleCustomerCreation}
-    //   type="createCustomer"
-    //   m={0}
-    // />
-    // {customers && (
-    //   <SelectOne
-    //     options={customers}
-    //     handleSelection={selectCustomer}
-    //     selected={selectedCustomer}
-    //     type="Kunden"
-    //     display="firm"
-    //   />
-    // )}
-    //     </Box>
-    // <Accordion
-    //   disabled={!selectedCustomer}
-    //   selectedCustomer={selectedCustomer}
-    // />
-    //   </Box>
-    //   <Modal />
-    // </>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Formik, Form, Field } from "formik";
 import InputField from "../components/InputField";
 import Button from "@material-ui/core/Button";
@@ -7,6 +7,7 @@ import styled from "styled-components";
 import illustration from "../assets/login-illustration.png";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/actions/authAction";
+import StyledSoftButton from "../styled/SoftButton";
 
 const LoginPageLayout = styled.div`
   background: url(${illustration}) 15% 100% / auto 50% no-repeat,
@@ -64,32 +65,8 @@ const StyledInteractionContainer = styled.div`
   flex: 1;
 `;
 
-const StyledYellowButtom = styled.button`
-  background: #fbd937 0% 0% no-repeat padding-box;
-  box-shadow: 0px 3px 6px #00000029;
-  border-radius: 49px;
-  opacity: 1;
-  width: 330px;
-  height: 60px;
-  border: none;
-  font-family: Brandon;
-  text-transform: uppercase;
-  color: white;
-  font-size: ${({ theme }) => theme.typography.fontSizes.large};
-`;
-
-const SoftButton = styled.button`
-  font-size: ${({ theme }) => theme.typography.fontSizes.small};
-  border: none;
-  text-decoration: underline;
-  background: none;
-`;
-
 const LoginPage = () => {
-  // const { authenticatedUser, setAuthenticatedUser } = useContext(AuthContext);
   const isAuthenticated = useSelector(({ authReducer }) => authReducer.userId);
-  const error = useSelector(({ authReducer }) => authReducer.error);
-  const loading = useSelector(({ authReducer }) => authReducer.loading);
   const dispatch = useDispatch();
 
   const handleSubmit = (values) => {
@@ -108,7 +85,6 @@ const LoginPage = () => {
         <StyledSubHeading>Welcome to your cashmachine</StyledSubHeading>
         <Formik
           initialValues={{ username: "", password: "" }}
-          // validationSchema={SignupSchema}
           onSubmit={handleSubmit}
         >
           <Form>
@@ -123,8 +99,7 @@ const LoginPage = () => {
               >
                 Login
               </Button>
-              <Button variant="text">Registrieren</Button>
-              {/* <SoftButton type="submit">Registrieren</SoftButton> */}
+              <StyledSoftButton>Registrieren</StyledSoftButton>
             </StyledInteractionContainer>
           </Form>
         </Formik>

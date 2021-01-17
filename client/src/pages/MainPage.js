@@ -13,7 +13,7 @@ const MainPageLayout = styled.div`
   background-attachment: fixed;
 `;
 
-const MainPage = ({ children }) => {
+const MainPage = () => {
   return (
     <MainPageLayout>
       <MainWidget />

@@ -3,17 +3,23 @@ import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form, Field } from "formik";
 import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
-import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { saveCustomer, updateCustomer } from "../redux/actions/customersAction";
+import styled from "styled-components";
 import {
   toggleCustomerCreation,
   toggleCustomerEdit,
 } from "../redux/actions/customersAction";
 import InputField from "./InputField";
 import FloatInputField from "./FloatInputField";
+import StyledSubHeading from "../styled/SubHeading";
+import StyledSoftButton from "../styled/SoftButton";
+import StyledDialogActions from "../styled/DialogActions";
+
+const StyledDeleteButtonContainer = styled.div`
+  flex: 1;
+`;
 
 const SignupSchema = Yup.object().shape({
   firm: Yup.string()
@@ -22,11 +28,7 @@ const SignupSchema = Yup.object().shape({
     .required("Required"),
 });
 
-const CustomerForm = (props) => {
-  // const error = useSelector(({ customersReducer }) => customersReducer.error);
-  // const loading = useSelector(
-  //   ({ customersReducer }) => customersReducer.loading
-  // );
+const CustomerForm = () => {
   const selectedCustomer = useSelector(
     ({ customersReducer }) => customersReducer.selectedCustomer
   );
@@ -84,8 +86,12 @@ const CustomerForm = (props) => {
     >
       {(props) => (
         <Form>
-          <DialogTitle id="responsive-dialog-title">
-            {"Neuen Kunden Erstellen"}
+          <DialogTitle>
+            <StyledSubHeading>
+              {editingCustomer
+                ? "Kundendaten berarbeiten"
+                : "Kund*in erstellen"}
+            </StyledSubHeading>
           </DialogTitle>
           <DialogContent>
             <Field component={InputField} name="firm" />
@@ -98,25 +104,23 @@ const CustomerForm = (props) => {
             <Field component={FloatInputField} name="hourlyRate" />
             <Field component={InputField} name="taxId" />
           </DialogContent>
-          <DialogActions>
-            <Box mr="auto">
-              {editingCustomer && (
-                <Button
-                  onClick={() =>
-                    handleSubmit({ ...props.values, active: false })
-                  }
+          <StyledDialogActions>
+            {editingCustomer && (
+              <StyledDeleteButtonContainer>
+                <StyledSoftButton
+                  onClick={() => {
+                    handleSubmit({ ...props.values, active: false });
+                  }}
                 >
                   Löschen
-                </Button>
-              )}
-            </Box>
-            <Button autoFocus onClick={closeModal} color="primary">
-              Abbrechen
-            </Button>
-            <Button color="primary" autoFocus variant="contained" type="submit">
+                </StyledSoftButton>
+              </StyledDeleteButtonContainer>
+            )}
+            <StyledSoftButton onClick={closeModal}>Abbrechen</StyledSoftButton>
+            <Button color="primary" variant="contained" type="submit">
               {getButtonCaption()}
             </Button>
-          </DialogActions>
+          </StyledDialogActions>
         </Form>
       )}
     </Formik>

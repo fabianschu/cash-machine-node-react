@@ -1,24 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import {
-  selectCustomer,
-  toggleCustomerEdit,
-} from "../redux/actions/customersAction";
+import { toggleCustomerEdit } from "../redux/actions/customersAction";
 import { toggleProjectCreation } from "../redux/actions/projectsAction";
 import { useSelector } from "react-redux";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
-import Paper from "@material-ui/core/Paper";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ModalButton from "./ModalButton";
 import Table from "./Table";
-import Box from "@material-ui/core/Box";
 import styled from "styled-components";
 import { withStyles } from "@material-ui/core/styles";
 import StyledSubHeading from "../styled/SubHeading";
-import Button from "@material-ui/core/Button";
 import StyledSoftButton from "../styled/SoftButton";
+import { useDispatch } from "react-redux";
 
 const StyledAccordion = withStyles({
   root: {
@@ -68,10 +62,14 @@ const StyledCustomerDetails = styled.div`
   justify-content: space-between;
 `;
 
-const StyledCustomerEditButtonContainer = styled.div`
+const StyledButtonContainer = styled.div`
   align-self: flex-end;
   width: 272px;
   text-align: right;
+`;
+
+const SpacedButtonContainer = styled(StyledButtonContainer)`
+  margin: ${({ theme }) => `${theme.spacing(3)}px 0`};
 `;
 
 const StyledCustomerSubheading = styled.p`
@@ -93,8 +91,8 @@ const StyledProjectsSection = styled.div`
 `;
 
 export default function ControlledAccordions(props) {
+  const dispatch = useDispatch();
   const [expanded, setExpanded] = useState(false);
-
   const { disabled, selectedCustomer, data } = props;
 
   const selectedProjects = useSelector(
@@ -157,11 +155,14 @@ export default function ControlledAccordions(props) {
                 </>
               )}
             </StyledCustomerDetails>
-            <StyledCustomerEditButtonContainer>
-              <StyledSoftButton handleClick={toggleCustomerEdit} variant="text">
+            <StyledButtonContainer>
+              <StyledSoftButton
+                onClick={() => dispatch(toggleCustomerEdit())}
+                variant="text"
+              >
                 Bearbeiten
               </StyledSoftButton>
-            </StyledCustomerEditButtonContainer>
+            </StyledButtonContainer>
           </StyledCustomerSection>
           <StyledProjectsSection>
             <StyledSubHeading>Projekte</StyledSubHeading>
@@ -172,13 +173,13 @@ export default function ControlledAccordions(props) {
             />
           </StyledProjectsSection>
           {selectedCustomer && <Table rows={data} />}
-          <Box my={2}>
+          <SpacedButtonContainer>
             <ModalButton
               handleClick={() => ({ type: "TOGGLE_INVOICE_CREATION" })}
               type="createInvoice"
               disabled={selectedProjects.length === 0}
             />
-          </Box>
+          </SpacedButtonContainer>
         </StyledAccordionDetails>
       </>
     </StyledAccordion>
