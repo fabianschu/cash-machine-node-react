@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { saveInvoice } from "../redux/actions/invoicesAction";
 import StyledDialogActions from "../styled/DialogActions";
 import StyledSoftButton from "../styled/SoftButton";
+import StyledSubHeading from "../styled/SubHeading";
 
 const useStyles = makeStyles({
   table: {
@@ -69,7 +70,7 @@ const InvoiceOverview = () => {
     setPdfAssemblingTimeout(
       setTimeout(function () {
         setDeactivatedPdfAssembling(false);
-      }, 500)
+      }, 800)
     );
   }, []);
 
@@ -144,7 +145,9 @@ const InvoiceOverview = () => {
 
   return (
     <>
-      <DialogTitle id="responsive-dialog-title">Rechnung erstellen</DialogTitle>
+      <DialogTitle>
+        <StyledSubHeading>Rechnung erstellen</StyledSubHeading>
+      </DialogTitle>
       <DialogContent>
         <Box
           mb={3}
