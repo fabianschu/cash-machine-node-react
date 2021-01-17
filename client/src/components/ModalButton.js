@@ -24,7 +24,7 @@ const ModalButton = (props) => {
   const renderCaption = () => {
     switch (type) {
       case "createCustomer":
-        return "Erstellen";
+        return "Kund*in";
       case "createInvoice":
         return "Rechnung";
       case "createProject":

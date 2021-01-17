@@ -34,22 +34,21 @@ export default createMuiTheme({
   rounded: "49px",
   overrides: {
     MuiButton: {
-      root: {
-        fontFamily: "Brandon",
-        fontWeight: "bold",
-      },
       sizeLarge: {
         width: "272px",
         height: "52px",
-        fontSize: "40px",
         fontWeight: "bold",
+      },
+      label: {
+        fontSize: "1.8rem",
+        fontWeight: "bold",
+        fontFamily: "Brandon",
       },
       contained: {
         boxShadow: "0px 3px 6px #00000029",
         borderRadius: "49px",
       },
       text: {
-        fontWeight: "normal",
         color: colors.primary.main,
         border: "none",
         textDecoration: "underline",

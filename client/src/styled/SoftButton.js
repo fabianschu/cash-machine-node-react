@@ -1,8 +1,17 @@
-import styled from "styled-components";
+import React from "react";
+import { withStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
 
-const SoftButton = styled.button`
-  font-size: ${({ theme }) => theme.typography.fontSizes.medium};
-  border: none;
-  text-decoration: underline;
-  background: none;
-`;
+const StyledSoftButton = withStyles((theme) => ({
+  label: {
+    fontSize: theme.typography.fontSizes.small,
+  },
+}))(Button);
+
+const SoftButton = (props) => {
+  const { children } = props;
+
+  return <StyledSoftButton {...props}>{children}</StyledSoftButton>;
+};
+
+export default SoftButton;

@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { toggleCustomerEdit } from "../redux/actions/customersAction";
+import {
+  selectCustomer,
+  toggleCustomerEdit,
+} from "../redux/actions/customersAction";
 import { toggleProjectCreation } from "../redux/actions/projectsAction";
 import { useSelector } from "react-redux";
 import Accordion from "@material-ui/core/Accordion";
@@ -15,14 +18,17 @@ import styled from "styled-components";
 import { withStyles } from "@material-ui/core/styles";
 import StyledSubHeading from "../styled/SubHeading";
 import Button from "@material-ui/core/Button";
+import StyledSoftButton from "../styled/SoftButton";
 
 const StyledAccordion = withStyles({
   root: {
-    bordeer: "none",
     "&.MuiAccordion-root:before": {
       backgroundColor: "white",
     },
     marginTop: "8px",
+    "&$disabled": {
+      backgroundColor: "white",
+    },
   },
   disabled: {
     backgroundColor: "white",
@@ -34,9 +40,6 @@ const StyledAccordionSummary = withStyles({
     backgroundColor: "white",
     height: `${({ theme }) => theme.spacing(2)}px`,
     padding: 0,
-  },
-  disabled: {
-    backgroundColor: "white",
   },
 })(AccordionSummary);
 
@@ -121,61 +124,63 @@ export default function ControlledAccordions(props) {
       disabled={disabled}
     >
       <StyledAccordionSummary expandIcon={<ExpandMoreIcon />} />
-      {selectedCustomer && (
-        <>
-          <StyledAccordionDetails p={0}>
-            <StyledCustomerSection>
-              <StyledSubHeading>Kundendetails</StyledSubHeading>
-              <StyledCustomerDetails>
-                <div>
-                  <StyledCustomerSubheading>Adresse</StyledCustomerSubheading>
-                  <div>{selectedCustomer.firm}</div>
-                  <div>{selectedCustomer.street}</div>
+      <>
+        <StyledAccordionDetails p={0}>
+          <StyledCustomerSection>
+            <StyledSubHeading>Kundendetails</StyledSubHeading>
+            <StyledCustomerDetails>
+              {selectedCustomer && (
+                <>
                   <div>
-                    {selectedCustomer.zip} {selectedCustomer.city}
+                    <StyledCustomerSubheading>Adresse</StyledCustomerSubheading>
+                    <div>{selectedCustomer.firm}</div>
+                    <div>{selectedCustomer.street}</div>
+                    <div>
+                      {selectedCustomer.zip} {selectedCustomer.city}
+                    </div>
+                    <div>{selectedCustomer.country}</div>
                   </div>
-                  <div>{selectedCustomer.country}</div>
-                </div>
-                <StyledCustomerAdditionals>
-                  <div>
-                    <StyledCustomerSubheading>
-                      Steuernummer
-                    </StyledCustomerSubheading>
-                    <div>{selectedCustomer.taxId}</div>
-                  </div>
-                  <div>
-                    <StyledCustomerSubheading>
-                      Stundensatz
-                    </StyledCustomerSubheading>
-                    <div>{selectedCustomer.hourlyRate}€</div>
-                  </div>
-                </StyledCustomerAdditionals>
-              </StyledCustomerDetails>
-              <StyledCustomerEditButtonContainer>
-                <Button handleClick={toggleCustomerEdit} variant="text">
-                  Bearbeiten
-                </Button>
-              </StyledCustomerEditButtonContainer>
-            </StyledCustomerSection>
-            <StyledProjectsSection>
-              <StyledSubHeading>Projekte</StyledSubHeading>
-              <ModalButton
-                handleClick={toggleProjectCreation}
-                type="createProject"
-                disabled={!selectedCustomer}
-              />
-            </StyledProjectsSection>
-            <Table rows={data} />
-            <Box my={2}>
-              <ModalButton
-                handleClick={() => ({ type: "TOGGLE_INVOICE_CREATION" })}
-                type="createInvoice"
-                disabled={selectedProjects.length === 0}
-              />
-            </Box>
-          </StyledAccordionDetails>
-        </>
-      )}
+                  <StyledCustomerAdditionals>
+                    <div>
+                      <StyledCustomerSubheading>
+                        Steuernummer
+                      </StyledCustomerSubheading>
+                      <div>{selectedCustomer.taxId}</div>
+                    </div>
+                    <div>
+                      <StyledCustomerSubheading>
+                        Stundensatz
+                      </StyledCustomerSubheading>
+                      <div>{selectedCustomer.hourlyRate}€</div>
+                    </div>
+                  </StyledCustomerAdditionals>
+                </>
+              )}
+            </StyledCustomerDetails>
+            <StyledCustomerEditButtonContainer>
+              <StyledSoftButton handleClick={toggleCustomerEdit} variant="text">
+                Bearbeiten
+              </StyledSoftButton>
+            </StyledCustomerEditButtonContainer>
+          </StyledCustomerSection>
+          <StyledProjectsSection>
+            <StyledSubHeading>Projekte</StyledSubHeading>
+            <ModalButton
+              handleClick={toggleProjectCreation}
+              type="createProject"
+              disabled={!selectedCustomer}
+            />
+          </StyledProjectsSection>
+          {selectedCustomer && <Table rows={data} />}
+          <Box my={2}>
+            <ModalButton
+              handleClick={() => ({ type: "TOGGLE_INVOICE_CREATION" })}
+              type="createInvoice"
+              disabled={selectedProjects.length === 0}
+            />
+          </Box>
+        </StyledAccordionDetails>
+      </>
     </StyledAccordion>
     // <div className={classes.accordion}>
     //   <Accordion

@@ -10,6 +10,7 @@ const MainPageLayout = styled.div`
   min-height: 100vh;
   width: 100vw;
   padding: 60px 100px;
+  background-attachment: fixed;
 `;
 
 const MainPage = ({ children }) => {

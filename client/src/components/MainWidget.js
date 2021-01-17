@@ -70,7 +70,7 @@ const MainWidget = (props) => {
           />
         </StyledFlexBox>
         <Accordion
-          // disabled={!selectedCustomer}
+          disabled={!selectedCustomer}
           selectedCustomer={selectedCustomer}
         />
       </StyledWidgetBox>
