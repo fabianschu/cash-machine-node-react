@@ -8,6 +8,7 @@ import illustration from "../assets/login-illustration.png";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/actions/authAction";
 import StyledSoftButton from "../styled/SoftButton";
+import StyledWidgetContainer from "../styled/WidgetContainer";
 
 const LoginPageLayout = styled.div`
   background: url(${illustration}) 15% 100% / auto 50% no-repeat,
@@ -20,15 +21,11 @@ const LoginPageLayout = styled.div`
   min-height: 100vh;
 `;
 
-const StyledLoginContainer = styled.div`
-  background-color: white;
+const StyledLoginContainer = styled(StyledWidgetContainer)`
   width: 30%;
   min-width: 470px;
-  box-shadow: 0px 3px 6px #00000029;
-  border-radius: 49px;
-  opacity: 1;
-  padding: 40px 45px 6px 45px;
   height: 500px;
+  box-shadow: ${({ theme }) => theme.shadows[5]};
 `;
 
 const StyledHeading = styled.h1`
