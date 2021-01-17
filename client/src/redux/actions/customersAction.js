@@ -83,9 +83,9 @@ export function updateCustomer(customer) {
     dispatch(updateCustomerStarted());
     try {
       const { data } = await axios.put(`/customers/${customer.id}`, customer);
-      await dispatch(fetchCustomers());
-      dispatch(selectCustomer(data.id));
-      await dispatch(updateCustomerSuccess(data));
+      dispatch(selectCustomer(data.active ? data.id : null));
+      dispatch(updateCustomerSuccess(data));
+      dispatch(fetchCustomers());
     } catch (err) {
       dispatch(updateCustomerFailure(err.message));
     }
@@ -108,6 +108,7 @@ const updateCustomerFailure = (error) => ({
 });
 
 export const selectCustomer = (customerId) => {
+  console.log(customerId);
   return {
     type: SELECT_CUSTOMER,
     payload: {

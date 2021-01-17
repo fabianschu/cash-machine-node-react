@@ -1,23 +1,11 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
-import EditIcon from "@material-ui/icons/Edit";
 import Button from "@material-ui/core/Button";
 import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
-import Box from "@material-ui/core/Box";
 import { useDispatch } from "react-redux";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "140px",
-    display: "flex",
-    justifyContent: "flex-start",
-  },
-}));
 
 const ModalButton = (props) => {
   const { disabled, handleClick, type } = props;
-  const classes = useStyles();
   const dispatch = useDispatch();
 
   const renderIcon = () => {
@@ -26,8 +14,6 @@ const ModalButton = (props) => {
         return <AddIcon />;
       case "createProject":
         return <AddIcon />;
-      case "editCustomer":
-        return <EditIcon />;
       case "createInvoice":
         return <PictureAsPdfIcon />;
       default:
@@ -38,9 +24,7 @@ const ModalButton = (props) => {
   const renderCaption = () => {
     switch (type) {
       case "createCustomer":
-        return "Erstellen";
-      case "editCustomer":
-        return "Bearbeiten";
+        return "Kund*in";
       case "createInvoice":
         return "Rechnung";
       case "createProject":
@@ -64,21 +48,19 @@ const ModalButton = (props) => {
   };
 
   return (
-    <Box>
-      <Button
-        color={renderBackgroundColor()}
-        className={classes.root}
-        variant="contained"
-        disabled={disabled}
-        onClick={(e) => {
-          e.stopPropagation();
-          dispatch(handleClick());
-        }}
-        startIcon={renderIcon()}
-      >
-        {renderCaption()}
-      </Button>
-    </Box>
+    <Button
+      color={renderBackgroundColor()}
+      variant="contained"
+      disabled={disabled}
+      size="large"
+      onClick={(e) => {
+        e.stopPropagation();
+        dispatch(handleClick());
+      }}
+      startIcon={renderIcon()}
+    >
+      {renderCaption()}
+    </Button>
   );
 };
 

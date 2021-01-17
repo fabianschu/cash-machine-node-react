@@ -31,23 +31,32 @@ export default createMuiTheme({
       xlarge: "4.5rem",
     },
   },
+  rounded: "49px",
   overrides: {
     MuiButton: {
-      root: {
-        fontFamily: "Brandon",
+      sizeLarge: {
+        width: "272px",
+        height: "52px",
         fontWeight: "bold",
       },
-      sizeLarge: {
-        width: "250px",
-        height: "52px",
-        fontSize: "3rem",
+      label: {
+        fontSize: "1.8rem",
+        fontWeight: "bold",
+        fontFamily: "Brandon",
       },
       contained: {
         boxShadow: "0px 3px 6px #00000029",
         borderRadius: "49px",
       },
+      text: {
+        color: colors.primary.main,
+        border: "none",
+        textDecoration: "underline",
+        background: "none",
+      },
       containedPrimary: {
         backgroundColor: colors.primary.main,
+        color: "white",
       },
       containedSecondary: {
         backgroundColor: colors.secondary.main,

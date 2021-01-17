@@ -43,23 +43,21 @@ const Modal = (props) => {
   };
 
   return (
-    <div>
-      <Dialog
-        fullScreen={fullScreen}
-        maxWidth={"md"}
-        fullWidth={true}
-        open={
-          creatingCustomer ||
-          editingCustomer ||
-          creatingInvoice ||
-          creatingProject
-        }
-        onClose={closeModals}
-        aria-labelledby="responsive-dialog-title"
-      >
-        {renderModalContent()}
-      </Dialog>
-    </div>
+    <Dialog
+      fullScreen={fullScreen}
+      maxWidth={"md"}
+      fullWidth={true}
+      open={
+        creatingCustomer ||
+        editingCustomer ||
+        creatingInvoice ||
+        creatingProject
+      }
+      onClose={closeModals}
+      aria-labelledby="responsive-dialog-title"
+    >
+      {renderModalContent()}
+    </Dialog>
   );
 };
 
