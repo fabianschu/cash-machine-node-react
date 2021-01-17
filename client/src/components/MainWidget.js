@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
 import ModalButton from "./ModalButton";
 import Accordion from "./Accordion";
-import Box from "@material-ui/core/Box";
 import SelectOne from "./SelectOne";
-import { makeStyles } from "@material-ui/core/styles";
 import Modal from "./Modal";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -13,32 +11,33 @@ import {
 } from "../redux/actions/customersAction";
 import { fetchProjects } from "../redux/actions/projectsAction";
 import { fetchInvoices } from "../redux/actions/invoicesAction";
-// import { useParams } from "react-router-dom";
+import styled from "styled-components";
+import StyledSubHeading from "../styled/SubHeading";
 
-const useStyles = makeStyles((theme) => ({
-  outer: {
-    padding: "20px 16px",
-    backgroundColor: "white",
-    display: "flex",
-    flexWrap: "wrap",
-    alignItems: "center",
-  },
-}));
+const StyledWidgetBox = styled.div`
+  border-radius: ${({ theme }) => theme.rounded};
+  box-shadow: ${({ theme }) => theme.shadows[1]};
+  background-color: white;
+  padding: ${({ theme }) =>
+    `${theme.spacing(6)}px ${theme.spacing(6)}px 0 ${theme.spacing(6)}px`};
+  min-width: 700px;
+`;
+
+const StyledFlexBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+`;
 
 const MainWidget = (props) => {
   const dispatch = useDispatch();
-  const classes = useStyles();
   const customers = useSelector(
     ({ customersReducer }) => customersReducer.customers
   );
   const selectedCustomer = useSelector(
     ({ customersReducer }) => customersReducer.selectedCustomer
   );
-  // const error = useSelector(({ customersReducer }) => customersReducer.error);
-  // const loading = useSelector(
-  //   ({ customersReducer }) => customersReducer.loading
-  // );
-  // const { customerId } = useParams();
 
   useEffect(() => {
     dispatch(fetchCustomers());
@@ -48,28 +47,31 @@ const MainWidget = (props) => {
 
   return (
     <>
-      <Box boxShadow={5}>
-        <Box className={classes.outer}>
+      <StyledWidgetBox>
+        <StyledFlexBox>
+          <div>
+            <StyledSubHeading>LOG HOURS,</StyledSubHeading>
+            <StyledSubHeading>CREATE PROJECTS</StyledSubHeading>
+            <StyledSubHeading>AND BILLS</StyledSubHeading>
+          </div>
+          <SelectOne
+            options={customers.filter((customer) => customer.active)}
+            handleSelection={selectCustomer}
+            selected={selectedCustomer}
+            type="Kunden"
+            display="firm"
+          />
           <ModalButton
             handleClick={toggleCustomerCreation}
             type="createCustomer"
             m={0}
           />
-          {customers && (
-            <SelectOne
-              options={customers}
-              handleSelection={selectCustomer}
-              selected={selectedCustomer}
-              type="Kunden"
-              display="firm"
-            />
-          )}
-        </Box>
+        </StyledFlexBox>
         <Accordion
           disabled={!selectedCustomer}
           selectedCustomer={selectedCustomer}
         />
-      </Box>
+      </StyledWidgetBox>
       <Modal />
     </>
   );

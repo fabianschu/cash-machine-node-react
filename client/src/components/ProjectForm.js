@@ -1,6 +1,5 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
-import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { Formik, Form, Field } from "formik";
@@ -11,6 +10,9 @@ import {
   saveProject,
   toggleProjectCreation,
 } from "../redux/actions/projectsAction";
+import StyledSubHeading from "../styled/SubHeading";
+import StyledSoftButton from "../styled/SoftButton";
+import StyledDialogActions from "../styled/DialogActions";
 
 const ProjectForm = () => {
   const dispatch = useDispatch();
@@ -40,22 +42,20 @@ const ProjectForm = () => {
     >
       {() => (
         <Form>
-          <DialogTitle id="responsive-dialog-title">
-            {"Neues Projekt"}
+          <DialogTitle>
+            <StyledSubHeading>Neues Projekt</StyledSubHeading>
           </DialogTitle>
           <DialogContent>
             <Field component={InputField} name="name" />
             <Field component={InputField} name="description" />
             <Field component={FloatInputField} name="hours" />
           </DialogContent>
-          <DialogActions>
-            <Button autoFocus onClick={closeModal} color="primary">
-              Abbrechen
-            </Button>
-            <Button color="primary" autoFocus variant="contained" type="submit">
+          <StyledDialogActions>
+            <StyledSoftButton onClick={closeModal}>Abbrechen</StyledSoftButton>
+            <Button color="primary" variant="contained" type="submit">
               Speichern
             </Button>
-          </DialogActions>
+          </StyledDialogActions>
         </Form>
       )}
     </Formik>

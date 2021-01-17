@@ -68,7 +68,7 @@ const InputField = (props) => {
       fullWidth
       error={meta.touched && meta.error ? true : false}
       helperText={(meta.touched && meta.error) || ""}
-      size="small"
+      size="medium"
       margin="normal"
     />
   );
