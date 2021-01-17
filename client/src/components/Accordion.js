@@ -42,7 +42,8 @@ const StyledAccordionSummary = withStyles({
 
 const StyledAccordionDetails = withStyles({
   root: {
-    display: "block",
+    display: "flex",
+    flexDirection: "column",
     padding: 0,
   },
 })(AccordionDetails);
@@ -73,13 +74,19 @@ const StyledCustomerEditButtonContainer = styled.div`
 const StyledCustomerSubheading = styled.p`
   font-weight: bold;
   text-transform: uppercase;
-  // color: ${({ theme }) => theme.palette.primary.main};
 `;
 
 const StyledCustomerAdditionals = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+`;
+
+const StyledProjectsSection = styled.div`
+  padding: ${({ theme }) => `${theme.spacing(3)}px 0`};
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
 `;
 
 export default function ControlledAccordions(props) {
@@ -118,7 +125,7 @@ export default function ControlledAccordions(props) {
         <>
           <StyledAccordionDetails p={0}>
             <StyledCustomerSection>
-              <StyledSubHeading>Client Details</StyledSubHeading>
+              <StyledSubHeading>Kundendetails</StyledSubHeading>
               <StyledCustomerDetails>
                 <div>
                   <StyledCustomerSubheading>Adresse</StyledCustomerSubheading>
@@ -150,8 +157,16 @@ export default function ControlledAccordions(props) {
                 </Button>
               </StyledCustomerEditButtonContainer>
             </StyledCustomerSection>
-            {selectedCustomer && <Table rows={data} />}
-            <Box mt={2}>
+            <StyledProjectsSection>
+              <StyledSubHeading>Projekte</StyledSubHeading>
+              <ModalButton
+                handleClick={toggleProjectCreation}
+                type="createProject"
+                disabled={!selectedCustomer}
+              />
+            </StyledProjectsSection>
+            <Table rows={data} />
+            <Box my={2}>
               <ModalButton
                 handleClick={() => ({ type: "TOGGLE_INVOICE_CREATION" })}
                 type="createInvoice"
@@ -210,12 +225,12 @@ export default function ControlledAccordions(props) {
     //             </Box>
     //           </Paper>
     //           <Box className={classes.buttonBox}>
-    //             <ModalButton
-    //               handleClick={toggleProjectCreation}
-    //               type="createProject"
-    //               disabled={!selectedCustomer}
-    //               className={classes.printButton}
-    //             />
+    // <ModalButton
+    //   handleClick={toggleProjectCreation}
+    //   type="createProject"
+    //   disabled={!selectedCustomer}
+    //   className={classes.printButton}
+    // />
     //           </Box>
     //         </Box>
     //       )}

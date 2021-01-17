@@ -48,31 +48,34 @@ const MainWidget = (props) => {
   }, [dispatch]);
 
   return (
-    <StyledWidgetBox>
-      <StyledFlexBox>
-        <div>
-          <StyledSubHeading>LOG HOURS,</StyledSubHeading>
-          <StyledSubHeading>CREATE PROJECTS</StyledSubHeading>
-          <StyledSubHeading>AND BILLS</StyledSubHeading>
-        </div>
-        <SelectOne
-          options={customers}
-          handleSelection={selectCustomer}
-          selected={selectedCustomer}
-          type="Kunden"
-          display="firm"
+    <>
+      <StyledWidgetBox>
+        <StyledFlexBox>
+          <div>
+            <StyledSubHeading>LOG HOURS,</StyledSubHeading>
+            <StyledSubHeading>CREATE PROJECTS</StyledSubHeading>
+            <StyledSubHeading>AND BILLS</StyledSubHeading>
+          </div>
+          <SelectOne
+            options={customers}
+            handleSelection={selectCustomer}
+            selected={selectedCustomer}
+            type="Kunden"
+            display="firm"
+          />
+          <ModalButton
+            handleClick={toggleCustomerCreation}
+            type="createCustomer"
+            m={0}
+          />
+        </StyledFlexBox>
+        <Accordion
+          // disabled={!selectedCustomer}
+          selectedCustomer={selectedCustomer}
         />
-        <ModalButton
-          handleClick={toggleCustomerCreation}
-          type="createCustomer"
-          m={0}
-        />
-      </StyledFlexBox>
-      <Accordion
-        // disabled={!selectedCustomer}
-        selectedCustomer={selectedCustomer}
-      />
-    </StyledWidgetBox>
+      </StyledWidgetBox>
+      <Modal />
+    </>
     // <>
     //   <Box boxShadow={5}>
     //     <Box className={classes.outer}>
