@@ -35,6 +35,9 @@ const MainWidget = (props) => {
   const selectedCustomer = useSelector(
     ({ customersReducer }) => customersReducer.selectedCustomer
   );
+  const accordionExpanded = useSelector(
+    ({ uiReducer }) => uiReducer.accordionExpanded
+  );
 
   useEffect(() => {
     dispatch(fetchCustomers());
@@ -67,6 +70,7 @@ const MainWidget = (props) => {
         <Accordion
           disabled={!selectedCustomer}
           selectedCustomer={selectedCustomer}
+          expanded={accordionExpanded}
         />
       </StyledMainWidget>
       <Modal />

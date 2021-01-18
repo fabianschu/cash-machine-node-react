@@ -26,6 +26,7 @@ export default createMuiTheme({
   typography: {
     fontSizes: {
       small: "1rem",
+      sm: "1.3rem",
       medium: "1.8rem",
       large: "3rem",
       xlarge: "4.5rem",
