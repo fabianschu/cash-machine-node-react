@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import bottomWave from "../assets/bottom-wave.png";
 import topCloud from "../assets/top-cloud.png";
@@ -25,12 +26,19 @@ const MainPageLayout = styled.div`
 `;
 
 const MainPage = () => {
+  const accordionExpanded = useSelector(
+    ({ uiReducer }) => uiReducer.accordionExpanded
+  );
+
   return (
     <MainPageLayout>
       <MainWidget />
-      <div className="bottom-half">
-        <AnalysisWidget />
-      </div>
+
+      {!accordionExpanded && (
+        <div className="bottom-half">
+          <AnalysisWidget />
+        </div>
+      )}
     </MainPageLayout>
   );
 };
