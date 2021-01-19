@@ -38,6 +38,7 @@ const useStyles = makeStyles({
 
 const InvoiceOverview = () => {
   const [invoiceTitle, setInvoiceTitle] = useState("");
+  const [pdfCreated, setPdfCreated] = useState(false);
   const [deactivatedPdfAssembling, setDeactivatedPdfAssembling] = useState(
     true
   );
@@ -96,6 +97,8 @@ const InvoiceOverview = () => {
   const { totalHours, totalPrice } = getTotal();
 
   const handleSubmit = () => {
+    if (!pdfCreated) return;
+
     dispatch(
       saveInvoice(
         {
@@ -263,7 +266,10 @@ const InvoiceOverview = () => {
               fileName={fileName}
               className={classes.button}
             >
-              {({ blob, url, loading, error }) => (loading ? "LÄDT" : "PDF")}
+              {({ blob, url, loading, error }) => {
+                if (url) setPdfCreated(true);
+                return loading ? "LÄDT" : "PDF";
+              }}
             </PDFDownloadLink>
           )}
         </Button>
