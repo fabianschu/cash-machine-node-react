@@ -5,7 +5,7 @@ const StyledCounter = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  width: 120px;
+  width: 140px;
   height: 70px;
 `;
 
@@ -20,11 +20,13 @@ const StyleCounterLabel = styled.div`
   font-weight: bold;
 `;
 
-const Counter = () => {
+const Counter = (props) => {
+  const { label, formattedNumber } = props;
+
   return (
     <StyledCounter>
-      <StyleCounterLabel>Gesamtstunden</StyleCounterLabel>
-      <StyledNumber>15</StyledNumber>
+      <StyleCounterLabel>{label}</StyleCounterLabel>
+      <StyledNumber>{formattedNumber}</StyledNumber>
     </StyledCounter>
   );
 };

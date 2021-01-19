@@ -13,6 +13,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
+    "file-saver": "^2.0.5",
     "formik": "^2.1.4",
     "material-table": "^1.65.0",
     "moment": "^2.27.0",
