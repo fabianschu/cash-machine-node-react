@@ -20,6 +20,7 @@ import { saveInvoice } from "../redux/actions/invoicesAction";
 import StyledDialogActions from "../styled/DialogActions";
 import StyledSoftButton from "../styled/SoftButton";
 import StyledSubHeading from "../styled/SubHeading";
+import { taxRate } from "../helpers/invoiceHelpers";
 
 const useStyles = makeStyles({
   table: {
@@ -100,6 +101,10 @@ const InvoiceOverview = () => {
         {
           title: invoiceTitle,
           customerId: selectedCustomer.id,
+          totalHours: totalHours,
+          totalSum: Math.round(totalPrice * 100),
+          taxRate:
+            (selectedCustomer.country === "Deutschland" && taxRate) || null,
         },
         selectedProjects.map((project) => project.id)
       )

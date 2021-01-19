@@ -11,8 +11,10 @@ import {
   SELECT_CUSTOMER,
   TOGGLE_CUSTOMER_CREATION,
   TOGGLE_CUSTOMER_EDIT,
+  FOLD_ACCORDION,
 } from "../types";
 import axios from "../apiClient";
+import { setAccordion } from "./uiAction";
 
 export function fetchCustomers() {
   return function (dispatch) {
@@ -50,9 +52,9 @@ export function saveCustomer(customer) {
     dispatch(saveCustomerStarted());
     try {
       const { data } = await axios.post(`/customers`, customer);
-      dispatch(fetchCustomers());
+      await dispatch(fetchCustomers());
       dispatch(saveCustomerSuccess(data));
-      selectCustomer(data.id);
+      dispatch(selectCustomer(data.id));
     } catch (err) {
       console.log(err);
       dispatch(saveCustomerFailure(err.message));
@@ -83,9 +85,9 @@ export function updateCustomer(customer) {
     dispatch(updateCustomerStarted());
     try {
       const { data } = await axios.put(`/customers/${customer.id}`, customer);
-      dispatch(selectCustomer(data.active ? data.id : null));
       dispatch(updateCustomerSuccess(data));
-      dispatch(fetchCustomers());
+      await dispatch(fetchCustomers());
+      dispatch(selectCustomer(data.active ? data.id : null, dispatch));
     } catch (err) {
       dispatch(updateCustomerFailure(err.message));
     }
@@ -107,14 +109,15 @@ const updateCustomerFailure = (error) => ({
   },
 });
 
-export const selectCustomer = (customerId) => {
-  console.log(customerId);
-  return {
+export const selectCustomer = (customerId) => (dispatch, getState) => {
+  if (!customerId) dispatch(setAccordion(false));
+  else dispatch(setAccordion(true));
+  return dispatch({
     type: SELECT_CUSTOMER,
     payload: {
-      customerId,
+      customerId: customerId,
     },
-  };
+  });
 };
 
 export const toggleCustomerCreation = () => ({

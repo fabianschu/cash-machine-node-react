@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { toggleCustomerEdit } from "../redux/actions/customersAction";
 import { toggleProjectCreation } from "../redux/actions/projectsAction";
 import { useSelector } from "react-redux";
@@ -13,6 +13,7 @@ import { withStyles } from "@material-ui/core/styles";
 import StyledSubHeading from "../styled/SubHeading";
 import StyledSoftButton from "../styled/SoftButton";
 import { useDispatch } from "react-redux";
+import { EXPAND_ACCORDION, FOLD_ACCORDION } from "../redux/types";
 
 const StyledAccordion = withStyles({
   root: {
@@ -94,26 +95,16 @@ const StyledProjectsSection = styled.div`
 
 export default function ControlledAccordions(props) {
   const dispatch = useDispatch();
-  const [expanded, setExpanded] = useState(false);
-  const { disabled, selectedCustomer, data } = props;
+  const { disabled, selectedCustomer, data, expanded } = props;
 
   const selectedProjects = useSelector(
     ({ projectsReducer }) => projectsReducer.selectedProjects
   );
 
-  useEffect(() => {
-    if (!selectedCustomer) {
-      setExpanded(false);
-      return;
-    }
-
-    if (selectedCustomer) {
-      setExpanded(true);
-    }
-  }, [selectedCustomer]);
-
   const handleChange = () => (event, isExpanded) => {
-    setExpanded(isExpanded ? true : false);
+    expanded
+      ? dispatch({ type: FOLD_ACCORDION })
+      : dispatch({ type: EXPAND_ACCORDION });
   };
 
   return (

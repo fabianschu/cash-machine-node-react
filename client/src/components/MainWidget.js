@@ -13,14 +13,11 @@ import { fetchProjects } from "../redux/actions/projectsAction";
 import { fetchInvoices } from "../redux/actions/invoicesAction";
 import styled from "styled-components";
 import StyledSubHeading from "../styled/SubHeading";
+import StyledWidgetContainer from "../styled/WidgetContainer";
 
-const StyledWidgetBox = styled.div`
-  border-radius: ${({ theme }) => theme.rounded};
-  box-shadow: ${({ theme }) => theme.shadows[1]};
-  background-color: white;
-  padding: ${({ theme }) =>
-    `${theme.spacing(6)}px ${theme.spacing(6)}px 0 ${theme.spacing(6)}px`};
+const StyledMainWidget = styled(StyledWidgetContainer)`
   min-width: 700px;
+  padding-bottom: 6px;
 `;
 
 const StyledFlexBox = styled.div`
@@ -38,6 +35,9 @@ const MainWidget = (props) => {
   const selectedCustomer = useSelector(
     ({ customersReducer }) => customersReducer.selectedCustomer
   );
+  const accordionExpanded = useSelector(
+    ({ uiReducer }) => uiReducer.accordionExpanded
+  );
 
   useEffect(() => {
     dispatch(fetchCustomers());
@@ -47,7 +47,7 @@ const MainWidget = (props) => {
 
   return (
     <>
-      <StyledWidgetBox>
+      <StyledMainWidget>
         <StyledFlexBox>
           <div>
             <StyledSubHeading>LOG HOURS,</StyledSubHeading>
@@ -70,8 +70,9 @@ const MainWidget = (props) => {
         <Accordion
           disabled={!selectedCustomer}
           selectedCustomer={selectedCustomer}
+          expanded={accordionExpanded}
         />
-      </StyledWidgetBox>
+      </StyledMainWidget>
       <Modal />
     </>
   );

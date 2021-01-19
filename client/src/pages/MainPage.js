@@ -1,9 +1,11 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import bottomWave from "../assets/bottom-wave.png";
 import topCloud from "../assets/top-cloud.png";
 import MainWidget from "../components/MainWidget";
 import illustration from "../assets/cheese-carrier.png";
+import AnalysisWidget from "../components/AnalysisWidget";
 
 const MainPageLayout = styled.div`
   background: url(${illustration}) 20% 80% / auto 50% no-repeat,
@@ -13,12 +15,30 @@ const MainPageLayout = styled.div`
   width: 100vw;
   padding: 60px 100px;
   background-attachment: fixed;
+  .bottom-half {
+    margin-top: ${({ theme }) => theme.spacing(5)}px;
+    display: block;
+    min-width: 700px;
+    display: flex;
+    justify-content: flex-end;
+    height: 100%;
+  }
 `;
 
 const MainPage = () => {
+  const accordionExpanded = useSelector(
+    ({ uiReducer }) => uiReducer.accordionExpanded
+  );
+
   return (
     <MainPageLayout>
       <MainWidget />
+
+      {!accordionExpanded && (
+        <div className="bottom-half">
+          <AnalysisWidget />
+        </div>
+      )}
     </MainPageLayout>
   );
 };
