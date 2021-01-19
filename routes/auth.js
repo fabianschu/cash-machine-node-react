@@ -2,7 +2,6 @@ var express = require("express");
 const bcrypt = require("bcrypt");
 const Router = require("express-promise-router");
 const db = require("../db");
-const { migrate } = require("../db/migrate");
 
 const router = new Router();
 
@@ -19,7 +18,6 @@ router.post("/login", async (req, res, next) => {
   const success = await bcrypt.compare(password, hashedUserPassword);
   if (!success) return res.status(401).json("pw wrong");
   req.session.currentUser = user.id;
-  migrate();
   return res.json({ id: req.session.currentUser });
 });
 
