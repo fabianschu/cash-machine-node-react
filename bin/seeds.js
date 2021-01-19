@@ -87,7 +87,7 @@ db.query("DROP TABLE IF EXISTS projects")
   )
   .then(() =>
     db.query(
-      `CREATE TABLE IF NOT EXISTS "invoices" (ID SERIAL PRIMARY KEY, "title" VARCHAR(60), "status" VARCHAR(30) DEFAULT 'open', "customerId" INTEGER REFERENCES customers("id"), "createdAt" TIMESTAMP, "updatedAt" TIMESTAMP, "userId" INTEGER REFERENCES users("id"))`
+      `CREATE TABLE IF NOT EXISTS "invoices" (ID SERIAL PRIMARY KEY, "title" VARCHAR(60), "status" VARCHAR(30) DEFAULT 'open', "customerId" INTEGER REFERENCES customers("id"), "createdAt" TIMESTAMP, "updatedAt" TIMESTAMP, "userId" INTEGER REFERENCES users("id"), "totalSum" INTEGER, "totalHours" FLOAT, , "taxRate" FLOAT)`
     )
   )
   .then(() =>
@@ -97,3 +97,5 @@ db.query("DROP TABLE IF EXISTS projects")
   )
   .then(() => console.log("Tables deleted and newly created"))
   .catch((e) => console.log(e));
+
+//ALTER TABLE invoices ADD COLUMN "totalSum" INTEGER, ADD COLUMN "totalHours" FLOAT, ADD COLUMN "taxRate" FLOAT;
