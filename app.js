@@ -9,7 +9,6 @@ const { client, conString } = require("./db/index");
 const cors = require("cors");
 const mountRoutes = require("./routes");
 const pgSession = require("connect-pg-simple")(session);
-const { migrate } = require("./db/migrate");
 require("dotenv").config();
 
 var app = express();
@@ -45,7 +44,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "/client/build")));
 
-migrate();
 // mount all routes
 mountRoutes(app);
 

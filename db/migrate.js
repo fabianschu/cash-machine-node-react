@@ -38,7 +38,7 @@ const migrate = async () => {
 
     const totalSum = totalHours * hourlyRate;
 
-    const result = await db.query(
+    await db.query(
       'UPDATE "invoices" SET "totalHours" = ($1), "totalSum" = ($2), "taxRate" = ($3) WHERE "id" = ($4) RETURNING *;',
       [totalHours, totalSum, taxRate, invoiceId]
     );
