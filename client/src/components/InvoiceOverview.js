@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import moment from "moment";
 import { saveAs } from "file-saver";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -13,7 +13,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { PDFDownloadLink, pdf } from "@react-pdf/renderer";
+import { pdf } from "@react-pdf/renderer";
 import Invoice from "./Invoice/Invoice";
 import TextField from "@material-ui/core/TextField";
 import { useDispatch, useSelector } from "react-redux";
@@ -39,9 +39,6 @@ const useStyles = makeStyles({
 
 const InvoiceOverview = () => {
   const [invoiceTitle, setInvoiceTitle] = useState("");
-  const [pdfCreated, setPdfCreated] = useState(false);
-
-  const [pdfAssemblingTimeout, setPdfAssemblingTimeout] = useState(0);
 
   const selectedProjects = useSelector(
     ({ projectsReducer }) => projectsReducer.selectedProjects
@@ -88,7 +85,6 @@ const InvoiceOverview = () => {
   const { totalHours, totalPrice } = getTotal();
 
   const handleTextInput = (value) => {
-    if (pdfAssemblingTimeout) clearTimeout(pdfAssemblingTimeout);
     setInvoiceTitle(value);
   };
 

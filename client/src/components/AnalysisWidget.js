@@ -44,7 +44,6 @@ const AnalysisWidget = () => {
   );
 
   const data = dataAnalysis(invoices, projects);
-  console.log(data);
 
   return (
     <StyledAnalysisContainer>
