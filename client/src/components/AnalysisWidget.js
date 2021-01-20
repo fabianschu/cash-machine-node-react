@@ -29,6 +29,12 @@ const StyledCounters = styled.div`
   margin-bottom: ${({ theme }) => theme.spacing(3)}px;
 `;
 
+const StyledChartWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const AnalysisWidget = () => {
   const invoices = useSelector(
     ({ invoicesReducer }) => invoicesReducer.invoices
@@ -37,26 +43,30 @@ const AnalysisWidget = () => {
     ({ projectsReducer }) => projectsReducer.projects
   );
 
-  const {
-    month: { billedHours, billedSum, totalHours },
-  } = dataAnalysis(invoices, projects);
+  const data = dataAnalysis(invoices, projects);
+  console.log(data);
 
   return (
     <StyledAnalysisContainer>
       <StyledHeading>Diesen Monat</StyledHeading>
       <StyledCounters>
         <Counter
-          label={billedHours.label}
-          formattedNumber={billedHours.count}
+          label={data.month.billedHours.label}
+          formattedNumber={data.month.billedHours.count}
         />
         <Counter
-          label={billedSum.label}
-          formattedNumber={"€" + billedSum.count / 100}
+          label={data.month.totalHours.label}
+          formattedNumber={data.month.totalHours.count}
         />
-        <Counter />
+        <Counter
+          label={data.month.billedSum.label}
+          formattedNumber={"€" + data.month.billedSum.count / 100}
+        />
       </StyledCounters>
-      <StyledHeading>Dieses Jahr</StyledHeading>
-      <BarChart />
+      <StyledHeading>Letzte 12 Monate</StyledHeading>
+      <StyledChartWrapper>
+        <BarChart data={data.year} />
+      </StyledChartWrapper>
     </StyledAnalysisContainer>
   );
 };
