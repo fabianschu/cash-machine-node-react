@@ -55,8 +55,8 @@ const prepareData = (invoices, projects) => {
   const calculateBilledData = (invoices) => {
     for (let i = 0; i < invoices.length; i++) {
       const invoice = invoices[i];
-      const { createdAt, totalHours, totalSum } = invoice;
-      const parsedDate = new Date(createdAt);
+      const { updatedAt, totalHours, totalSum } = invoice;
+      const parsedDate = new Date(updatedAt);
       if (isSameMonth(parsedDate)) {
         data.month.billedHours.count += totalHours;
         data.month.billedSum.count += totalSum;
@@ -71,8 +71,8 @@ const prepareData = (invoices, projects) => {
   const calculateTotalData = (projects) => {
     for (let i = 0; i < projects.length; i++) {
       const project = projects[i];
-      const { hours, createdAt } = project;
-      const parsedDate = new Date(createdAt);
+      const { hours, updatedAt } = project;
+      const parsedDate = new Date(updatedAt);
       if (isSameMonth(parsedDate)) {
         data.month.totalHours.count += hours;
       }
