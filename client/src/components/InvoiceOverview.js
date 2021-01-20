@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import moment from "moment";
+import { saveAs } from "file-saver";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
@@ -12,7 +13,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { PDFDownloadLink } from "@react-pdf/renderer";
+import { pdf } from "@react-pdf/renderer";
 import Invoice from "./Invoice/Invoice";
 import TextField from "@material-ui/core/TextField";
 import { useDispatch, useSelector } from "react-redux";
@@ -38,11 +39,6 @@ const useStyles = makeStyles({
 
 const InvoiceOverview = () => {
   const [invoiceTitle, setInvoiceTitle] = useState("");
-  const [pdfCreated, setPdfCreated] = useState(false);
-  const [deactivatedPdfAssembling, setDeactivatedPdfAssembling] = useState(
-    true
-  );
-  const [pdfAssemblingTimeout, setPdfAssemblingTimeout] = useState(0);
 
   const selectedProjects = useSelector(
     ({ projectsReducer }) => projectsReducer.selectedProjects
@@ -68,14 +64,6 @@ const InvoiceOverview = () => {
     hourlyRate,
   } = selectedCustomer;
 
-  useEffect(() => {
-    setPdfAssemblingTimeout(
-      setTimeout(function () {
-        setDeactivatedPdfAssembling(false);
-      }, 800)
-    );
-  }, []);
-
   const classes = useStyles();
 
   const getTotal = () => {
@@ -96,33 +84,8 @@ const InvoiceOverview = () => {
 
   const { totalHours, totalPrice } = getTotal();
 
-  const handleSubmit = () => {
-    if (!pdfCreated) return;
-
-    dispatch(
-      saveInvoice(
-        {
-          title: invoiceTitle,
-          customerId: selectedCustomer.id,
-          totalHours: totalHours,
-          totalSum: Math.round(totalPrice * 100),
-          taxRate:
-            (selectedCustomer.country === "Deutschland" && taxRate) || null,
-        },
-        selectedProjects.map((project) => project.id)
-      )
-    );
-  };
-
   const handleTextInput = (value) => {
-    if (pdfAssemblingTimeout) clearTimeout(pdfAssemblingTimeout);
     setInvoiceTitle(value);
-    setDeactivatedPdfAssembling(true);
-    setPdfAssemblingTimeout(
-      setTimeout(function () {
-        setDeactivatedPdfAssembling(false);
-      }, 500)
-    );
   };
 
   const formattedCustomerTitle = () => {
@@ -149,6 +112,24 @@ const InvoiceOverview = () => {
     formalInvoiceId,
     invoiceTitle,
     userProfile,
+  };
+
+  const generatePdfDocument = async () => {
+    const blob = await pdf(<Invoice template={invoiceTemplate} />).toBlob();
+    saveAs(blob, fileName);
+    dispatch(
+      saveInvoice(
+        {
+          title: invoiceTitle,
+          customerId: selectedCustomer.id,
+          totalHours: totalHours,
+          totalSum: Math.round(totalPrice * 100),
+          taxRate:
+            (selectedCustomer.country === "Deutschland" && taxRate) || null,
+        },
+        selectedProjects.map((project) => project.id)
+      )
+    );
   };
 
   return (
@@ -255,23 +236,9 @@ const InvoiceOverview = () => {
           color="secondary"
           variant="contained"
           size="large"
-          onClick={handleSubmit}
-          disabled={deactivatedPdfAssembling}
+          onClick={generatePdfDocument}
         >
-          {deactivatedPdfAssembling ? (
-            "LÄDT"
-          ) : (
-            <PDFDownloadLink
-              document={<Invoice template={invoiceTemplate} />}
-              fileName={fileName}
-              className={classes.button}
-            >
-              {({ blob, url, loading, error }) => {
-                if (url) setPdfCreated(true);
-                return loading ? "LÄDT" : "PDF";
-              }}
-            </PDFDownloadLink>
-          )}
+          PDF
         </Button>
       </StyledDialogActions>
     </>

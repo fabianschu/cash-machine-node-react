@@ -4,7 +4,7 @@ import dataAnalysis from "../helpers/dataAnalysis";
 import { useSelector } from "react-redux";
 import StyledWidgetContainer from "../styled/WidgetContainer";
 import Counter from "./Counter";
-import { LineChart, Line } from "recharts";
+import BarChart from "./BarChart";
 
 const StyledAnalysisContainer = styled(StyledWidgetContainer)`
   width: 60%;
@@ -26,6 +26,13 @@ const StyledCounters = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 70px;
+  margin-bottom: ${({ theme }) => theme.spacing(3)}px;
+`;
+
+const StyledChartWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const AnalysisWidget = () => {
@@ -36,16 +43,29 @@ const AnalysisWidget = () => {
     ({ projectsReducer }) => projectsReducer.projects
   );
 
-  dataAnalysis(invoices, projects);
+  const data = dataAnalysis(invoices, projects);
 
   return (
     <StyledAnalysisContainer>
       <StyledHeading>Diesen Monat</StyledHeading>
       <StyledCounters>
-        <Counter />
-        <Counter />
-        <Counter />
+        <Counter
+          label={data.month.billedHours.label}
+          formattedNumber={data.month.billedHours.count}
+        />
+        <Counter
+          label={data.month.totalHours.label}
+          formattedNumber={data.month.totalHours.count}
+        />
+        <Counter
+          label={data.month.billedSum.label}
+          formattedNumber={"€" + data.month.billedSum.count / 100}
+        />
       </StyledCounters>
+      <StyledHeading>Letzte 12 Monate</StyledHeading>
+      <StyledChartWrapper>
+        <BarChart data={data.year} />
+      </StyledChartWrapper>
     </StyledAnalysisContainer>
   );
 };

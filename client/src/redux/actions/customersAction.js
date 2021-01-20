@@ -11,7 +11,6 @@ import {
   SELECT_CUSTOMER,
   TOGGLE_CUSTOMER_CREATION,
   TOGGLE_CUSTOMER_EDIT,
-  FOLD_ACCORDION,
 } from "../types";
 import axios from "../apiClient";
 import { setAccordion } from "./uiAction";
