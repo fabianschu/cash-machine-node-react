@@ -21,9 +21,7 @@ const prepareData = (invoices, projects) => {
 
   const getMonthIndex = (date) => {
     const dateIndex = moment(date).format("M") - 1;
-    if (januaryIndex + dateIndex > 11) return januaryIndex + dateIndex - 11;
-    if (januaryIndex == dateIndex) return januaryIndex;
-    return januaryIndex + dateIndex;
+    return (januaryIndex + dateIndex) % 12;
   };
 
   const data = {
@@ -45,7 +43,7 @@ const prepareData = (invoices, projects) => {
   };
 
   const isWithinYear = (date) => {
-    return moment(date).isSame(moment(), "year");
+    return moment().diff(date, "years") < 1;
   };
 
   const isSameMonth = (date) => {
