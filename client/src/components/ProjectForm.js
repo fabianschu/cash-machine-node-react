@@ -3,8 +3,7 @@ import Button from "@material-ui/core/Button";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { Formik, Form, Field } from "formik";
-import InputField from "./InputField";
-import FloatInputField from "./FloatInputField";
+import InputField from "./Inputs/InputField";
 import { useDispatch, useSelector } from "react-redux";
 import {
   saveProject,
@@ -46,9 +45,18 @@ const ProjectForm = () => {
             <StyledSubHeading>Neues Projekt</StyledSubHeading>
           </DialogTitle>
           <DialogContent>
-            <Field component={InputField} name="name" />
-            <Field component={InputField} name="description" />
-            <Field component={FloatInputField} name="hours" />
+            <Field component={InputField} name="name" label="Titel" />
+            <Field
+              component={InputField}
+              name="description"
+              label="Beschreibung"
+            />
+            <Field
+              component={InputField}
+              name="hours"
+              label="Stundenanzahl"
+              type="number"
+            />
           </DialogContent>
           <StyledDialogActions>
             <StyledSoftButton onClick={closeModal}>Abbrechen</StyledSoftButton>

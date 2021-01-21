@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
-import InputField from "../components/InputField";
+import InputField from "../components/Inputs/InputField";
 import Button from "@material-ui/core/Button";
 import { Redirect } from "react-router-dom";
 import styled from "styled-components";
@@ -86,8 +86,17 @@ const LoginPage = () => {
         >
           <Form>
             <StyledInteractionContainer>
-              <Field component={InputField} name="username" />
-              <Field component={InputField} name="password" />
+              <Field
+                component={InputField}
+                name="username"
+                label="Benutzername"
+              />
+              <Field
+                component={InputField}
+                name="password"
+                label="Passwort"
+                type="password"
+              />
               <Button
                 type="submit"
                 size="large"

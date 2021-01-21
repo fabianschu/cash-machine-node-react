@@ -71,29 +71,6 @@ const Table = (props) => {
       (project) => !project.invoiceId && project.customerId === customerId
     );
 
-  // rows = rows.map((row) => {
-  //   if (
-  //     selectedProjects
-  //       .map((selectedProject) => selectedProject.id)
-  //       .includes(row.id)
-  //   ) {
-  //     return {
-  //       ...row,
-  //       tableData: {
-  //         ...row.tableData,
-  //         checked: true,
-  //       },
-  //     };
-  //   }
-  //   return {
-  //     ...row,
-  //     tableData: {
-  //       ...row.tableData,
-  //       checked: false,
-  //     },
-  //   };
-  // });
-
   const [columns] = useState([
     { title: "Projekt", field: "name", width: 200 },
     {

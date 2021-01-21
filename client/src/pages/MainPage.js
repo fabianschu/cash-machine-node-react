@@ -6,6 +6,7 @@ import topCloud from "../assets/top-cloud.png";
 import MainWidget from "../components/MainWidget";
 import illustration from "../assets/cheese-carrier.png";
 import AnalysisWidget from "../components/AnalysisWidget";
+import Header from "../components/Header";
 
 const MainPageLayout = styled.div`
   background: url(${illustration}) 20% 80% / auto 50% no-repeat,
@@ -13,7 +14,7 @@ const MainPageLayout = styled.div`
     url(${bottomWave}) 20% 100% / 100% 100% no-repeat;
   min-height: 100vh;
   width: 100vw;
-  padding: 60px 100px;
+  padding: 0 100px 60px 100px;
   background-attachment: fixed;
   .bottom-half {
     margin-top: ${({ theme }) => theme.spacing(5)}px;
@@ -32,8 +33,8 @@ const MainPage = () => {
 
   return (
     <MainPageLayout>
+      <Header />
       <MainWidget />
-
       {!accordionExpanded && (
         <div className="bottom-half">
           <AnalysisWidget />

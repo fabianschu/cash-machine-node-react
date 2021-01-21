@@ -11,8 +11,8 @@ import {
   toggleCustomerCreation,
   toggleCustomerEdit,
 } from "../redux/actions/customersAction";
-import InputField from "./InputField";
-import FloatInputField from "./FloatInputField";
+import InputField from "./Inputs/InputField";
+import SelectField from "./Inputs/SelectField";
 import StyledSubHeading from "../styled/SubHeading";
 import StyledSoftButton from "../styled/SoftButton";
 import StyledDialogActions from "../styled/DialogActions";
@@ -94,15 +94,20 @@ const CustomerForm = () => {
             </StyledSubHeading>
           </DialogTitle>
           <DialogContent>
-            <Field component={InputField} name="firm" />
-            <Field component={InputField} name="firstName" />
-            <Field component={InputField} name="lastName" />
-            <Field component={InputField} name="street" />
-            <Field component={InputField} name="zip" />
-            <Field component={InputField} name="city" />
-            <Field component={InputField} name="country" />
-            <Field component={FloatInputField} name="hourlyRate" />
-            <Field component={InputField} name="taxId" />
+            <Field component={InputField} name="firm" label="Firma" />
+            <Field component={InputField} name="firstName" label="Vorname" />
+            <Field component={InputField} name="lastName" label="Nachname" />
+            <Field component={InputField} name="street" label="Straße" />
+            <Field component={InputField} name="zip" label="Postleitzahl" />
+            <Field component={InputField} name="city" label="Stadt" />
+            <Field component={SelectField} name="country" label="Land" />
+            <Field
+              component={InputField}
+              name="hourlyRate"
+              label="Stundensatz"
+              type="number"
+            />
+            <Field component={InputField} name="taxId" label="Steuernummer" />
           </DialogContent>
           <StyledDialogActions>
             {editingCustomer && (

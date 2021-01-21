@@ -6,6 +6,7 @@ import CustomerForm from "./CustomerForm";
 import ProjectForm from "./ProjectForm";
 import InvoiceOverview from "./InvoiceOverview";
 import { useDispatch, useSelector } from "react-redux";
+import UserProfile from "./UserProfile";
 
 const Modal = (props) => {
   const theme = useTheme();
@@ -24,12 +25,16 @@ const Modal = (props) => {
   const creatingProject = useSelector(
     ({ projectsReducer }) => projectsReducer.creatingProject
   );
+  const editingUserProfile = useSelector(
+    ({ userReducer }) => userReducer.editingUserProfile
+  );
 
   const closeModals = () => {
     if (creatingCustomer) dispatch({ type: "TOGGLE_CUSTOMER_CREATION" });
     if (editingCustomer) dispatch({ type: "TOGGLE_CUSTOMER_EDIT" });
     if (creatingInvoice) dispatch({ type: "TOGGLE_INVOICE_CREATION" });
     if (creatingProject) dispatch({ type: "TOGGLE_PROJECT_CREATION" });
+    if (editingUserProfile) dispatch({ type: "TOGGLE_USER_EDIT" });
   };
 
   const renderModalContent = () => {
@@ -39,6 +44,8 @@ const Modal = (props) => {
       return <InvoiceOverview />;
     } else if (creatingProject) {
       return <ProjectForm />;
+    } else if (editingUserProfile) {
+      return <UserProfile />;
     }
   };
 
@@ -51,7 +58,8 @@ const Modal = (props) => {
         creatingCustomer ||
         editingCustomer ||
         creatingInvoice ||
-        creatingProject
+        creatingProject ||
+        editingUserProfile
       }
       onClose={closeModals}
       aria-labelledby="responsive-dialog-title"

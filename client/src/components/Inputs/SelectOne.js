@@ -21,7 +21,6 @@ const SelectOne = (props) => {
       inputValue={inputValue}
       disabled={disabled}
       options={options}
-      // className={classes.formControl}
       getOptionLabel={(option) => {
         if (!option) return "";
         return option[display];

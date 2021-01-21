@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import ModalButton from "./ModalButton";
+import ModalButton from "./Inputs/ModalButton";
 import Accordion from "./Accordion";
-import SelectOne from "./SelectOne";
+import SelectOne from "./Inputs/SelectOne";
 import Modal from "./Modal";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -11,6 +11,7 @@ import {
 } from "../redux/actions/customersAction";
 import { fetchProjects } from "../redux/actions/projectsAction";
 import { fetchInvoices } from "../redux/actions/invoicesAction";
+import { fetchUser } from "../redux/actions/userAction";
 import styled from "styled-components";
 import StyledSubHeading from "../styled/SubHeading";
 import StyledWidgetContainer from "../styled/WidgetContainer";
@@ -43,6 +44,7 @@ const MainWidget = (props) => {
     dispatch(fetchCustomers());
     dispatch(fetchProjects());
     dispatch(fetchInvoices());
+    dispatch(fetchUser());
   }, [dispatch]);
 
   return (

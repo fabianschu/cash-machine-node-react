@@ -19,4 +19,16 @@ router.get("/", async (req, res, next) => {
   res.json(result[0]);
 });
 
+router.post("/", async (req, res, next) => {
+  const userId = req.session.currentUser;
+  const result = await UserProfile.create({ ...req.body, userId });
+  res.json(result);
+});
+
+router.put("/", async (req, res, next) => {
+  const userId = req.session.currentUser;
+  const result = await UserProfile.update({ ...req.body }, { userId });
+  res.json(result);
+});
+
 module.exports = router;

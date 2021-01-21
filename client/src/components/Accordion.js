@@ -6,7 +6,7 @@ import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import ModalButton from "./ModalButton";
+import ModalButton from "./Inputs/ModalButton";
 import Table from "./Table";
 import styled from "styled-components";
 import { withStyles } from "@material-ui/core/styles";

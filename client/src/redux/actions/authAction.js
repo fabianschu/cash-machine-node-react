@@ -1,5 +1,12 @@
 import axios from "../apiClient";
-import { LOGIN_STARTED, LOGIN_SUCCESS, LOGIN_FAILURE } from "../types";
+import {
+  LOGIN_STARTED,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+  LOGOUT_STARTED,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAILURE,
+} from "../types";
 import { fetchUser } from "./userAction";
 
 axios.defaults.withCredentials = true;
@@ -29,6 +36,36 @@ const loginSuccess = (data) => ({
 
 const loginFailure = (error) => ({
   type: LOGIN_FAILURE,
+  payload: {
+    error,
+  },
+});
+
+export function logout() {
+  return function (dispatch) {
+    dispatch(logoutStarted());
+    return axios
+      .get(`/auth/logout`)
+      .then(({ data }) => {
+        dispatch(logoutSuccess(data));
+      })
+      .catch((err) => {
+        dispatch(logoutFailure(err.message));
+      });
+  };
+}
+
+const logoutStarted = () => ({
+  type: LOGOUT_STARTED,
+});
+
+const logoutSuccess = (data) => ({
+  type: LOGOUT_SUCCESS,
+  payload: data.id,
+});
+
+const logoutFailure = (error) => ({
+  type: LOGOUT_FAILURE,
   payload: {
     error,
   },
