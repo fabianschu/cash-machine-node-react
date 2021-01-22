@@ -8,6 +8,7 @@ import InputField from "./Inputs/InputField";
 import StyledSubHeading from "../styled/SubHeading";
 import StyledSoftButton from "../styled/SoftButton";
 import StyledDialogActions from "../styled/DialogActions";
+import FileUploadField from "./Inputs/FileUploadField";
 import {
   updateUser,
   saveUser,
@@ -19,11 +20,13 @@ const UserProfile = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = (values) => {
-    if (user.id) {
-      dispatch(updateUser(values));
-    } else {
-      dispatch(saveUser(values));
-    }
+    console.log(values);
+    dispatch(updateUser(values));
+    // if (user.id) {
+    //   dispatch(updateUser(values));
+    // } else {
+    //   dispatch(saveUser(values));
+    // }
     closeModal();
   };
 
@@ -45,6 +48,7 @@ const UserProfile = () => {
           bic: "",
           taxId: "",
           userId: "",
+          logo: null,
         }
       }
       onSubmit={handleSubmit}
@@ -56,6 +60,12 @@ const UserProfile = () => {
           </DialogTitle>
           <DialogContent>
             <Field component={InputField} name="name" label="Name" />
+            <Field
+              component={FileUploadField}
+              name="logo"
+              label="Logo"
+              type="file"
+            />
             <Field component={InputField} name="street" label="Straße" />
             <Field component={InputField} name="zip" label="Postleitzahl" />
             <Field component={InputField} name="city" label="Stadt" />
