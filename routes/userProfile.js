@@ -30,8 +30,7 @@ router.post("/", async (req, res, next) => {
 
 router.put("/", upload.single("logo"), async (req, res, next) => {
   const { logo } = req.body;
-  console.log(logo);
-  uploadBase64(logo);
+  const logoUrl = await uploadBase64(logo);
   // console.log(req.file);
   // const userId = req.session.currentUser;
   // const result = await UserProfile.update({ ...req.body }, { userId });

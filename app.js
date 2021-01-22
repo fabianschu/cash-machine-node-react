@@ -1,3 +1,4 @@
+require("dotenv").config();
 const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
@@ -9,7 +10,6 @@ const { client, conString } = require("./db/index");
 const cors = require("cors");
 const mountRoutes = require("./routes");
 const pgSession = require("connect-pg-simple")(session);
-require("dotenv").config();
 
 var app = express();
 
