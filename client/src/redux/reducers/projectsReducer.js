@@ -40,7 +40,7 @@ export const projectsReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: null,
-        projects: [...action.payload],
+        projects: action.payload,
       };
     case GET_PROJECTS_FAILURE:
       return {

@@ -32,7 +32,7 @@ const getInvoicesStarted = () => ({
 
 const getInvoicesSuccess = (invoices) => ({
   type: GET_INVOICES_SUCCESS,
-  payload: [...invoices],
+  payload: invoices,
 });
 
 const getInvoicesFailure = (error) => ({

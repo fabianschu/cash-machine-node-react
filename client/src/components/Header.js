@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import IconButton from "@material-ui/core/IconButton";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { toggleUserProfileEdit } from "../redux/actions/userAction";
 import { logout } from "../redux/actions/authAction";
 

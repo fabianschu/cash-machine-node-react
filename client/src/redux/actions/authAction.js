@@ -59,9 +59,8 @@ const logoutStarted = () => ({
   type: LOGOUT_STARTED,
 });
 
-const logoutSuccess = (data) => ({
+const logoutSuccess = () => ({
   type: LOGOUT_SUCCESS,
-  payload: data.id,
 });
 
 const logoutFailure = (error) => ({

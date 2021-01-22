@@ -30,7 +30,7 @@ export const invoicesReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: null,
-        invoices: [...state.invoices, ...action.payload],
+        invoices: action.payload,
       };
     case GET_INVOICES_FAILURE:
       return {

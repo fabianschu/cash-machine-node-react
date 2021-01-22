@@ -48,24 +48,28 @@ const AnalysisWidget = () => {
   return (
     <StyledAnalysisContainer>
       <StyledHeading>Diesen Monat</StyledHeading>
-      <StyledCounters>
-        <Counter
-          label={data.month.billedHours.label}
-          formattedNumber={data.month.billedHours.count}
-        />
-        <Counter
-          label={data.month.totalHours.label}
-          formattedNumber={data.month.totalHours.count}
-        />
-        <Counter
-          label={data.month.billedSum.label}
-          formattedNumber={"€" + data.month.billedSum.count / 100}
-        />
-      </StyledCounters>
-      <StyledHeading>Letzte 12 Monate</StyledHeading>
-      <StyledChartWrapper>
-        <BarChart data={data.year} />
-      </StyledChartWrapper>
+      {invoices && projects && (
+        <>
+          <StyledCounters>
+            <Counter
+              label={data.month.totalHours.label}
+              formattedNumber={data.month.totalHours.count}
+            />
+            <Counter
+              label={data.month.billedHours.label}
+              formattedNumber={data.month.billedHours.count}
+            />
+            <Counter
+              label={data.month.billedSum.label}
+              formattedNumber={"€" + data.month.billedSum.count / 100}
+            />
+          </StyledCounters>
+          <StyledHeading>Letzte 12 Monate</StyledHeading>
+          <StyledChartWrapper>
+            <BarChart data={data.year} />
+          </StyledChartWrapper>
+        </>
+      )}
     </StyledAnalysisContainer>
   );
 };

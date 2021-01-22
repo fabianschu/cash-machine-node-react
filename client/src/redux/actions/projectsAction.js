@@ -41,7 +41,7 @@ const getProjectsStarted = () => ({
 
 const getProjectsSuccess = (projects) => ({
   type: GET_PROJECTS_SUCCESS,
-  payload: [...projects],
+  payload: projects,
 });
 
 const getProjectsFailure = (error) => ({
