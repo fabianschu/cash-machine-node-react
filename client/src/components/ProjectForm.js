@@ -9,7 +9,7 @@ import {
   saveProject,
   toggleProjectCreation,
 } from "../redux/actions/projectsAction";
-import StyledSubHeading from "../styled/SubHeading";
+import StyledHeading from "../styled/Heading";
 import StyledSoftButton from "../styled/SoftButton";
 import StyledDialogActions from "../styled/DialogActions";
 
@@ -42,7 +42,7 @@ const ProjectForm = () => {
       {() => (
         <Form>
           <DialogTitle>
-            <StyledSubHeading>Neues Projekt</StyledSubHeading>
+            <StyledHeading small>Neues Projekt</StyledHeading>
           </DialogTitle>
           <DialogContent>
             <Field component={InputField} name="name" label="Titel" />

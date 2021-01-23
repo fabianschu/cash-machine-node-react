@@ -20,7 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { saveInvoice } from "../redux/actions/invoicesAction";
 import StyledDialogActions from "../styled/DialogActions";
 import StyledSoftButton from "../styled/SoftButton";
-import StyledSubHeading from "../styled/SubHeading";
+import StyledHeading from "../styled/Heading";
 import { taxRate } from "../helpers/invoiceHelpers";
 
 const useStyles = makeStyles({
@@ -135,7 +135,7 @@ const InvoiceOverview = () => {
   return (
     <>
       <DialogTitle>
-        <StyledSubHeading>Rechnung erstellen</StyledSubHeading>
+        <StyledHeading small>Rechnung erstellen</StyledHeading>
       </DialogTitle>
       <DialogContent>
         <Box

@@ -4,18 +4,29 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import styled from "styled-components";
+
+const StyledFormControl = styled(FormControl)`
+  width: ${({ fullWidth }) => (fullWidth ? "100%" : "47%")};
+`;
 
 const SelectField = (props) => {
   const {
     field: { name },
     label,
+    flexWidth,
   } = props;
   const [field, meta, helpers] = useField(name);
   const { setValue } = helpers;
   const { value } = field;
 
   return (
-    <FormControl variant="outlined" fullWidth size="small" margin="normal">
+    <StyledFormControl
+      variant="outlined"
+      fullWidth={!flexWidth}
+      size="large"
+      margin="normal"
+    >
       <InputLabel id="demo-simple-select-outlined-label">{label}</InputLabel>
       <Select
         labelId="demo-simple-select-outlined-label"
@@ -30,7 +41,7 @@ const SelectField = (props) => {
           Vereinigtes Königreich
         </MenuItem>
       </Select>
-    </FormControl>
+    </StyledFormControl>
   );
 };
 
