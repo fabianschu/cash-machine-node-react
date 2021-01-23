@@ -7,13 +7,13 @@ const { uploadBase64 } = require("../services/cloudinary");
 
 const router = new Router({ mergeParams: true });
 
-// router.use((req, res, next) => {
-//   if (req.session.currentUser) {
-//     next();
-//   } else {
-//     res.status(401).json("not authorized");
-//   }
-// });
+router.use((req, res, next) => {
+  if (req.session.currentUser) {
+    next();
+  } else {
+    res.status(401).json("not authorized");
+  }
+});
 
 /*  GET own user profile */
 router.get("/", async (req, res, next) => {
@@ -29,14 +29,17 @@ router.post("/", async (req, res, next) => {
 });
 
 router.put("/", upload.single("logo"), async (req, res, next) => {
-  const { logo } = req.body;
+  const params = req.body;
+  const { logo } = params;
   const logoUrl = await uploadBase64(logo);
-  // console.log(req.file);
-  // const userId = req.session.currentUser;
-  // const result = await UserProfile.update({ ...req.body }, { userId });
-  // console.log(result);
-  // res.json(result);
-  res.json("result");
+  const userId = req.session.currentUser;
+  delete params["user"];
+  delete params["logo"];
+  const result = await UserProfile.update(
+    { ...params, logoUrl: logoUrl },
+    { userId }
+  );
+  res.json(result);
 });
 
 module.exports = router;

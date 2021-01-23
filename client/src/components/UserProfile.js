@@ -48,7 +48,6 @@ const UserProfile = () => {
           bic: "",
           taxId: "",
           userId: "",
-          logo: null,
         }
       }
       onSubmit={handleSubmit}
