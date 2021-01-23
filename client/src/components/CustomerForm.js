@@ -13,9 +13,10 @@ import {
 } from "../redux/actions/customersAction";
 import InputField from "./Inputs/InputField";
 import SelectField from "./Inputs/SelectField";
-import StyledSubHeading from "../styled/SubHeading";
 import StyledSoftButton from "../styled/SoftButton";
 import StyledDialogActions from "../styled/DialogActions";
+import StyledInputContainer from "../styled/InputContainer";
+import StyledHeading from "../styled/Heading";
 
 const StyledDeleteButtonContainer = styled.div`
   flex: 1;
@@ -87,27 +88,71 @@ const CustomerForm = () => {
       {(props) => (
         <Form>
           <DialogTitle>
-            <StyledSubHeading>
+            <StyledHeading small>
               {editingCustomer
                 ? "Kundendaten berarbeiten"
                 : "Kund*in erstellen"}
-            </StyledSubHeading>
+            </StyledHeading>
           </DialogTitle>
           <DialogContent>
             <Field component={InputField} name="firm" label="Firma" />
-            <Field component={InputField} name="firstName" label="Vorname" />
-            <Field component={InputField} name="lastName" label="Nachname" />
-            <Field component={InputField} name="street" label="Straße" />
-            <Field component={InputField} name="zip" label="Postleitzahl" />
-            <Field component={InputField} name="city" label="Stadt" />
-            <Field component={SelectField} name="country" label="Land" />
-            <Field
-              component={InputField}
-              name="hourlyRate"
-              label="Stundensatz"
-              type="number"
-            />
-            <Field component={InputField} name="taxId" label="Steuernummer" />
+            <StyledInputContainer>
+              <Field
+                component={InputField}
+                name="firstName"
+                label="Vorname"
+                flexWidth
+              />
+              <Field
+                component={InputField}
+                name="lastName"
+                label="Nachname"
+                flexWidth
+              />
+            </StyledInputContainer>
+            <StyledInputContainer>
+              <Field
+                component={InputField}
+                name="street"
+                label="Straße"
+                flexWidth
+              />
+              <Field
+                component={InputField}
+                name="zip"
+                label="Postleitzahl"
+                flexWidth
+              />
+            </StyledInputContainer>
+            <StyledInputContainer>
+              <Field
+                component={InputField}
+                name="city"
+                label="Stadt"
+                flexWidth
+              />
+              <Field
+                component={SelectField}
+                name="country"
+                label="Land"
+                flexWidth
+              />
+            </StyledInputContainer>
+            <StyledInputContainer>
+              <Field
+                component={InputField}
+                name="hourlyRate"
+                label="Stundensatz"
+                type="number"
+                flexWidth
+              />
+              <Field
+                component={InputField}
+                name="taxId"
+                label="Steuernummer"
+                flexWidth
+              />
+            </StyledInputContainer>
           </DialogContent>
           <StyledDialogActions>
             {editingCustomer && (

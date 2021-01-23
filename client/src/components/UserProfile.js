@@ -1,29 +1,38 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
 import Button from "@material-ui/core/Button";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { Formik, Form, Field } from "formik";
 import InputField from "./Inputs/InputField";
-import StyledSubHeading from "../styled/SubHeading";
 import StyledSoftButton from "../styled/SoftButton";
 import StyledDialogActions from "../styled/DialogActions";
-import {
-  updateUser,
-  saveUser,
-  toggleUserProfileEdit,
-} from "../redux/actions/userAction";
+import FileUploadField from "./Inputs/FileUploadField";
+import { updateUser, toggleUserProfileEdit } from "../redux/actions/userAction";
+import StyledInputContainer from "../styled/InputContainer";
+import StyledHeading from "../styled/Heading";
+
+const StyledLogoContainer = styled.div`
+  width: 47%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const StyledCustomWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 47%;
+`;
 
 const UserProfile = () => {
   const user = useSelector(({ userReducer }) => userReducer.user);
   const dispatch = useDispatch();
 
   const handleSubmit = (values) => {
-    if (user.id) {
-      dispatch(updateUser(values));
-    } else {
-      dispatch(saveUser(values));
-    }
+    dispatch(updateUser(values));
     closeModal();
   };
 
@@ -52,23 +61,76 @@ const UserProfile = () => {
       {() => (
         <Form>
           <DialogTitle>
-            <StyledSubHeading>Eigene Daten</StyledSubHeading>
+            <StyledHeading small>Eigene Daten</StyledHeading>
           </DialogTitle>
           <DialogContent>
-            <Field component={InputField} name="name" label="Name" />
-            <Field component={InputField} name="street" label="Straße" />
-            <Field component={InputField} name="zip" label="Postleitzahl" />
-            <Field component={InputField} name="city" label="Stadt" />
-            <Field component={InputField} name="email" label="E-Mail" />
-            <Field component={InputField} name="phone" label="Telefon" />
-            <Field component={InputField} name="iban" label="IBAN" />
-            <Field component={InputField} name="bic" label="BIC" />
-            <Field component={InputField} name="taxId" label="Steuernummer" />
-            <Field
-              component={InputField}
-              name="uId"
-              label="Umsatzsteuernummer"
-            />
+            <StyledInputContainer>
+              <StyledCustomWrapper>
+                <Field component={InputField} name="name" label="Name" />
+                <Field component={InputField} name="street" label="Straße" />
+              </StyledCustomWrapper>
+              <StyledLogoContainer>
+                <img src={user.logoUrl} alt="logo" />
+                <Field
+                  component={FileUploadField}
+                  name="logo"
+                  label="Logo"
+                  type="file"
+                />
+              </StyledLogoContainer>
+            </StyledInputContainer>
+            <StyledInputContainer>
+              <Field
+                component={InputField}
+                name="zip"
+                label="Postleitzahl"
+                flexWidth
+              />
+              <Field
+                component={InputField}
+                name="city"
+                label="Stadt"
+                flexWidth
+              />
+            </StyledInputContainer>
+
+            <StyledInputContainer>
+              <Field
+                component={InputField}
+                name="email"
+                label="E-Mail"
+                flexWidth
+              />
+              <Field
+                component={InputField}
+                name="phone"
+                label="Telefon"
+                flexWidth
+              />
+            </StyledInputContainer>
+            <StyledInputContainer>
+              <Field
+                component={InputField}
+                name="taxId"
+                label="Steuernummer"
+                flexWidth
+              />
+              <Field
+                component={InputField}
+                name="uId"
+                label="Umsatzsteuernummer"
+                flexWidth
+              />
+            </StyledInputContainer>
+            <StyledInputContainer>
+              <Field
+                component={InputField}
+                name="iban"
+                label="IBAN"
+                flexWidth
+              />
+              <Field component={InputField} name="bic" label="BIC" flexWidth />
+            </StyledInputContainer>
           </DialogContent>
           <StyledDialogActions>
             <StyledSoftButton onClick={closeModal}>Abbrechen</StyledSoftButton>

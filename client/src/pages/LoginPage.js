@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/actions/authAction";
 import StyledSoftButton from "../styled/SoftButton";
 import StyledWidgetContainer from "../styled/WidgetContainer";
+import StyledHeading from "../styled/Heading";
 
 const LoginPageLayout = styled.div`
   background: url(${illustration}) 15% 100% / auto 50% no-repeat,
@@ -28,28 +29,12 @@ const StyledLoginContainer = styled(StyledWidgetContainer)`
   box-shadow: ${({ theme }) => theme.shadows[5]};
 `;
 
-const StyledHeading = styled.h1`
-  text-align: left;
-  font: Brandon;
-  color: #6ea5a2;
-  opacity: 1;
-  font-size: ${({ theme }) => theme.typography.fontSizes.xlarge};
-  text-transform: uppercase;
-`;
-
 const StyledSubHeading = styled.h2`
   text-align: left;
   font: Brandon;
   color: #6ea5a2;
   opacity: 1;
   font-size: ${({ theme }) => theme.typography.fontSizes.medium};
-`;
-
-const StyledSpacer = styled.div`
-  border: 4px solid #fbd937;
-  height: 0px;
-  width: 50px;
-  margin: ${({ theme }) => theme.spacing(2)}px 0;
 `;
 
 const StyledInteractionContainer = styled.div`
@@ -78,7 +63,6 @@ const LoginPage = () => {
     <LoginPageLayout>
       <StyledLoginContainer>
         <StyledHeading>Make it rain</StyledHeading>
-        <StyledSpacer />
         <StyledSubHeading>Welcome to your cashmachine</StyledSubHeading>
         <Formik
           initialValues={{ username: "", password: "" }}

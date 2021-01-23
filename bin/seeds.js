@@ -77,7 +77,7 @@ db.query("DROP TABLE IF EXISTS projects")
   )
   .then(() =>
     db.query(
-      'CREATE TABLE IF NOT EXISTS "userProfiles" (ID SERIAL PRIMARY KEY, "name" VARCHAR(30), "street" VARCHAR(50), "zip" VARCHAR(30), "city" VARCHAR(30), "email" VARCHAR(30), "phone" VARCHAR(30), "iban" VARCHAR(30), "bic" VARCHAR(30), "taxId" VARCHAR(30), "uId" VARCHAR(30), "userId" INTEGER REFERENCES users("id"), "updatedAt" TIMESTAMP, "createdAt" TIMESTAMP)'
+      'CREATE TABLE IF NOT EXISTS "userProfiles" (ID SERIAL PRIMARY KEY, "name" VARCHAR(30), "street" VARCHAR(50), "zip" VARCHAR(30), "city" VARCHAR(30), "email" VARCHAR(30), "phone" VARCHAR(30), "iban" VARCHAR(30), "bic" VARCHAR(30), "taxId" VARCHAR(30), "uId" VARCHAR(30), "userId" INTEGER REFERENCES users("id"), "updatedAt" TIMESTAMP, "createdAt" TIMESTAMP, "logoUrl" VARCHAR(150))'
     )
   )
   .then(() =>

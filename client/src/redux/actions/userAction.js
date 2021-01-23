@@ -1,4 +1,5 @@
-import axios from "../apiClient";
+import apiClient from "../apiClient";
+import axios from "axios";
 import {
   GET_USER_STARTED,
   GET_USER_SUCCESS,
@@ -15,7 +16,7 @@ import {
 export function fetchUser() {
   return function (dispatch) {
     dispatch(getUserStarted());
-    return axios
+    return apiClient
       .get(`${process.env.REACT_APP_SERVER_URL}/api/user_profile`)
       .then(({ data }) => {
         dispatch(getUserSuccess(data));
@@ -30,7 +31,20 @@ export function updateUser(user) {
   return async (dispatch) => {
     dispatch(updateUserStarted());
     try {
-      const { data } = await axios.put(`/user_profile`, user);
+      const formData = new FormData();
+      Object.keys(user).forEach((key) => {
+        formData.append(key, user[key]);
+      });
+      const { data } = await axios.put(
+        `${process.env.REACT_APP_SERVER_URL}/api/user_profile`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true,
+        }
+      );
       dispatch(updateUserSuccess(data));
       dispatch(fetchUser());
     } catch (err) {
@@ -61,7 +75,7 @@ export function saveUser(user) {
   return async (dispatch) => {
     dispatch(saveUserStarted());
     try {
-      const { data } = await axios.post(`/user_profile`, user);
+      const { data } = await apiClient.post(`/user_profile`, user);
       dispatch(saveUserSuccess(data));
     } catch (err) {
       dispatch(saveUserFailure(err.message));

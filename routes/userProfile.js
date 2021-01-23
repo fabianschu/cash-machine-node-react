@@ -1,6 +1,9 @@
 const Router = require("express-promise-router");
 const db = require("../db");
 const UserProfile = require("../models/baseModel")("userProfiles");
+const multer = require("multer");
+const upload = multer({ storage: multer.memoryStorage() });
+const { uploadBase64 } = require("../services/cloudinary");
 
 const router = new Router({ mergeParams: true });
 
@@ -25,9 +28,17 @@ router.post("/", async (req, res, next) => {
   res.json(result);
 });
 
-router.put("/", async (req, res, next) => {
+router.put("/", upload.single("logo"), async (req, res, next) => {
+  const params = req.body;
+  const { logo } = params;
+  const logoUrl = await uploadBase64(logo);
   const userId = req.session.currentUser;
-  const result = await UserProfile.update({ ...req.body }, { userId });
+  delete params["user"];
+  delete params["logo"];
+  const result = await UserProfile.update(
+    { ...params, logoUrl: logoUrl },
+    { userId }
+  );
   res.json(result);
 });
 

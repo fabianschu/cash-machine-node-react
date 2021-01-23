@@ -1,31 +1,34 @@
 import React from "react";
 import { useField } from "formik";
 import TextField from "@material-ui/core/TextField";
-import styled from "styled-components";
 
-const StyledTextField = styled(TextField)`
-  width: ${({ fullWidth }) => (fullWidth ? "100%" : "47%")};
-`;
-
-const InputField = (props) => {
+const FileUploadField = (props) => {
   const {
     field: { name },
     label,
     type,
-    flexWidth,
   } = props;
   const [field, meta, helpers] = useField(name);
   const { setValue } = helpers;
-  const { value } = field;
+
+  const getFile = (e) => {
+    e.preventDefault();
+    let reader = new FileReader();
+    let file = e.target.files[0];
+    console.log(reader);
+    reader.onload = (e) => {
+      console.log("loaded");
+      setValue(e.target.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
   return (
-    <StyledTextField
+    <TextField
       type={type || "text"}
       id={name}
-      label={label}
       variant="outlined"
-      onChange={(e) => setValue(e.target.value)}
-      value={value}
-      fullWidth={!flexWidth}
+      onChange={(e) => getFile(e)}
       error={meta.touched && meta.error ? true : false}
       helperText={(meta.touched && meta.error) || ""}
       size="medium"
@@ -34,4 +37,4 @@ const InputField = (props) => {
   );
 };
 
-export default InputField;
+export default FileUploadField;

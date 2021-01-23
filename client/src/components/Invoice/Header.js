@@ -1,7 +1,6 @@
 import React from "react";
 import { View, Text, Image, StyleSheet } from "@react-pdf/renderer";
 import moment from "moment";
-import logo from "../../logo.png";
 
 const BLACK_EIGHTY = "#333333";
 const MINTY_GREEN = "#559495";
@@ -21,7 +20,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   logo: {
-    width: "60px",
+    maxHeight: "60px",
     textAlign: "center",
     marginBottom: BOTTOM_MARGIN_WITHIN_SECTIONS,
   },
@@ -66,7 +65,7 @@ const Header = (props) => {
   return (
     <View style={styles.header}>
       <View style={styles.logoContainer}>
-        <Image src={logo} style={styles.logo} />
+        <Image src={userProfile.logoUrl} style={styles.logo} />
       </View>
       <Text style={styles.ownName}>{formatName(userProfile.name)}</Text>
       <View style={styles.ownAddress}>
