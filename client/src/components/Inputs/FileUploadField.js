@@ -27,10 +27,8 @@ const FileUploadField = (props) => {
     <TextField
       type={type || "text"}
       id={name}
-      label={label}
       variant="outlined"
       onChange={(e) => getFile(e)}
-      fullWidth
       error={meta.touched && meta.error ? true : false}
       helperText={(meta.touched && meta.error) || ""}
       size="medium"

@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
 import Button from "@material-ui/core/Button";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -11,6 +12,20 @@ import FileUploadField from "./Inputs/FileUploadField";
 import { updateUser, toggleUserProfileEdit } from "../redux/actions/userAction";
 import StyledInputContainer from "../styled/InputContainer";
 import StyledHeading from "../styled/Heading";
+
+const StyledLogoContainer = styled.div`
+  width: 47%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const StyledCustomWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 47%;
+`;
 
 const UserProfile = () => {
   const user = useSelector(({ userReducer }) => userReducer.user);
@@ -49,28 +64,28 @@ const UserProfile = () => {
             <StyledHeading small>Eigene Daten</StyledHeading>
           </DialogTitle>
           <DialogContent>
-            <Field component={InputField} name="name" label="Name" />
-            <Field
-              component={FileUploadField}
-              name="logo"
-              label="Logo"
-              type="file"
-            />
             <StyledInputContainer>
-              <Field
-                component={InputField}
-                name="street"
-                label="Straße"
-                flexWidth
-              />
+              <StyledCustomWrapper>
+                <Field component={InputField} name="name" label="Name" />
+                <Field component={InputField} name="street" label="Straße" />
+              </StyledCustomWrapper>
+              <StyledLogoContainer>
+                <img src={user.logoUrl} alt="logo" />
+                <Field
+                  component={FileUploadField}
+                  name="logo"
+                  label="Logo"
+                  type="file"
+                />
+              </StyledLogoContainer>
+            </StyledInputContainer>
+            <StyledInputContainer>
               <Field
                 component={InputField}
                 name="zip"
                 label="Postleitzahl"
                 flexWidth
               />
-            </StyledInputContainer>
-            <StyledInputContainer>
               <Field
                 component={InputField}
                 name="city"
@@ -78,6 +93,7 @@ const UserProfile = () => {
                 flexWidth
               />
             </StyledInputContainer>
+
             <StyledInputContainer>
               <Field
                 component={InputField}
