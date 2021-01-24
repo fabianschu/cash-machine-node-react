@@ -29,7 +29,6 @@ const StyledFlexBox = styled.div`
 `;
 
 const MainWidget = (props) => {
-  const dispatch = useDispatch();
   const customers = useSelector(
     ({ customersReducer }) => customersReducer.customers
   );
@@ -39,13 +38,6 @@ const MainWidget = (props) => {
   const accordionExpanded = useSelector(
     ({ uiReducer }) => uiReducer.accordionExpanded
   );
-
-  useEffect(() => {
-    dispatch(fetchCustomers());
-    dispatch(fetchProjects());
-    dispatch(fetchInvoices());
-    dispatch(fetchUser());
-  }, [dispatch]);
 
   return (
     <>

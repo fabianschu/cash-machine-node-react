@@ -15,9 +15,7 @@ const FileUploadField = (props) => {
     e.preventDefault();
     let reader = new FileReader();
     let file = e.target.files[0];
-    console.log(reader);
     reader.onload = (e) => {
-      console.log("loaded");
       setValue(e.target.result);
     };
     reader.readAsDataURL(file);
@@ -26,6 +24,7 @@ const FileUploadField = (props) => {
   return (
     <TextField
       type={type || "text"}
+      fullWidth
       id={name}
       variant="outlined"
       onChange={(e) => getFile(e)}

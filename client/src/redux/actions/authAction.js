@@ -106,7 +106,7 @@ export function register(credentials) {
   return function (dispatch) {
     dispatch(registerStarted());
     return axios
-      .post(`/auth/register`, credentials)
+      .post(`/auth/signup`, credentials)
       .then(({ data }) => {
         dispatch(registerSuccess(data));
       })

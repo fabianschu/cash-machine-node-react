@@ -1,9 +1,13 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import bottomWave from "../assets/bottom-wave.png";
 import topCloud from "../assets/top-cloud.png";
 import MainWidget from "../components/MainWidget";
+import { fetchProjects } from "../redux/actions/projectsAction";
+import { fetchInvoices } from "../redux/actions/invoicesAction";
+import { fetchUser } from "../redux/actions/userAction";
+import { fetchCustomers } from "../redux/actions/customersAction";
 import illustration from "../assets/cheese-carrier.png";
 import AnalysisWidget from "../components/AnalysisWidget";
 import Header from "../components/Header";
@@ -27,9 +31,23 @@ const MainPageLayout = styled.div`
 `;
 
 const MainPage = () => {
+  const dispatch = useDispatch();
   const accordionExpanded = useSelector(
     ({ uiReducer }) => uiReducer.accordionExpanded
   );
+  const customers = useSelector(
+    ({ customersReducer }) => customersReducer.customers
+  );
+  const selectedCustomer = useSelector(
+    ({ customersReducer }) => customersReducer.selectedCustomer
+  );
+
+  useEffect(() => {
+    dispatch(fetchCustomers());
+    dispatch(fetchProjects());
+    dispatch(fetchInvoices());
+    dispatch(fetchUser());
+  }, [dispatch]);
 
   return (
     <MainPageLayout>
