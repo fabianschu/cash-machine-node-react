@@ -80,7 +80,6 @@ const CustomerForm = () => {
       city: "",
       country: "",
       taxId: "",
-      uId: "",
       hourlyRate: "",
     };
   };

@@ -65,7 +65,9 @@ const Header = (props) => {
   return (
     <View style={styles.header}>
       <View style={styles.logoContainer}>
-        <Image src={userProfile.logoUrl} style={styles.logo} />
+        {userProfile.logoUrl && (
+          <Image src={userProfile.logoUrl} style={styles.logo} />
+        )}
       </View>
       <Text style={styles.ownName}>{formatName(userProfile.name)}</Text>
       <View style={styles.ownAddress}>
