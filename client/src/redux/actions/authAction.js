@@ -3,6 +3,9 @@ import {
   LOGIN_STARTED,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  REGISTER_STARTED,
+  REGISTER_SUCCESS,
+  REGISTER_FAILURE,
   LOGOUT_STARTED,
   LOGOUT_SUCCESS,
   LOGOUT_FAILURE,
@@ -94,6 +97,36 @@ const authenticateSuccess = (data) => ({
 
 const authenticateFailure = (error) => ({
   type: LOGIN_FAILURE,
+  payload: {
+    error,
+  },
+});
+
+export function register(credentials) {
+  return function (dispatch) {
+    dispatch(registerStarted());
+    return axios
+      .post(`/auth/register`, credentials)
+      .then(({ data }) => {
+        dispatch(registerSuccess(data));
+      })
+      .catch((err) => {
+        dispatch(registerFailure(err.message));
+      });
+  };
+}
+
+const registerStarted = () => ({
+  type: REGISTER_STARTED,
+});
+
+const registerSuccess = (data) => ({
+  type: REGISTER_SUCCESS,
+  payload: data.id,
+});
+
+const registerFailure = (error) => ({
+  type: REGISTER_FAILURE,
   payload: {
     error,
   },
