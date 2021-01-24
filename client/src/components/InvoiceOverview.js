@@ -46,12 +46,15 @@ const InvoiceOverview = () => {
   const selectedCustomer = useSelector(
     ({ customersReducer }) => customersReducer.selectedCustomer
   );
-  const userProfile = useSelector(({ userReducer }) => userReducer.user);
-  const maxInvoiceId = Math.max(
-    ...useSelector(({ invoicesReducer }) =>
-      invoicesReducer.invoices.map((invoice) => invoice.id)
-    )
+  const invoices = useSelector(
+    ({ invoicesReducer }) => invoicesReducer.invoices
   );
+
+  const userProfile = useSelector(({ userReducer }) => userReducer.user);
+  const maxInvoiceId = invoices
+    ? Math.max(invoices.map((invoice) => invoice.id))
+    : 0;
+
   const dispatch = useDispatch();
 
   const {

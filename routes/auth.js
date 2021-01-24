@@ -1,6 +1,6 @@
-var express = require("express");
-const bcrypt = require("bcrypt");
 const Router = require("express-promise-router");
+const { eventEmitter } = require("../services/eventEmitter");
+const bcrypt = require("bcrypt");
 const db = require("../db");
 
 const router = new Router();
@@ -18,6 +18,7 @@ router.post("/login", async (req, res, next) => {
   const success = await bcrypt.compare(password, hashedUserPassword);
   if (!success) return res.status(401).json("pw wrong");
   req.session.currentUser = user.id;
+
   return res.json({ id: req.session.currentUser });
 });
 
@@ -40,7 +41,10 @@ router.post("/signup", async (req, res, next) => {
     'INSERT INTO "users" ("username", "password") VALUES ($1, $2) RETURNING id',
     [username, hash]
   );
-  res.json("success");
+  const userId = rows[0]["id"];
+  eventEmitter.emit("user_signup", { userId });
+  req.session.currentUser = userId;
+  res.json({ id: req.session.currentUser });
 });
 
 router.use((req, res, next) => {

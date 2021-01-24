@@ -46,6 +46,7 @@ export function updateUser(user) {
         }
       );
       dispatch(updateUserSuccess(data));
+      dispatch(toggleUserProfileEdit());
       dispatch(fetchUser());
     } catch (err) {
       dispatch(updateUserFailure(err.message));

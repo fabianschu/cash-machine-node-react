@@ -51,6 +51,8 @@ const prepareData = (invoices, projects) => {
   };
 
   const calculateBilledData = (invoices) => {
+    if (!invoices) return;
+
     for (let i = 0; i < invoices.length; i++) {
       const invoice = invoices[i];
       const { updatedAt, totalHours, totalSum } = invoice;
@@ -67,6 +69,8 @@ const prepareData = (invoices, projects) => {
   };
 
   const calculateTotalData = (projects) => {
+    if (!projects) return;
+
     for (let i = 0; i < projects.length; i++) {
       const project = projects[i];
       const { hours, updatedAt } = project;

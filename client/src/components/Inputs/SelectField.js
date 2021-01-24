@@ -24,7 +24,7 @@ const SelectField = (props) => {
     <StyledFormControl
       variant="outlined"
       fullWidth={!flexWidth}
-      size="large"
+      size="medium"
       margin="normal"
     >
       <InputLabel id="demo-simple-select-outlined-label">{label}</InputLabel>

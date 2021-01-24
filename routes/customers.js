@@ -13,8 +13,10 @@ router.use((req, res, next) => {
 
 /* POST NEW CUSTOMER. */
 router.post("/", async (req, res, next) => {
+  console.log(req.body);
   const userId = req.session.currentUser;
   const result = await Customer.create({ ...req.body, userId });
+  console.log(result);
   res.json(result);
 });
 

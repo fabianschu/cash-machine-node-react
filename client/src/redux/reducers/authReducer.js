@@ -2,6 +2,9 @@ import {
   LOGIN_STARTED,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  REGISTER_STARTED,
+  REGISTER_SUCCESS,
+  REGISTER_FAILURE,
   LOGOUT_STARTED,
   LOGOUT_SUCCESS,
   LOGOUT_FAILURE,
@@ -31,6 +34,24 @@ export const authReducer = (state = initialState, action) => {
         userId: action.payload,
       };
     case LOGIN_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+      };
+    case REGISTER_STARTED:
+      return {
+        ...state,
+        loading: true,
+      };
+    case REGISTER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        userId: action.payload,
+      };
+    case REGISTER_FAILURE:
       return {
         ...state,
         loading: false,

@@ -1,17 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import ModalButton from "./Inputs/ModalButton";
 import Accordion from "./Accordion";
 import SelectOne from "./Inputs/SelectOne";
 import Modal from "./Modal";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
-  fetchCustomers,
   selectCustomer,
   toggleCustomerCreation,
 } from "../redux/actions/customersAction";
-import { fetchProjects } from "../redux/actions/projectsAction";
-import { fetchInvoices } from "../redux/actions/invoicesAction";
-import { fetchUser } from "../redux/actions/userAction";
 import styled from "styled-components";
 import StyledSubHeading from "../styled/SubHeading";
 import StyledWidgetContainer from "../styled/WidgetContainer";
@@ -29,7 +25,6 @@ const StyledFlexBox = styled.div`
 `;
 
 const MainWidget = (props) => {
-  const dispatch = useDispatch();
   const customers = useSelector(
     ({ customersReducer }) => customersReducer.customers
   );
@@ -39,13 +34,6 @@ const MainWidget = (props) => {
   const accordionExpanded = useSelector(
     ({ uiReducer }) => uiReducer.accordionExpanded
   );
-
-  useEffect(() => {
-    dispatch(fetchCustomers());
-    dispatch(fetchProjects());
-    dispatch(fetchInvoices());
-    dispatch(fetchUser());
-  }, [dispatch]);
 
   return (
     <>

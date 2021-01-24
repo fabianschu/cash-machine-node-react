@@ -22,11 +22,23 @@ const StyledDeleteButtonContainer = styled.div`
   flex: 1;
 `;
 
-const SignupSchema = Yup.object().shape({
+const CustomerSchema = Yup.object().shape({
   firm: Yup.string()
-    .min(2, "Too Short!")
-    .max(70, "Too Long!")
-    .required("Required"),
+    .min(2, "Zu kurz!")
+    .max(80, "Zu lang (max. 80 Zeichen)")
+    .required("Notwendig"),
+  street: Yup.string()
+    .required("Notwendig")
+    .max(80, "Zu lang (max. 30 Zeichen)"),
+  zip: Yup.string().required("Notwendig").max(30, "Zu lang (max. 30 Zeichen)"),
+  city: Yup.string().required("Notwendig").max(30, "Zu lang (max. 30 Zeichen)"),
+  country: Yup.string()
+    .required("Notwendig")
+    .max(30, "Zu lang (max. 30 Zeichen)"),
+  hourlyRate: Yup.number("Gültiges Format: Zahl")
+    .required("Notwendig")
+    .positive("Gültiges Format: Zahl")
+    .integer("Gültiges Format: Zahl"),
 });
 
 const CustomerForm = () => {
@@ -82,7 +94,7 @@ const CustomerForm = () => {
   return (
     <Formik
       initialValues={getInitialValues()}
-      validationSchema={SignupSchema}
+      validationSchema={CustomerSchema}
       onSubmit={handleSubmit}
     >
       {(props) => (

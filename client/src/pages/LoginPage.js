@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
 import InputField from "../components/Inputs/InputField";
 import Button from "@material-ui/core/Button";
 import { Redirect } from "react-router-dom";
 import styled from "styled-components";
 import illustration from "../assets/login-illustration.png";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../redux/actions/authAction";
+import { login, register } from "../redux/actions/authAction";
 import StyledSoftButton from "../styled/SoftButton";
 import StyledWidgetContainer from "../styled/WidgetContainer";
 import StyledHeading from "../styled/Heading";
@@ -47,12 +48,35 @@ const StyledInteractionContainer = styled.div`
   flex: 1;
 `;
 
+const LoginSchema = Yup.object().shape({
+  username: Yup.string()
+    .min(2, "Zu kurz!")
+    .max(70, "Zu lang!")
+    .required("Notwendig"),
+  password: Yup.string()
+    .min(8, "Mindestens 8 Zeichen erforderlich")
+    .required("Notwendig"),
+});
+
 const LoginPage = () => {
   const isAuthenticated = useSelector(({ authReducer }) => authReducer.userId);
   const dispatch = useDispatch();
+  const [screen, setScreen] = useState("login");
 
   const handleSubmit = (values) => {
-    dispatch(login(values));
+    if (screen === "login") {
+      dispatch(login(values));
+    } else {
+      dispatch(register(values));
+    }
+  };
+
+  const handleSceenChange = (values) => {
+    if (screen === "login") {
+      setScreen("register");
+    } else {
+      setScreen("login");
+    }
   };
 
   if (isAuthenticated) {
@@ -67,6 +91,7 @@ const LoginPage = () => {
         <Formik
           initialValues={{ username: "", password: "" }}
           onSubmit={handleSubmit}
+          validationSchema={LoginSchema}
         >
           <Form>
             <StyledInteractionContainer>
@@ -87,9 +112,11 @@ const LoginPage = () => {
                 variant="contained"
                 color="secondary"
               >
-                Login
+                {screen === "login" ? "Anmelden" : "Registrieren"}
               </Button>
-              <StyledSoftButton>Registrieren</StyledSoftButton>
+              <StyledSoftButton onClick={handleSceenChange}>
+                {screen === "login" ? "Registrieren" : "Anmelden"}
+              </StyledSoftButton>
             </StyledInteractionContainer>
           </Form>
         </Formik>
