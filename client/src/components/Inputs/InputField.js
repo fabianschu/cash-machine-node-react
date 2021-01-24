@@ -17,6 +17,7 @@ const InputField = (props) => {
   const [field, meta, helpers] = useField(name);
   const { setValue } = helpers;
   const { value } = field;
+
   return (
     <StyledTextField
       type={type || "text"}

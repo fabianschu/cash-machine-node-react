@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
+import * as Yup from "yup";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { Formik, Form, Field } from "formik";
@@ -12,6 +13,20 @@ import {
 import StyledHeading from "../styled/Heading";
 import StyledSoftButton from "../styled/SoftButton";
 import StyledDialogActions from "../styled/DialogActions";
+
+const ProjectSchema = Yup.object().shape({
+  name: Yup.string()
+    .required("Notwendig")
+    .min(2, "Zu kurz!")
+    .max(30, "Zu lang (max. 100 Zeichen)"),
+  description: Yup.string()
+    .required("Notwendig")
+    .min(2, "Zu kurz!")
+    .max(30, "Zu lang (max. 400 Zeichen)"),
+  hours: Yup.number("Gültiges Format: Zahl")
+    .required("Notwendig")
+    .positive("Gültiges Format: Zahl"),
+});
 
 const ProjectForm = () => {
   const dispatch = useDispatch();
@@ -38,6 +53,7 @@ const ProjectForm = () => {
         customerId: selectedCustomer.id,
       }}
       onSubmit={handleSubmit}
+      validationSchema={ProjectSchema}
     >
       {() => (
         <Form>

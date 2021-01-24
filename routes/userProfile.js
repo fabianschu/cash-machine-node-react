@@ -31,7 +31,7 @@ router.post("/", async (req, res, next) => {
 router.put("/", upload.single("logo"), async (req, res, next) => {
   const params = req.body;
   const { logo } = params;
-  const logoUrl = await uploadBase64(logo);
+  const logoUrl = logo ? await uploadBase64(logo) : params.logoUrl;
   const userId = req.session.currentUser;
   delete params["user"];
   delete params["logo"];

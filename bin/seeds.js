@@ -92,7 +92,7 @@ db.query("DROP TABLE IF EXISTS projects")
   )
   .then(() =>
     db.query(
-      'CREATE TABLE IF NOT EXISTS "projects" (ID SERIAL PRIMARY KEY, "name" VARCHAR(30), "description" VARCHAR(400), "hours" REAL, "customerId" INTEGER REFERENCES customers("id"), "createdAt" TIMESTAMP, "updatedAt" TIMESTAMP, "userId" INTEGER REFERENCES users("id"), "invoiceId" INTEGER REFERENCES invoices("id"))'
+      'CREATE TABLE IF NOT EXISTS "projects" (ID SERIAL PRIMARY KEY, "name" VARCHAR(100), "description" VARCHAR(400), "hours" REAL, "customerId" INTEGER REFERENCES customers("id"), "createdAt" TIMESTAMP, "updatedAt" TIMESTAMP, "userId" INTEGER REFERENCES users("id"), "invoiceId" INTEGER REFERENCES invoices("id"))'
     )
   )
   .then(() => console.log("Tables deleted and newly created"))

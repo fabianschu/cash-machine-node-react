@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
 import InputField from "../components/Inputs/InputField";
 import Button from "@material-ui/core/Button";
 import { Redirect } from "react-router-dom";
@@ -47,6 +48,16 @@ const StyledInteractionContainer = styled.div`
   flex: 1;
 `;
 
+const LoginSchema = Yup.object().shape({
+  username: Yup.string()
+    .min(2, "Zu kurz!")
+    .max(70, "Zu lang!")
+    .required("Notwendig"),
+  password: Yup.string()
+    .min(8, "Mindestens 8 Zeichen erforderlich")
+    .required("Notwendig"),
+});
+
 const LoginPage = () => {
   const isAuthenticated = useSelector(({ authReducer }) => authReducer.userId);
   const dispatch = useDispatch();
@@ -80,6 +91,7 @@ const LoginPage = () => {
         <Formik
           initialValues={{ username: "", password: "" }}
           onSubmit={handleSubmit}
+          validationSchema={LoginSchema}
         >
           <Form>
             <StyledInteractionContainer>

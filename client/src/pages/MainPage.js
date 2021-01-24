@@ -35,12 +35,6 @@ const MainPage = () => {
   const accordionExpanded = useSelector(
     ({ uiReducer }) => uiReducer.accordionExpanded
   );
-  const customers = useSelector(
-    ({ customersReducer }) => customersReducer.customers
-  );
-  const selectedCustomer = useSelector(
-    ({ customersReducer }) => customersReducer.selectedCustomer
-  );
 
   useEffect(() => {
     dispatch(fetchCustomers());
