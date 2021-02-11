@@ -165,6 +165,9 @@ const InvoiceOverview = () => {
             <Box>
               Stundensatz: <span>€{hourlyRate}</span>
             </Box>
+            <Box>
+              Rechnungsnummer: <span>{formalInvoiceId}</span>
+            </Box>
           </Box>
         </Box>
         <Box
