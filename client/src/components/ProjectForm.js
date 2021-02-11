@@ -18,11 +18,11 @@ const ProjectSchema = Yup.object().shape({
   name: Yup.string()
     .required("Notwendig")
     .min(2, "Zu kurz!")
-    .max(30, "Zu lang (max. 100 Zeichen)"),
+    .max(100, "Zu lang (max. 100 Zeichen)"),
   description: Yup.string()
     .required("Notwendig")
     .min(2, "Zu kurz!")
-    .max(30, "Zu lang (max. 400 Zeichen)"),
+    .max(400, "Zu lang (max. 400 Zeichen)"),
   hours: Yup.number("Gültiges Format: Zahl")
     .required("Notwendig")
     .positive("Gültiges Format: Zahl"),
