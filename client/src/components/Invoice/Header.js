@@ -14,15 +14,13 @@ const styles = StyleSheet.create({
     lineHeight: 1.3,
   },
   logoContainer: {
-    width: "100%",
+    height: "80px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
   },
   logo: {
-    maxHeight: "60px",
-    textAlign: "center",
-    marginBottom: BOTTOM_MARGIN_WITHIN_SECTIONS,
+    maxHeight: "40px",
   },
   ownName: {
     textTransform: "capitalize",
