@@ -1,14 +1,13 @@
-const { Pool, Client } = require("pg");
+const { Client } = require("pg");
 
 const conString =
   process.env.DATABASE_URL ||
   "postgres://fabi:dbaccess@localhost:5432/cashmashine";
 
-const client = new Client(conString);
-
-if (process.env.NODE_ENV == "production") {
-  client.ssl = true;
-}
+const client = new Client({
+  connectionString: conString,
+  ssl: process.env.NODE_ENV === "production",
+});
 
 client.connect();
 
