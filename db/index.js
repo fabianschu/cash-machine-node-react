@@ -9,7 +9,12 @@ const client = new Client({
   ssl: process.env.NODE_ENV === "production",
 });
 
-client.connect();
+console.log("connecting db");
+
+client.connect((err) => {
+  if (err) console.log("Custom-Error:", err);
+  else console.log("connected");
+});
 
 module.exports = {
   query: (text, params) => client.query(text, params),
