@@ -6,6 +6,10 @@ const conString =
 
 const client = new Client(conString);
 
+if (process.env.NODE_ENV == "production") {
+  client.ssl = true;
+}
+
 client.connect();
 
 module.exports = {
