@@ -7,11 +7,13 @@ const router = new Router();
 
 /* GET users listing. */
 router.post("/login", async (req, res, next) => {
+  console.log("incoming request");
+  console.log(req.body);
   const { username, password } = req.body;
   const { rows } = await db.query("SELECT * FROM users WHERE username = $1", [
     username,
   ]);
-
+  console.log(rows);
   const user = rows[0];
   if (!user) return res.status(401).json("user doesnt exist");
   const hashedUserPassword = user.password;
