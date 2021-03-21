@@ -6,9 +6,11 @@ const conString =
 
 const client = new Client({
   connectionString: conString,
-  ssl: process.env.NODE_ENV === "production",
+  ssl: process.env.NODE_ENV !== "development",
 });
-
+console.log("client: ", client);
+console.log("node_env: ", process.env.NODE_ENV);
+console.log("DATABASE_URL: ", process.env.DATABASE_URL);
 console.log("connecting db");
 
 client.connect((err) => {
