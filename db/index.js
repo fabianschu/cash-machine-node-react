@@ -9,13 +9,8 @@ const client = new Client({
   ssl: { rejectUnauthorized: false },
 });
 
-console.log("constring: ", conString);
-console.log("node_env: ", process.env.NODE_ENV);
-console.log("DATABASE_URL: ", process.env.DATABASE_URL);
-console.log("connecting db");
-
 client.connect((err) => {
-  if (err) console.log("Custom-Error:", err);
+  if (err) console.log("db error:", err);
   else console.log("db connected");
 });
 
