@@ -4,7 +4,10 @@ const conString =
   process.env.DATABASE_URL ||
   "postgres://fabi:dbaccess@localhost:5432/cashmashine";
 
-const client = new Client(conString);
+const client = new Client({
+  connectionString: conString,
+  ssl: { rejectUnauthorized: false },
+});
 
 console.log("constring: ", conString);
 console.log("node_env: ", process.env.NODE_ENV);
