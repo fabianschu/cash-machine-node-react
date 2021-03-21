@@ -1,8 +1,8 @@
 const { Client } = require("pg");
 
-const conString = process.env.DATABASE_URL
-  ? process.env.DATABASE_URL + "?sslmode=require"
-  : "postgres://fabi:dbaccess@localhost:5432/cashmashine";
+const conString =
+  process.env.DATABASE_URL ||
+  "postgres://fabi:dbaccess@localhost:5432/cashmashine";
 
 const client = new Client(conString);
 
@@ -13,7 +13,7 @@ console.log("connecting db");
 
 client.connect((err) => {
   if (err) console.log("Custom-Error:", err);
-  else console.log("connected");
+  else console.log("db connected");
 });
 
 module.exports = {
