@@ -21,10 +21,10 @@ const FileUploadField = (props) => {
       img.onload = function () {
         var height = img.height;
         var width = img.width;
-        if (height > 100 || width > 400) {
-          setError("Maximale Maße: 100px hoch, 400px breit");
-          return;
-        }
+        // if (height > 100 || width > 400) {
+        //   setError("Maximale Maße: 100px hoch, 400px breit");
+        //   return;
+        // }
         setError("");
         setValue(e.target.result);
       };

@@ -6,7 +6,10 @@ const conString =
 
 const client = new Client({
   connectionString: conString,
-  ssl: { rejectUnauthorized: false },
+  ssl:
+    process.env.NODE_ENV === "production"
+      ? { rejectUnauthorized: false }
+      : false,
 });
 
 client.connect((err) => {
