@@ -1,14 +1,12 @@
 const { Client } = require("pg");
 
-const conString =
-  process.env.DATABASE_URL ||
-  "postgres://fabi:dbaccess@localhost:5432/cashmashine";
+const conString = process.env.DATABASE_URL
+  ? process.env.DATABASE_URL + "?sslmode=require"
+  : "postgres://fabi:dbaccess@localhost:5432/cashmashine";
 
-const client = new Client({
-  connectionString: conString,
-  ssl: process.env.NODE_ENV !== "development",
-});
-console.log("client: ", client);
+const client = new Client(conString);
+
+console.log("constring: ", conString);
 console.log("node_env: ", process.env.NODE_ENV);
 console.log("DATABASE_URL: ", process.env.DATABASE_URL);
 console.log("connecting db");
