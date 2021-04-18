@@ -3,10 +3,14 @@ This is an app to help you track projects and to automatically create PDF invoic
 
 ## Walkthrough
 ### App
-![](app_walkthrough.gif)
+![](walkthrough.gif)
 
 ### Invoice PDF
-![](pdf_view.gif)
+#### With tax (when country is Germany)
+![](invoice_with_tax.png)
+
+#### Without tax (when country is not Germany)
+![](invoice_without_tax.png)
 
 ## Run it
 Quick note: Some parts of this application were built the way they were built, because I wanted to better understand how specific parts of an application work. For instance, I did not use any ORM, but built my own query builder etc.

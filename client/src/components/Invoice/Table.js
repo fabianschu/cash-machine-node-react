@@ -182,7 +182,7 @@ const Table = (props) => {
                   ...styles.alignRight,
                 }}
               >
-                + 16% USt
+                + 19% USt
               </Text>
             </View>
             <View style={{ ...styles.tableCol, ...styles.col3 }}>
