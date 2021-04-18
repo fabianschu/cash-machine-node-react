@@ -1,6 +1,8 @@
 # Cash Machine
 This is an app to help you track projects and to automatically create PDF invoices from these projects for you.
 
+Live: https://cash-mashine.herokuapp.com/main
+
 ## Walkthrough
 ### App
 ![](walkthrough.gif)
