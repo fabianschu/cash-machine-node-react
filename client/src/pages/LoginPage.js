@@ -71,7 +71,7 @@ const LoginPage = () => {
     }
   };
 
-  const handleSceenChange = (values) => {
+  const handleScreenChange = (values) => {
     if (screen === "login") {
       setScreen("register");
     } else {
@@ -114,7 +114,7 @@ const LoginPage = () => {
               >
                 {screen === "login" ? "Anmelden" : "Registrieren"}
               </Button>
-              <StyledSoftButton onClick={handleSceenChange}>
+              <StyledSoftButton onClick={handleScreenChange}>
                 {screen === "login" ? "Registrieren" : "Anmelden"}
               </StyledSoftButton>
             </StyledInteractionContainer>

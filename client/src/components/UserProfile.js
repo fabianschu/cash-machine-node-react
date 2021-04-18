@@ -28,6 +28,10 @@ const StyledCustomWrapper = styled.div`
   width: 47%;
 `;
 
+const LogoContainer = styled.img`
+  max-height: 200px;
+`;
+
 const ProfileSchema = Yup.object().shape({
   name: Yup.string()
     .min(2, "Zu kurz!")
@@ -105,7 +109,7 @@ const UserProfile = () => {
                   <Field component={InputField} name="street" label="Straße" />
                 </StyledCustomWrapper>
                 <StyledLogoContainer>
-                  <img src={user.logoUrl} alt="logo" />
+                  <LogoContainer src={user.logoUrl} alt="logo" />
                   <Field
                     component={FileUploadField}
                     name="logo"
